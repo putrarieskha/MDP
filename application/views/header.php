@@ -77,16 +77,35 @@
               </span>
             </a>
             <ul class="treeview-menu" style="display: none;">
-              <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik</a></li>
-              <li><a href="<?php echo base_url("pram"); ?>"><i class="fa fa-calendar-check-o"></i>Plan vs Real Act MTC</a></li>
-              <li><a href="<?php echo base_url("prmm"); ?>"><i class="fa fa-calendar"></i>Plan vs Real Mon MTC</a></li>
-              <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>ACM</a></li>
-              <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Record HM Alat</a></li>
-              <li><a href="<?php echo base_url("downtime_alat"); ?>"><i class="fa fa-thumbs-o-down"></i>Downtime Alat</a></li>
-              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
+              <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit</a></li>
+              <li><a href="<?php echo base_url("pram"); ?>"><i class="fa fa-calendar-check-o"></i>Activity MTC</a></li>
+              <li><a href="<?php echo base_url("prmm"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC</a></li>
+              <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine</a></li>
+              <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat</a></li>
+              <li><a href="<?php echo base_url("downtime_alat"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem</a></li>
               <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP</a></li>
+              <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>CAPEX</a></li>
+              <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>Inventory</a></li>
+
             </ul>
           </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-gear"></i> <span>Report</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu" style="display: none;">
+              <li><a href="<?php echo base_url("downtime_alat"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>
+              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
+              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Distribusi Man Hour</a></li>
+              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Plan vs Real (CM MM)</a></li>
+              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Inventory</a></li>
+              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
+            </ul>
+          </li>
+
       </ul>
     </section>
     <!-- /.sidebar -->
