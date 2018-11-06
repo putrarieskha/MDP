@@ -1,5 +1,5 @@
 /**
- * (c) 2013 Jexcel Plugin v1.5.5 | Bossanova UI
+ * (c) 2013 Jexcel Plugin v1.5.7 | Bossanova UI
  * http://www.github.com/paulhodel/jexcel
  *
  * @author: Paul Hodel <paul.hodel@gmail.com>
@@ -84,7 +84,7 @@ var methods = {
             // Allow Overflow
             tableHeight:'300px',
             // About message
-            about:'jExcel Spreadsheet\\nVersion 1.5.5\\nAuthor: Paul Hodel <paul.hodel@gmail.com>\\nWebsite: https://bossanova.uk/jexcel'
+            about:'jExcel Spreadsheet\\nVersion 1.5.7\\nAuthor: Paul Hodel <paul.hodel@gmail.com>\\nWebsite: https://bossanova.uk/jexcel'
         };
 
         // Id
@@ -92,6 +92,9 @@ var methods = {
 
         // Configuration holder
         var options =  $.extend(defaults, options);
+
+        // Save the div that will hold the grid
+        options.div = this;
 
         // Compatibility
         if (options.manualColumnResize != undefined) {
@@ -276,11 +279,11 @@ var methods = {
             // Waiting all external data is loaded
             $.when.apply(this, results).done(function() {
                 // Create the table
-                $('#' + id).jexcel('createTable');
+                $($.fn.jexcel.defaults[id].div).jexcel('createTable');
             });
         } else {
             // No external data to be loaded, just created the table
-            $('#' + id).jexcel('createTable');
+            $($.fn.jexcel.defaults[id].div).jexcel('createTable');
         }
     },
 
@@ -310,9 +313,10 @@ var methods = {
         // Unselectable properties
         $(table).prop('unselectable', 'yes');
         $(table).prop('onselectstart', 'return false');
-        // $(table).prop('draggable', 'false');
+        //$(table).prop('draggable', 'false');
 
         // Create header and body tags
+        var colgroup = document.createElement('colgroup');
         var thead = document.createElement('thead');
         var tbody = document.createElement('tbody');
 
@@ -321,7 +325,7 @@ var methods = {
 
         // Row
         var tr = '';
-
+        var cg = '';
         // Create nested headers
         /*if (options.nestedHeaders && options.nestedHeaders.length > 0) {
             // Flexible way to handle nestedheaders
@@ -359,6 +363,7 @@ var methods = {
 
         // Create headers
         tr = '<td width="30" class="jexcel_label"></td>';
+        cg = '<col width="30">';
 
         // TODO: When the first or last column is hidden
         for (var i = 0; i < options.colHeaders.length; i++) {
@@ -378,7 +383,13 @@ var methods = {
 
             // Create HTML row
             tr += '<td id="col-' + i + '" width="' + width + '" align="' + align +'" title="' + title + '" class=" ' + className + '"' + display + '>' + header + '</td>';
+
+            // Colgroup
+            cg += '<col width="' + width + '">';
         }
+
+        // Colgroup
+        $(colgroup).html(cg);
 
         // Populate header
         $(thead).append('<tr>' + tr + '</tr>'); 
@@ -387,6 +398,7 @@ var methods = {
         // <tr><td></td><td><input type="text"></td></tr>
 
         // Append content
+        //$(table).append(colgroup);
         $(table).append(thead);
         $(table).append(tbody);
 
@@ -397,7 +409,7 @@ var methods = {
         if (! $('.jexcel_corner').length) {
             // Corner one for all sheets in a page
             var corner = document.createElement('div');
-            $(corner).prop('class', 'jexcel_corner');
+            $(corner).prop('class', 'jexcel_corner jexcel');
             $(corner).prop('id', 'jexcel_corner');
 
             // Disable copy
@@ -430,18 +442,18 @@ var methods = {
             $('body').append(ads);
 
             // Unselectable properties
-            $(corner).prop('unselectable', 'yes');
+            $(corner).prop('unselectable', 'on');
             $(corner).prop('onselectstart', 'return false');
-            $(corner).prop('draggable', 'false');
+            //$(corner).prop('draggable', 'false');
 
             // Prevent dragging on the corner object
             $.fn.jexcel.dragStartControls = function (e) {
-                if ($(e.target).parents('.jexcel').length) {
-                    return false;
+                if ($(e.target).prop('id') == 'jexcel_corner') {
+                   // return false;
                 }
             }
 
-            $(document).on('dragstart', $.fn.jexcel.dragStartControls);
+            //$(document).on('dragstart', $.fn.jexcel.dragStartControls);
 
             // Corner persistence and other helpers
             $.fn.jexcel.selectedCorner = false;
@@ -484,9 +496,10 @@ var methods = {
                                         contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('insertColumn', 1, null, " + o[1] + ")\">Insert a new column<span></span></a>";
                                     }
                                     if ($.fn.jexcel.defaults[$.fn.jexcel.current].allowDeleteColumn == true) {
-                                        contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('deleteColumn'," + o[1] + ")\">Delete this column<span></span></a>";
+                                        contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('deleteColumn')\">Delete this column<span></span></a>";
                                     }
-                                    contextMenuContent += "<hr><a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('download')\">Save as...<span>Ctrl + S</span></a>";
+                                    contextMenuContent += "<hr><a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('copy', true)\">Copy...<span>Ctrl + C</span></a>";
+                                    contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('download')\">Save as...<span>Ctrl + S</span></a>";
                                     if ($.fn.jexcel.defaults[$.fn.jexcel.current].about) {
                                         contextMenuContent += "<a onclick=\"alert('" + $.fn.jexcel.defaults[$.fn.jexcel.current].about + "')\">About<span></span></a>";
                                     }
@@ -499,8 +512,9 @@ var methods = {
                                         contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('insertRow', 1, " + o[1] + ")\">Insert a new row<span></span></a><hr>";
                                     }
                                     if ($.fn.jexcel.defaults[$.fn.jexcel.current].allowDeleteRow == true) {
-                                        contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('deleteRow'," + o[1] + ")\">Delete this row<span></span></a><hr>";
+                                        contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('deleteRow')\">Delete this row<span></span></a><hr>";
                                     }
+                                    contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('copy', true)\">Copy...<span>Ctrl + C</span></a>";
                                     contextMenuContent += "<a onclick=\"jQuery('#" + $.fn.jexcel.current + "').jexcel('download')\">Save as...<span>Ctrl + S</span></a>";
                                     if ($.fn.jexcel.defaults[$.fn.jexcel.current].about) {
                                         contextMenuContent += "<a onclick=\"alert('" + $.fn.jexcel.defaults[$.fn.jexcel.current].about + "')\">About<span></span></a>";
@@ -539,139 +553,141 @@ var methods = {
 
             // Global mouse click down controles
             $.fn.jexcel.mouseDownControls = function (e) {
-                // Click on corner icon
-                if (e.target.id == 'jexcel_corner') {
-                    if ($.fn.jexcel.defaults[$.fn.jexcel.current].editable == true) {
-                        $.fn.jexcel.selectedCorner = true;
-                    }
-                } else {
-                    // Check if the click was in an jexcel element
-                    var table = $(e.target).parent().parent().parent();
-
-                    // Table found
-                    if ($(table).is('.jexcel')) {
-                        // Get id
-                        var current = $(table).parent().prop('id');
-
-                        // Remove selection from any other jexcel if applicable
-                        if ($.fn.jexcel.current) {
-                            if ($.fn.jexcel.current != current) {
-                                $('#' + $.fn.jexcel.current).jexcel('updateSelection');
-                            }
+                if (e.which != 3) {
+                    // Click on corner icon
+                    if (e.target.id == 'jexcel_corner') {
+                        if ($.fn.jexcel.defaults[$.fn.jexcel.current].editable == true) {
+                            $.fn.jexcel.selectedCorner = true;
                         }
+                    } else {
+                        // Check if the click was in an jexcel element
+                        var table = $(e.target).parent().parent().parent();
 
-                        // Mark as current
-                        $.fn.jexcel.current = current;
+                        // Table found
+                        if ($(table).is('.jexcel')) {
+                            // Get id
+                            var current = $(table).parent().prop('id');
 
-                        // Header found
-                        if ($(e.target).parent().parent().is('thead')) {
-                            var o = $(e.target).prop('id');
-                            if (o) {
-                                o = o.split('-');
-
-                                if ($.fn.jexcel.selectedHeader && (e.shiftKey || e.ctrlKey)) {
-                                    var d = $($.fn.jexcel.selectedHeader).prop('id').split('-');
-                                } else {
-                                    // Update selection single column
-                                    var d = $(e.target).prop('id').split('-');
-                                    // Keep track of which header was selected first
-                                    $.fn.jexcel.selectedHeader = $(e.target);
-                                    $.fn.jexcel.selectedRow = null;
+                            // Remove selection from any other jexcel if applicable
+                            if ($.fn.jexcel.current) {
+                                if ($.fn.jexcel.current != current) {
+                                    $('#' + $.fn.jexcel.current).jexcel('updateSelection');
                                 }
+                            }
 
-                                // Update cursor
-                                if ($(e.target).outerWidth() - e.offsetX < 8) {
-                                    if ($.fn.jexcel.defaults[$.fn.jexcel.current].columnResize == true) {
-                                        // Resize helper
-                                        $.fn.jexcel.resizeColumn = {
-                                            mousePosition: e.pageX,
-                                            column:o[1],
-                                            width:parseInt($(e.target).css('width')),
+                            // Mark as current
+                            $.fn.jexcel.current = current;
+
+                            // Header found
+                            if ($(e.target).parent().parent().is('thead')) {
+                                var o = $(e.target).prop('id');
+                                if (o) {
+                                    o = o.split('-');
+
+                                    if ($.fn.jexcel.selectedHeader && (e.shiftKey || e.ctrlKey)) {
+                                        var d = $($.fn.jexcel.selectedHeader).prop('id').split('-');
+                                    } else {
+                                        // Update selection single column
+                                        var d = $(e.target).prop('id').split('-');
+                                        // Keep track of which header was selected first
+                                        $.fn.jexcel.selectedHeader = $(e.target);
+                                        $.fn.jexcel.selectedRow = null;
+                                    }
+
+                                    // Update cursor
+                                    if ($(e.target).outerWidth() - e.offsetX < 8) {
+                                        if ($.fn.jexcel.defaults[$.fn.jexcel.current].columnResize == true) {
+                                            // Resize helper
+                                            $.fn.jexcel.resizeColumn = {
+                                                mousePosition: e.pageX,
+                                                column:o[1],
+                                                width:parseInt($(e.target).css('width')),
+                                            }
+                                            // Border indication
+                                            $(table).parent().find('.c' + o[1]).addClass('resizing');
+                                            $(table).parent().find('#col-' + o[1]).addClass('resizing');
+
+                                            // Remove selected cells
+                                            $('#' + $.fn.jexcel.current).jexcel('updateSelection');
+                                            $('.jexcel_corner').css('left', '-200px');
                                         }
-                                        // Border indication
-                                        $(table).parent().find('.c' + o[1]).addClass('resizing');
-                                        $(table).parent().find('#col-' + o[1]).addClass('resizing');
+                                    } else {
+                                        // Get cell objects
+                                        var o1 = $('#' + $.fn.jexcel.current).find('#' + o[1] + '-0');
+                                        var o2 = $('#' + $.fn.jexcel.current).find('#' + d[1] + '-' + parseInt($.fn.jexcel.defaults[$.fn.jexcel.current].data.length - 1));
 
-                                        // Remove selected cells
-                                        $('#' + $.fn.jexcel.current).jexcel('updateSelection');
-                                        $('.jexcel_corner').css('left', '-200px');
+                                        // Update selection
+                                        $('#' + $.fn.jexcel.current).jexcel('updateSelection', o1, o2, 1);
+
+                                        // Selected cell will be the first in the row
+                                        $.fn.jexcel.selectedCell = $(o1);
+                                    }
+                                }
+                            } else {
+                                $.fn.jexcel.selectedHeader = false;
+                            }
+
+                            // Body found
+                            if ($(e.target).parent().parent().is('tbody')) {
+                                // Update row label selection
+                                if ($(e.target).is('.jexcel_label')) {
+                                    if ($.fn.jexcel.defaults[$.fn.jexcel.current].rowDrag == true && $(e.target).outerWidth() - e.offsetX < 8) {
+                                        // Reset selection
+                                        $('#' + $.fn.jexcel.current).jexcel('resetSelection');
+                                        // Mark which row we are dragging
+                                        $.fn.jexcel.dragRowFrom = $(e.target).parent().prop('id');
+                                        $.fn.jexcel.dragRowOver = $(e.target).parent().prop('id');
+                                        // Visual row we are dragging
+                                        $(e.target).parent().find('td').css('background-color', 'rgba(0,0,0,0.1)');
+                                    } else {
+                                        var o = $(e.target).parent().prop('id').split('-');
+
+                                        if ($.fn.jexcel.selectedRow && (e.shiftKey || e.ctrlKey)) {
+                                            // Updade selection multi columns
+                                            var d = $($.fn.jexcel.selectedRow).prop('id').split('-');
+                                        } else {
+                                            // Update selection single column
+                                            var d = $(e.target).parent().prop('id').split('-');
+                                            // Keep track of which header was selected first
+                                            $.fn.jexcel.selectedRow = $(e.target).parent();
+                                            $.fn.jexcel.selectedHeader = null;
+                                        }
+
+                                        // Get cell objects
+                                        var o1 = $('#' + $.fn.jexcel.current).find('#0-' + o[1]);
+                                        var o2 = $('#' + $.fn.jexcel.current).find('#' + parseInt($.fn.jexcel.defaults[$.fn.jexcel.current].columns.length - 1) + '-' + d[1]);
+
+                                        // Update selection
+                                        $('#' + $.fn.jexcel.current).jexcel('updateSelection', o1, o2);
+
+                                        // Selected cell will be the first in the row
+                                        $.fn.jexcel.selectedCell = $(o2);
                                     }
                                 } else {
-                                    // Get cell objects
-                                    var o1 = $('#' + $.fn.jexcel.current).find('#' + o[1] + '-0');
-                                    var o2 = $('#' + $.fn.jexcel.current).find('#' + d[1] + '-' + parseInt($.fn.jexcel.defaults[$.fn.jexcel.current].data.length - 1));
+                                    // Update cell selection
+                                    if (! $($.fn.jexcel.selectedCell).hasClass('edition')) {
+                                        if (! $.fn.jexcel.selectedCell || ! e.shiftKey) {
+                                            $.fn.jexcel.selectedCell = $(e.target);
+                                        }
+                                        $('#' + $.fn.jexcel.current).jexcel('updateSelection', $.fn.jexcel.selectedCell, $(e.target));
+                                    } else {
+                                        if ($(e.target) != $.fn.jexcel.selectedCell) {
+                                            $.fn.jexcel.selectedCell = $(e.target);
+                                            $('#' + $.fn.jexcel.current).jexcel('updateSelection', $.fn.jexcel.selectedCell, $(e.target));
+                                        }
+                                    }
 
-                                    // Update selection
-                                    $('#' + $.fn.jexcel.current).jexcel('updateSelection', o1, o2, 1);
-
-                                    // Selected cell will be the first in the row
-                                    $.fn.jexcel.selectedCell = $(o1);
+                                    // No full row selected
+                                    $.fn.jexcel.selectedRow = null;
                                 }
                             }
                         } else {
-                            $.fn.jexcel.selectedHeader = false;
-                        }
-
-                        // Body found
-                        if ($(e.target).parent().parent().is('tbody')) {
-                            // Update row label selection
-                            if ($(e.target).is('.jexcel_label')) {
-                                if ($.fn.jexcel.defaults[$.fn.jexcel.current].rowDrag == true && $(e.target).outerWidth() - e.offsetX < 8) {
-                                    // Reset selection
+                            // Check if the object is in the jexcel domain
+                            if (! $(e.target).parents('.jexcel, .jexcel_contextmenu').length) {
+                                // Keep selection if main scrollbar is selected
+                                if (e.target != $('html').get(0)) {
                                     $('#' + $.fn.jexcel.current).jexcel('resetSelection');
-                                    // Mark which row we are dragging
-                                    $.fn.jexcel.dragRowFrom = $(e.target).parent().prop('id');
-                                    $.fn.jexcel.dragRowOver = $(e.target).parent().prop('id');
-                                    // Visual row we are dragging
-                                    $(e.target).parent().find('td').css('background-color', 'rgba(0,0,0,0.1)');
-                                } else {
-                                    var o = $(e.target).parent().prop('id').split('-');
-
-                                    if ($.fn.jexcel.selectedRow && (e.shiftKey || e.ctrlKey)) {
-                                        // Updade selection multi columns
-                                        var d = $($.fn.jexcel.selectedRow).prop('id').split('-');
-                                    } else {
-                                        // Update selection single column
-                                        var d = $(e.target).parent().prop('id').split('-');
-                                        // Keep track of which header was selected first
-                                        $.fn.jexcel.selectedRow = $(e.target).parent();
-                                        $.fn.jexcel.selectedHeader = null;
-                                    }
-
-                                    // Get cell objects
-                                    var o1 = $('#' + $.fn.jexcel.current).find('#0-' + o[1]);
-                                    var o2 = $('#' + $.fn.jexcel.current).find('#' + parseInt($.fn.jexcel.defaults[$.fn.jexcel.current].columns.length - 1) + '-' + d[1]);
-
-                                    // Update selection
-                                    $('#' + $.fn.jexcel.current).jexcel('updateSelection', o1, o2);
-
-                                    // Selected cell will be the first in the row
-                                    $.fn.jexcel.selectedCell = $(o2);
                                 }
-                            } else {
-                                // Update cell selection
-                                if (! $($.fn.jexcel.selectedCell).hasClass('edition')) {
-                                    if (! $.fn.jexcel.selectedCell || ! e.shiftKey) {
-                                        $.fn.jexcel.selectedCell = $(e.target);
-                                    }
-                                    $('#' + $.fn.jexcel.current).jexcel('updateSelection', $.fn.jexcel.selectedCell, $(e.target));
-                                } else {
-                                    if ($(e.target) != $.fn.jexcel.selectedCell) {
-                                        $.fn.jexcel.selectedCell = $(e.target);
-                                        $('#' + $.fn.jexcel.current).jexcel('updateSelection', $.fn.jexcel.selectedCell, $(e.target));
-                                    }
-                                }
-
-                                // No full row selected
-                                $.fn.jexcel.selectedRow = null;
-                            }
-                        }
-                    } else {
-                        // Check if the object is in the jexcel domain
-                        if (! $(e.target).parents('.jexcel').length) {
-                            // Keep selection if main scrollbar is selected
-                            if (e.target != $('html').get(0)) {
-                                $('#' + $.fn.jexcel.current).jexcel('resetSelection');
                             }
                         }
                     }
@@ -722,7 +738,6 @@ var methods = {
 
                         // Update any nested cells
                         if ($(nestedHeaders).length > 0) {
-                            
                             $.each(nestedHeaders, function(k, v) {
                                 $(v).prop('width', $(v).prop('width') + ($.fn.jexcel.resizeColumn.width - newWidth));
                             });
@@ -939,6 +954,15 @@ var methods = {
                                         }
                                     }
                                 }
+
+                                // On mouse over event for cells
+                                if ($.fn.jexcel.ignoreEvents != true) {
+                                    if ($.fn.jexcel.defaults[id].onmouseover) {
+                                        if (typeof($.fn.jexcel.defaults[id].onmouseover) == 'function') {
+                                            $.fn.jexcel.defaults[id].onmouseover($('#' + $.fn.jexcel.current), $(e.target));
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -1011,7 +1035,7 @@ var methods = {
                             // Top arrow
                             if ($($.fn.jexcel.selectedCell).hasClass('edition')) {
                                 if ($.fn.jexcel.defaults[$.fn.jexcel.current].columns[columnId[0]].type == 'text' || $.fn.jexcel.defaults[$.fn.jexcel.current].columns[columnId[0]].type == 'numeric') {
-                                    $('#' + $.fn.jexcel.current).jexcel('closeEditor', $($.fn.jexcel.selectedCell), true);
+                                    //$('#' + $.fn.jexcel.current).jexcel('closeEditor', $($.fn.jexcel.selectedCell), true);
                                 }
                             }
 
@@ -1027,7 +1051,7 @@ var methods = {
                             // Bottom arrow
                             if ($($.fn.jexcel.selectedCell).hasClass('edition')) {
                                 if ($.fn.jexcel.defaults[$.fn.jexcel.current].columns[columnId[0]].type == 'text' || $.fn.jexcel.defaults[$.fn.jexcel.current].columns[columnId[0]].type == 'numeric') {
-                                    $('#' + $.fn.jexcel.current).jexcel('closeEditor', $($.fn.jexcel.selectedCell), true);
+                                    //$('#' + $.fn.jexcel.current).jexcel('closeEditor', $($.fn.jexcel.selectedCell), true);
                                 }
                             }
 
@@ -1154,7 +1178,16 @@ var methods = {
                                             // Start edition in case a valid character.
                                             if (! $($.fn.jexcel.selectedCell).hasClass('edition')) {
                                                 // Characters able to start a edition
-                                                if (e.keyCode == 110 || e.keyCode == 32 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || (e.keyCode >= 186 && e.keyCode <= 190)) {
+                                                if (e.keyCode == 32) {
+                                                    // Space
+                                                    if ($.fn.jexcel.defaults[$.fn.jexcel.current].columns[columnId[0]].type == 'checkbox') {
+                                                        var checkboxCurrentVal = $('#' + $.fn.jexcel.current).jexcel('getValue', $.fn.jexcel.selectedCell);
+                                                        $('#' + $.fn.jexcel.current).jexcel('setValue', $.fn.jexcel.selectedCell, checkboxCurrentVal == 1 ? false : true);
+                                                        e.preventDefault();
+                                                    } else {
+                                                        $('#' + $.fn.jexcel.current).jexcel('openEditor', $($.fn.jexcel.selectedCell), true);
+                                                    }
+                                                } else if (e.keyCode == 110 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || (e.keyCode >= 186 && e.keyCode <= 190)) {
                                                     $('#' + $.fn.jexcel.current).jexcel('openEditor', $($.fn.jexcel.selectedCell), true);
                                                 } else if (e.keyCode == 113) {
                                                     $('#' + $.fn.jexcel.current).jexcel('openEditor', $($.fn.jexcel.selectedCell), false);
@@ -1456,7 +1489,10 @@ var methods = {
             } else {
                 // Native functions
                 if (options.columns[position[0]].type == 'checkbox' || options.columns[position[0]].type == 'hidden') {
-                    // Do nothing for checkboxes or hidden columns
+                    // Get value
+                    var value = $(this).jexcel('getValue', $(cell)) == 1 ? false : true;
+                    // Update value
+                    $(this).jexcel('setValue', $(cell), value);
                 } else if (options.columns[position[0]].type == 'dropdown') {
                     // Keep the current value
                     $(cell).addClass('edition');
@@ -2131,6 +2167,11 @@ var methods = {
                     } else {
                         val = '';
                     }
+
+                    if (! val) {
+                        value = '';
+                    }
+
                     $(v.cell).html('<input type="hidden" value="' + value + '">' + val);
                 } else {
                     val = value ? value : '';
@@ -4112,7 +4153,7 @@ var methods = {
             if (options.columns[i].readOnly == true) {
                 $(td).html('<input type="checkbox" disabled="disabled">');
             } else {
-                $(td).html('<input type="checkbox" onclick="var value = this.checked; var instance = jQuery(this).parents(\'.jexcel\').parent(); $(instance).jexcel(\'setValue\', $(this).parent(), value);" value="false">');
+                $(td).html('<input type="checkbox" onclick="var value = this.checked; var instance = jQuery(this).parents(\'.jexcel\').parent(); $(instance).jexcel(\'setValue\', $(this).parent(), value); $(this).parent().mousedown();" value="false">');
             }
         }
 
@@ -4684,6 +4725,11 @@ var methods = {
             $('.jexcel_textarea').remove();
             $('.jexcel_contextmenu').remove();
             $('.jexcel_about').remove();
+
+            // Remove selection
+            if ($.fn.jexcel.current == id) {
+                $.fn.jexcel.current = null;
+            }
         }
 
         // If no other spreadsheet in the screen :: remove all elements

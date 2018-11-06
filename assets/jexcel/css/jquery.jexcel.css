@@ -25,10 +25,6 @@
     {
         width:0px;
     }
-    .jexcel > thead > tr, .jexcel > tbody > tr
-    {
-        display:table-row !important;
-    }
 }
 @media screen\9
 {
@@ -36,16 +32,12 @@
     {
         width:0px;
     }
-    .jexcel > thead > tr, .jexcel > tbody > tr
-    {
-        display:table-row !important;
-    }
 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none)
 {
-    .jexcel > thead > tr, .jexcel > tbody > tr
+    .jexcel
     {
-        display:table-row !important;
+        width:0px;
     }
 }
 .jexcel > thead > tr, .jexcel > tbody > tr
@@ -201,11 +193,12 @@
 .jexcel > tbody > tr > td > textarea
 {
     resize: none;
+    padding-top:6px !important;
 }
 
 .jexcel > tbody > tr > td > input[type=checkbox]
 {
-    width:20px;
+    width:12px;
     margin-top:2px;
 }
 
@@ -218,17 +211,6 @@
     background-position-x: 100%;
     background-position-y: 40%;
     background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSdibGFjaycgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyB3aWR0aD0nMjQnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTcgMTBsNSA1IDUtNXonLz48cGF0aCBkPSdNMCAwaDI0djI0SDB6JyBmaWxsPSdub25lJy8+PC9zdmc+);
-}
-
-.jexcel > tbody > tr > td:besfore
-{
-    content:'-';
-    float:right;
-    background-repeat: no-repeat;
-    background-position-x: 50%;
-    background-position-y: 40%;
-    width:16px;
-    bsackground-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSdibGFjaycgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyB3aWR0aD0nMjQnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTcgMTBsNSA1IDUtNXonLz48cGF0aCBkPSdNMCAwaDI0djI0SDB6JyBmaWxsPSdub25lJy8+PC9zdmc+);
 }
 
 .jexcel, .jexcel td, .jexcel_corner {
@@ -340,15 +322,13 @@
     display:none;
     position:absolute;
     z-index:100;
-    background: #fff;
+    background:#fff;
     color: #555;
     font-family: sans-serif;
     font-size: 11px;
-    -webkit-transition: opacity .5s ease-in-out;
-    -moz-transition: opacity .5s ease-in-out;
-    -ms-transition: opacity .5s ease-in-out;
-    -o-transition: opacity .5s ease-in-out;
-    transition: opacity .5s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
     -webkit-box-shadow: 2px 2px 2px 0px rgba(143, 144, 145, 1);
     -moz-box-shadow: 2px 2px 2px 0px rgba(143, 144, 145, 1);
     box-shadow: 2px 2px 2px 0px rgba(143, 144, 145, 1);
@@ -365,6 +345,7 @@
     padding: 6px 8px 6px 30px;
     width: 250px;
     position: relative;
+    cursor: default;
 }
 
 .jexcel_contextmenu a span

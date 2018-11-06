@@ -30,7 +30,7 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -77,6 +77,7 @@
               </span>
             </a>
             <ul class="treeview-menu" style="display: none;">
+              <li><a href="<?php echo base_url("wo"); ?>"><i class="fa fa-industry"></i>Work Order</a></li>
               <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit</a></li>
               <li><a href="<?php echo base_url("pram"); ?>"><i class="fa fa-calendar-check-o"></i>Activity MTC</a></li>
               <li><a href="<?php echo base_url("prmm"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC</a></li>
