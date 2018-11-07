@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Breakdown extends CI_Controller {
+class Capex extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -23,7 +23,7 @@ class Breakdown extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Breakdown";
+		$output['main_title'] = "CAPEX";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -34,7 +34,7 @@ class Breakdown extends CI_Controller {
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
-			base_url("assets/mdp/breakdown.js"),
+			base_url("assets/mdp/capex.js"),
 		];
 		
 		$output['content'] = '
@@ -82,7 +82,7 @@ class Breakdown extends CI_Controller {
 		
 		
 		$this->load->view('header',$header);
-		$this->load->view('content-breakdown',$output);
+		$this->load->view('content-capex',$output);
 		$this->load->view('footer',$footer);
 
 	}

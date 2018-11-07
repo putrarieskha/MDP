@@ -29,7 +29,7 @@
             format:'DD/MM/YYYY',
             readonly:0,
             today:0,
-            time:0,
+            time:1,
             clear:1,
             mask:1,
             months:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

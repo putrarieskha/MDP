@@ -13,20 +13,19 @@ $(document).ready(function () {
     $('#my-spreadsheet').jexcel({
         data: data,
         colHeaders: [
-            'Station', 'Unit', 'Problem', 'Perbaikan', 'Tanggal<br>Mulai', 'Jam<br>Mulai', 'Tanggal<br>Selesai', 'Jam<br>Selesai','Jenis<br>Breakdown', 'Jenis<br>Problem'],
-        colWidths: [100, 100, 250, 250, 100, 50, 100, 60, 100, 100],
+            'Station', 'Unit', 'Kondisi', 'Status', 'Identifikasi<br>Problem', 'Perbaikan<br>Yang Diperlukan', 'PIC', 'Status<br>Sparepart','Keterangan'],
+        colWidths: [100, 100, 250, 70, 200, 250, 80, 100, 100, 100],
         columns: [
             { type: 'autocomplete', source: ['loading ramp', 'sterilizer', 'thresher', 'press', 'bunch press', 'kernel', 'klarifikasi', 'boiler', 'effluent', 'dispatch'] },
             { type: 'text' },
             { type: 'text', wordWrap: true },
+            { type: 'dropdown', source: ['Hijau', 'Kuning', 'Merah'] },
             { type: 'text', wordWrap: true },
-            { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
             { type: 'text' },
-            { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
+            { type: 'dropdown', source: ['Internal', 'WSC', 'External'] },
+            { type: 'dropdown', source: ['Ready', 'Order', 'Progress Order'] },
             { type: 'text' },
-            // { type: 'text' },
-            { type: 'dropdown', source: ['unit', 'line', 'pabrik'] },
-            { type: 'dropdown', source: ['Alat', 'Proses'] },
+
         ]
     });
     // $('#my-spreadsheet').find('thead').before('<thead class="jexcel_label"><tr><td class="jexcel_label" width="30"></td><td colspan="2" width="400" align="center">Group 1</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td></tr></thead>');

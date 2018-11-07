@@ -19,26 +19,26 @@
         <div class="col-xs-12">
           <?php //echo $content; ?>
           <div class="col-xs-12">
-          Bulan : 
+          Pabrik : 
           <select>
-            <option>januari</option>
-            <option>februari</option>
-            <option>maret</option>
-            <option>april</option>
-            <option>mei</option>
-            <option>juni</option>
-            <option>juli</option>
-            <option>oktober</option>
-            <option>november</option>
-            <option>desember</option>
+            <option>GSDI</option>
+            <option>GSPP</option>
+            <option>GSIP</option>
+            <option>NAL</option>
+            <option>SINP</option>
+            <option>BCL2</option>
           </select>
           Tahun : 
           <select>
             <option>2018</option>
             <option>2019</option>
           </select>
+
           <br><br>
-          <div id='my-spreadsheet'></div>      
+          <div id='my-spreadsheet'></div>
+          <br><br>
+          <div id='my-PRPO'></div>
+
         </div>
       </div>
       <!-- /.row -->

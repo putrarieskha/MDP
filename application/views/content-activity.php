@@ -3,12 +3,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <?=$main_title?>
+        Activity Maintenance
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?=base_url()?>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><?=$main_title?></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>Activity Maintenance</li>
+        <li class="active">Dashboard</li>
       </ol>
     </section>
 
@@ -16,9 +17,8 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
+        <?php  ?>
         <div class="col-xs-12">
-          <?php //echo $content; ?>
-          <div class="col-xs-12">
           Bulan : 
           <select>
             <option>januari</option>

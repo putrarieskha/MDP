@@ -70,32 +70,38 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
-            <a href="#">
-              <i class="fa fa-gear"></i> <span>Maintenance</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu" style="display: none;">
-              <li><a href="<?php echo base_url("wo"); ?>"><i class="fa fa-industry"></i>Work Order</a></li>
-              <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit</a></li>
-              <li><a href="<?php echo base_url("pram"); ?>"><i class="fa fa-calendar-check-o"></i>Activity MTC</a></li>
-              <li><a href="<?php echo base_url("prmm"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC</a></li>
-              <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine</a></li>
-              <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat</a></li>
-              <li><a href="<?php echo base_url("downtime_alat"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem</a></li>
-              <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP</a></li>
-              <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>CAPEX</a></li>
-              <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>Inventory</a></li>
+          <a href="#">
+            <i class="fa fa-gear"></i> <span>Master</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
+            <li><a href="<?php echo base_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
+            <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
+            <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-calendar"></i>Karyawan</a></li>
+          </ul>
+        </li>
+  
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gear"></i> <span>Maintenance</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("wo"); ?>"><i class="fa fa-industry"></i>Work Order</a></li>
+            <li><a href="<?php echo base_url("breakdown"); ?>"><i class="fa fa-industry"></i>Breakdown Pabrik & Downtime Unit</a></li>
+            <li><a href="<?php echo base_url("activity"); ?>"><i class="fa fa-calendar-check-o"></i>Activity MTC</a></li>
+            <li><a href="<?php echo base_url("monitoring"); ?>"><i class="fa fa-calendar"></i>Monitoring MTC</a></li>
+            <li><a href="<?php echo base_url("acm"); ?>"><i class="fa fa-warning"></i>Avaibility Critical Machine</a></li>
+            <li><a href="<?php echo base_url("recordhm"); ?>"><i class="fa fa-line-chart"></i>Hour Meter Alat</a></li>
+            <li><a href="<?php echo base_url("highlight"); ?>"><i class="fa fa-thumbs-o-down"></i>Highlight Problem</a></li>
+            <li><a href="<?php echo base_url("lkpmp"); ?>"><i class="fa fa-file"></i>LKPMP</a></li>
+            <li><a href="<?php echo base_url("capex"); ?>"><i class="fa fa-file"></i>CAPEX</a></li>
+            <li><a href="<?php echo base_url("inventory"); ?>"><i class="fa fa-file"></i>Inventory</a></li>
 
-            </ul>
-          </li>
+          </ul>
+        </li>
           <li class="treeview">
             <a href="#">
               <i class="fa fa-gear"></i> <span>Report</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
             </a>
             <ul class="treeview-menu" style="display: none;">
               <li><a href="<?php echo base_url("downtime_alat"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>

@@ -44,12 +44,6 @@ class Wo extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/wo.js"),
 		];
-
-		// $this->load->view('welcome_message');
-		// $output = "";
-		// $this->load->view('header');
-		// $this->load->view('content-wo',$output);
-		// $this->load->view('footer');
 			
 		$this->load->view('header',$header);
 		$this->load->view('content-wo',$output);
