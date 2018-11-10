@@ -25,7 +25,6 @@ $(document).ready(function () {
             { type: 'dropdown', source: ['Internal', 'WSC', 'External'] },
             { type: 'dropdown', source: ['Ready', 'Order', 'Progress Order'] },
             { type: 'text' },
-
         ]
     });
     // $('#my-spreadsheet').find('thead').before('<thead class="jexcel_label"><tr><td class="jexcel_label" width="30"></td><td colspan="2" width="400" align="center">Group 1</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td></tr></thead>');
