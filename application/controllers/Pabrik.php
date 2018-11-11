@@ -95,6 +95,7 @@ class Pabrik extends CI_Controller {
 		$this->load->view('content-pabrik',$output);
 		$this->load->view('footer',$footer);
 	}
+
 	public function load()
 	{
 		$query = $this->db->query("SELECT nama,tipe FROM master_pabrik;");
@@ -103,8 +104,8 @@ class Pabrik extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				$d[$i][0] = $row->nama; // access attributes
-				$d[$i++][1] = $row->tipe; // or methods defined on the 'User' class
+			$d[$i][0] = $row->nama; // access attributes
+			$d[$i++][1] = $row->tipe; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 

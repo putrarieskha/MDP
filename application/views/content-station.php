@@ -30,7 +30,8 @@
             <option>BCL2</option>
           </select> -->
           <br><br>
-          <div id='my-spreadsheet'></div>      
+          <button id="simpan">Simpan</button>
+          <br><br><div id='my-spreadsheet'></div>      
         </div>
       </div>
       <!-- /.row -->

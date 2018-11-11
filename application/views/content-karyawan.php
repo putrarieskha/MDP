@@ -20,15 +20,9 @@
           <?php //echo $content; ?>
           <div class="col-xs-12">
           Pabrik : 
-          <select>
-            <option>GSDI</option>
-            <option>GSPP</option>
-            <option>GSIP</option>
-            <option>NAL</option>
-            <option>SINP</option>
-            <option>BCL2</option>
-          </select>
+          <?php echo $dropdown_pabrik ?>
           <br><br>
+          <button id="simpan">Simpan</button>
           <div id='my-spreadsheet'></div>      
         </div>
       </div>

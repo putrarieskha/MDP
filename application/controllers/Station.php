@@ -50,7 +50,7 @@ class Station extends CI_Controller {
 		$output['content'] = '';
 		
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
-		$output['dropdown_pabrik']= "<select>";
+		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
 		foreach ($query->result() as $row)
 		{
 			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
@@ -60,5 +60,57 @@ class Station extends CI_Controller {
 		$this->load->view('header',$header);
 		$this->load->view('content-station',$output);
 		$this->load->view('footer',$footer);
+	}
+
+	public function simpan()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		$this->db->query("DELETE FROM `master_station` where id_pabrik = '$pabrik' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'nama' => $value[0],
+				// 'tipe' => $value[1],
+				// 'date' => 'My date'
+			);
+			// print_r($data);
+			$this->db->insert('master_station', $data);
+		}
+	}
+	
+	public function load()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$d[$i++][0] = $row->nama; // or methods defined on the 'User' class
+		}
+		echo json_encode($d);
+	}
+
+	public function ajax()
+	{
+		// $id_pabrik = $_REQUEST['id_pabrik'];
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$a['name'] = $row->nama;
+				$a['id'] = $row->nama;
+				$d[$i++] = $a;
+		}
+		echo json_encode($d);
 	}
 }

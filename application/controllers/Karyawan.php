@@ -44,54 +44,59 @@ class Karyawan extends CI_Controller {
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
-			base_url("assets/mdp/unit.js"),
+			base_url("assets/mdp/karyawan.js"),
 		];
 		
-		$output['content'] = '
-		<table id="table_id" class="table">
-			<thead>
-				<tr>
-					<th>station</th>
-					<th>equipment</th>
-					<th>problem</th>
-					<th>jenis</th>
-					<th>tipe</th>
-					<th>tindakan</th>
-					<th>mulai</th>
-					<th>selesai</th>
-					<th>keterangan</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-				</tr>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-				</tr>
-			</tbody>
-		</table>
-		';
+		$output['content'] = '';
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
 		
 		
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-karyawan',$output);
-		$this->load->view('footer',$footer);	}
+		$this->load->view('footer',$footer);	
+	}
+
+	public function simpan()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		$this->db->query("DELETE FROM `master_karyawan` where id_pabrik = '$pabrik' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'nama' => $value[0],
+				'bagian' => $value[1],
+				// 'tipe' => $value[1],
+				// 'date' => 'My date'
+			);
+			// print_r($data);
+			$this->db->insert('master_karyawan', $data);
+		}
+	}
+	
+	public function load()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$query = $this->db->query("SELECT nama,bagian FROM master_karyawan where id_pabrik = '$id_pabrik';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				$d[$i][0] = $row->nama; // access attributes
+				$d[$i++][1] = $row->bagian; // or methods defined on the 'User' class
+		}
+		echo json_encode($d);
+	}
 }
+

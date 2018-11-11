@@ -37,48 +37,15 @@ class Unit extends CI_Controller {
 			base_url("assets/mdp/unit.js"),
 		];
 		
-		$output['content'] = '
-		<table id="table_id" class="table">
-			<thead>
-				<tr>
-					<th>station</th>
-					<th>equipment</th>
-					<th>problem</th>
-					<th>jenis</th>
-					<th>tipe</th>
-					<th>tindakan</th>
-					<th>mulai</th>
-					<th>selesai</th>
-					<th>keterangan</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-				</tr>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-				</tr>
-			</tbody>
-		</table>
-		';
-		
+		$output['content'] = '';
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+		}
+		$output['dropdown_pabrik'] .= "/<select>";		
 		
 		
 		$this->load->view('header',$header);
@@ -86,6 +53,45 @@ class Unit extends CI_Controller {
 		$this->load->view('footer',$footer);
 
 	}
+
+	public function load()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$query = $this->db->query("SELECT id_station,kode_asset,nama FROM master_unit where id_pabrik = '$id_pabrik';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			// $d[$i][0] = $row->nama; // access attributes
+			$d[$i][0] = $row->id_station; // or methods defined on the 'User' class
+			$d[$i][1] = $row->kode_asset; // or methods defined on the 'User' class
+			$d[$i++][2] = $row->nama; // or methods defined on the 'User' class
+		}
+		echo json_encode($d);
+	}
+
+	public function simpan()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'id_station' => $value[0],
+				'kode_asset' => $value[1],
+				'nama' => $value[2],
+				// 'tipe' => $value[1],
+				// 'date' => 'My date'
+			);
+			// print_r($data);
+			$this->db->insert('master_unit', $data);
+		}
+	}
+
 
 	public function site(){
 		$output['content'] = "test";
