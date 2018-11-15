@@ -34,6 +34,7 @@ class Unit extends CI_Controller {
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/unit.js"),
 		];
 		
@@ -92,6 +93,23 @@ class Unit extends CI_Controller {
 		}
 	}
 
+	public function ajax()
+	{
+		// $id_pabrik = $_REQUEST['id_pabrik'];
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$a['name'] = $row->nama;
+				$a['id'] = $row->nama;
+				$d[$i++] = $a;
+		}
+		echo json_encode($d);
+	}
 
 	public function site(){
 		$output['content'] = "test";

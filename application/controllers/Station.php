@@ -44,6 +44,7 @@ class Station extends CI_Controller {
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/station.js"),
 		];
 		

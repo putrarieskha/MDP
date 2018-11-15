@@ -1,15 +1,15 @@
 $(document).ready(function(){
     // console.log("tes");
-    data = [
-        ['Google', '#542727'],
-        ['Yahoo', '#724f4f'],
-        ['Bing', '#b43131'],
-    ];
+    // data = [
+    //     ['Google', '#542727'],
+    //     ['Yahoo', '#724f4f'],
+    //     ['Bing', '#b43131'],
+    // ];
 
     function refresh(){
         $.ajax({
             method: "POST",
-            url: "http://localhost/MDP/station/load",
+            url: BASE_URL+"station/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -24,6 +24,7 @@ $(document).ready(function(){
                     // 'Kode Asset',
                     // 'Unit',
                 ],
+                allowInsertColumn: false,
 
                 colWidths: [150, 150, 150, 100, 250, 250, 75, 75],
                 columns: [
@@ -41,6 +42,7 @@ $(document).ready(function(){
         colHeaders: [
             'Station',
         ],
+        allowInsertColumn: false,
 
         colWidths: [150,150,150,100,250,250,75,75],
         columns: [
@@ -54,7 +56,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: "http://localhost/MDP/station/simpan",
+            url: BASE_URL+"station/simpan",
             data: {
                 pabrik : $("#pabrik").val(),
                 data_json: JSON.stringify(data_j),
@@ -65,7 +67,6 @@ $(document).ready(function(){
     });
 
     $("#pabrik").change(function(){
-        console.log($(this).val());
         refresh();
     });
 });

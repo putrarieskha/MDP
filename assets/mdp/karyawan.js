@@ -2,7 +2,7 @@ $(document).ready(function () {
     function refresh() {
         $.ajax({
             method: "POST",
-            url: "http://localhost/MDP/karyawan/load",
+            url: BASE_URL+"karyawan/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: "http://localhost/MDP/karyawan/simpan",
+            url: BASE_URL+"karyawan/simpan",
             data: {
                 pabrik: $("#pabrik").val(),
                 data_json: JSON.stringify(data_j),

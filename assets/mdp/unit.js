@@ -4,7 +4,7 @@ $(document).ready(function(){
     function refresh() {
         $.ajax({
             method: "POST",
-            url: "http://localhost/MDP/unit/load",
+            url: BASE_URL+"unit/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
             }
@@ -14,6 +14,8 @@ $(document).ready(function(){
             console.log(data);
             $('#my-spreadsheet').jexcel({
                 data: data,
+                allowInsertColumn: false,
+
                 colHeaders: [
                     'Station',
                     'Kode Asset',
@@ -22,7 +24,7 @@ $(document).ready(function(){
 
                 colWidths: [150, 150, 150, 100, 250, 250, 75, 75],
                 columns: [
-                    { type: 'autocomplete', url: 'http://localhost/MDP/station/ajax/' + $("#pabrik").val() },
+                    { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
                 ]
@@ -36,7 +38,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: "http://localhost/MDP/unit/simpan",
+            url: BASE_URL+"unit/simpan",
             data: {
                 pabrik: $("#pabrik").val(),
                 data_json: JSON.stringify(data_j),
@@ -65,7 +67,6 @@ $(document).ready(function(){
     refresh();
 
     $("#pabrik").change(function () {
-        // console.log($(this).val());
         refresh();
     });
 

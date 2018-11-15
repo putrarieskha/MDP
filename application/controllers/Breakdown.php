@@ -79,7 +79,13 @@ class Breakdown extends CI_Controller {
 		</table>
 		';
 		
-		
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-breakdown',$output);

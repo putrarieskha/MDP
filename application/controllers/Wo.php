@@ -42,12 +42,92 @@ class Wo extends CI_Controller {
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/wo.js"),
 		];
 			
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+
 		$this->load->view('header',$header);
 		$this->load->view('content-wo',$output);
 		$this->load->view('footer',$footer);
 
+	}
+
+	public function load()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
+		$query = $this->db->query("SELECT no_wo,station,unit,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			// $d[$i][0] = $row->nama; // access attributes
+			$d[$i][0] = $row->no_wo; // or methods defined on the 'User' class
+			$d[$i][1] = $row->station; // or methods defined on the 'User' class
+			$d[$i][2] = $row->unit; // or methods defined on the 'User' class
+			$d[$i][3] = $row->problem; // or methods defined on the 'User' class
+			$d[$i][4] = $row->desc_masalah; // or methods defined on the 'User' class
+			$d[$i][5] = $row->hm; // or methods defined on the 'User' class
+			$d[$i][6] = $row->kategori; // or methods defined on the 'User' class
+			$d[$i++][7] = $row->status; // or methods defined on the 'User' class
+		}
+		echo json_encode($d);
+	}
+
+	public function simpan()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$this->db->query("DELETE FROM `m_wo` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'tanggal' => $tanggal,
+				'no_wo' => $value[0],
+				'station' => $value[1],
+				'unit' => $value[2],
+				'problem' => $value[3],
+				'desc_masalah' => $value[4],
+				'hm' => $value[5],
+				'kategori' => $value[6],
+				'status' => $value[7],
+				// 'date' => 'My date'
+			);
+			// print_r($data);
+			if($value[0]!=""){
+				$this->db->insert('m_wo', $data);
+			}
+		}
+	}
+	
+	public function ajax()
+	{
+		// $id_pabrik = $_REQUEST['id_pabrik'];
+		$status = $this->uri->segment(3, 0);
+		$id_pabrik = $this->uri->segment(4, 0);
+		$query = $this->db->query("SELECT no_wo FROM m_wo where id_pabrik = '$id_pabrik' AND status='$status';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$a['name'] = $row->no_wo;
+				$a['id'] = $row->no_wo;
+				$d[$i++] = $a;
+		}
+		echo json_encode($d);
 	}
 }

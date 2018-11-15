@@ -44,52 +44,11 @@ class Pabrik extends CI_Controller {
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/pabrik.js"),
 		];
 		
-		$output['content'] = '
-		<table id="table_id" class="table">
-			<thead>
-				<tr>
-					<th>station</th>
-					<th>equipment</th>
-					<th>problem</th>
-					<th>jenis</th>
-					<th>tipe</th>
-					<th>tindakan</th>
-					<th>mulai</th>
-					<th>selesai</th>
-					<th>keterangan</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-				</tr>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-				</tr>
-			</tbody>
-		</table>
-		';
-		
-		
+		$output['content'] = '';
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-pabrik',$output);

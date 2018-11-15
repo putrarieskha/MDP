@@ -10,7 +10,7 @@ $(document).ready(function(){
 
     $.ajax({
         method: "GET",
-        url: "http://localhost/MDP/pabrik/load",
+        url: BASE_URL+"pabrik/load",
         // data: {
         //     data_json: JSON.stringify(data_j),
         // }
@@ -59,6 +59,7 @@ $(document).ready(function(){
             // { type: 'text' },
         ],
         onchange: handler,
+        allowInsertColumn: false,
     });
 
     $("#simpan").click(function(){
@@ -67,7 +68,7 @@ $(document).ready(function(){
 
         $.ajax({
             method: "POST",
-            url: "http://localhost/MDP/pabrik/simpan",
+            url: BASE_URL+"pabrik/simpan",
             data: {
                 data_json: JSON.stringify(data_j),
             }
