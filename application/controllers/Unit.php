@@ -39,15 +39,28 @@ class Unit extends CI_Controller {
 		];
 		
 		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
 
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
-		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
 		foreach ($query->result() as $row)
 		{
-			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
 		}
 		$output['dropdown_pabrik'] .= "/<select>";		
-		
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-unit',$output);
@@ -110,6 +123,26 @@ class Unit extends CI_Controller {
 		}
 		echo json_encode($d);
 	}
+
+	public function ajax_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				$d[$i++][0] = $row->nama; // access attributes
+				// $a['name'] = $row->nama;
+				// $a['id'] = $row->nama;
+				// $d[$i++] = $;
+		}
+		echo json_encode($d);
+	}
+
 
 	public function site(){
 		$output['content'] = "test";

@@ -50,11 +50,25 @@ class Station extends CI_Controller {
 		
 		$output['content'] = '';
 		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
-		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
 		foreach ($query->result() as $row)
 		{
-			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
 		}
 		$output['dropdown_pabrik'] .= "/<select>";
 		
@@ -113,5 +127,21 @@ class Station extends CI_Controller {
 				$d[$i++] = $a;
 		}
 		echo json_encode($d);
+	}
+
+	public function ajax_dropdown(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+		// $i = 0;
+		// $d = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				// $a['name'] = $row->nama;
+				// $a['id'] = $row->nama;
+				// $d[$i++] = $a;
+				echo "<option>".$row->nama."</option>";
+		}
+		// echo json_encode($d);
 	}
 }
