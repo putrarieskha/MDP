@@ -20,34 +20,31 @@
           <?php //echo $content; ?>
           <div class="col-xs-12">
           Pabrik : 
-          <select>
-            <option>GSDI</option>
-            <option>GSPP</option>
-            <option>GSIP</option>
-            <option>NAL</option>
-            <option>SINP</option>
-            <option>BCL2</option>
-          </select>
-          Bulan : 
-          <select>
-            <option>januari</option>
-            <option>februari</option>
-            <option>maret</option>
-            <option>april</option>
-            <option>mei</option>
-            <option>juni</option>
-            <option>juli</option>
-            <option>oktober</option>
-            <option>november</option>
-            <option>desember</option>
-          </select>
+          <?php echo $dropdown_pabrik ?>
           Tahun : 
-          <select>
+          <select id="tahun">
+            <option>2017</option>
             <option>2018</option>
             <option>2019</option>
           </select>
-
+          Bulan : 
+          <select id="bulan">
+            <option value="01">januari</option>
+            <option value="02">februari</option>
+            <option value="03">maret</option>
+            <option value="04">april</option>
+            <option value="05">mei</option>
+            <option value="06">juni</option>
+            <option value="07">juli</option>
+            <option value="08">agustus</option>
+            <option value="09">september</option>
+            <option value="10">oktober</option>
+            <option value="11">november</option>
+            <option value="12">desember</option>
+          </select>
           <br><br>
+          <button id="simpan">Simpan</button>
+          <br>
           <div id='my-spreadsheet'></div>
           <br><br>
           <div id='my-PRPO'></div>

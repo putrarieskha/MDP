@@ -47,10 +47,28 @@ class Wo extends CI_Controller {
 		];
 			
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
-		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
 		foreach ($query->result() as $row)
 		{
-			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
 		}
 		$output['dropdown_pabrik'] .= "/<select>";
 
@@ -129,5 +147,27 @@ class Wo extends CI_Controller {
 				$d[$i++] = $a;
 		}
 		echo json_encode($d);
+	}
+
+	public function detail_wo()
+	{
+		// $id_pabrik = $_REQUEST['id_pabrik'];
+		$no_wo = $this->uri->segment(3, 0);
+		// $id_pabrik = $this->uri->segment(4, 0);
+		// $no_wo = $_REQUEST['no_wo'];
+		$query = $this->db->query("SELECT * FROM m_wo where no_wo='$no_wo';");
+
+		$i = 0;
+		$a = [];
+		foreach ($query->result() as $row)
+		{
+				// $d[$i][0] = $row->nama; // access attributes
+				$a['station'] = $row->station;
+				$a['unit'] = $row->unit;
+				$a['problem'] = $row->problem;
+				$a['desc_masalah'] = $row->desc_masalah;
+				// $d[$i++] = $a;
+		}
+		echo json_encode($a);
 	}
 }

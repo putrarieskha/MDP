@@ -1,31 +1,97 @@
 $(document).ready(function () {
-    // console.log("tes");
-    data = [
-        ['Google', '#542727'],
-        ['Yahoo', '#724f4f'],
-        ['Bing', '#b43131'],
-    ];
+    data = [];
 
-    unit =[
-        ''
-    ];
+    function refresh(data){
+        if (data == undefined) {
+            data = [];
+        }
+        $('#my-spreadsheet').jexcel({
+            data: data,
+            allowInsertColumn: false,
+            colHeaders: [
+                'Station', 'Unit', 'Kondisi', 'Status', 'Identifikasi<br>Problem', 'Perbaikan<br>Yang Diperlukan', 'PIC', 'Status<br>Sparepart', 'Keterangan'],
+            colWidths: [100, 100, 250, 70, 200, 250, 80, 100, 100, 100],
+            columns: [
+                { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
+                { type: 'autocomplete', url: BASE_URL + 'unit/ajax/' + $("#pabrik").val() },
+                { type: 'text', wordWrap: true },
+                { type: 'dropdown', source: ['Hijau', 'Kuning', 'Merah'] },
+                { type: 'text', wordWrap: true },
+                { type: 'text' },
+                { type: 'dropdown', source: ['Internal', 'WSC', 'External'] },
+                { type: 'dropdown', source: ['Ready', 'Order', 'Progress Order'] },
+                { type: 'text' },
+            ]
+        });
 
-    $('#my-spreadsheet').jexcel({
-        data: data,
-        colHeaders: [
-            'Station', 'Unit', 'Kondisi', 'Status', 'Identifikasi<br>Problem', 'Perbaikan<br>Yang Diperlukan', 'PIC', 'Status<br>Sparepart','Keterangan'],
-        colWidths: [100, 100, 250, 70, 200, 250, 80, 100, 100, 100],
-        columns: [
-            { type: 'autocomplete', source: ['loading ramp', 'sterilizer', 'thresher', 'press', 'bunch press', 'kernel', 'klarifikasi', 'boiler', 'effluent', 'dispatch'] },
-            { type: 'text' },
-            { type: 'text', wordWrap: true },
-            { type: 'dropdown', source: ['Hijau', 'Kuning', 'Merah'] },
-            { type: 'text', wordWrap: true },
-            { type: 'text' },
-            { type: 'dropdown', source: ['Internal', 'WSC', 'External'] },
-            { type: 'dropdown', source: ['Ready', 'Order', 'Progress Order'] },
-            { type: 'text' },
-        ]
+    }
+
+    $("#pabrik").change(function () {
+        ajax_refresh();
     });
-    // $('#my-spreadsheet').find('thead').before('<thead class="jexcel_label"><tr><td class="jexcel_label" width="30"></td><td colspan="2" width="400" align="center">Group 1</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td></tr></thead>');
+    $("#tahun").change(function () {
+        ajax_refresh();
+    });
+    $("#bulan").change(function () {
+        ajax_refresh();
+    });
+    $("#tanggal").change(function () {
+        ajax_refresh();
+    });
+
+    $("#simpan").click(function () {
+        var data_j = $('#my-spreadsheet').jexcel('getData');
+        console.log(data_j);
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "lkpmp/simpan",
+            data: {
+                pabrik: $("#pabrik").val(),
+                bulan: $("#bulan").val(),
+                tahun: $("#tahun").val(),
+                data_json: JSON.stringify(data_j),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+        });
+    });
+
+    var tgl = new Date();
+    var m = tgl.getMonth() + 1;
+    if (m < 10) {
+        $("#bulan").val("0" + m.toString());
+    } else {
+        $("#bulan").val(m.toString());
+    }
+    var y = tgl.getFullYear();
+    $("#tahun").val(y.toString());
+    var d = tgl.getDate();
+    if (d < 10) {
+        $("#tanggal").val("0" + d.toString());
+    } else {
+        $("#tanggal").val(d.toString());
+    }
+
+    // refresh();
+    function ajax_refresh() {
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "lkpmp/load",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                bulan: $("#bulan").val(),
+                tahun: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            data = JSON.parse(msg);
+            console.log(data);
+            refresh(data);
+        });
+    }
+
+    ajax_refresh();
+
+
 });

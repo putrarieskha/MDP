@@ -18,7 +18,6 @@
       <div class="row">
         <div class="col-xs-12">
           <?php //echo $content; ?>
-          <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           Station :
@@ -80,12 +79,17 @@
           </select>
           <br><br>
           <button id="simpan">Simpan</button>
-          <div style="
-						height: 500px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id='my-spreadsheet'></div>              
+          <div class="row">
+            <div class="col-xs-6">
+              <div style="height: 500px; width: 100%; overflow: auto;">
+                <div id='my-spreadsheet'></div>              
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div style="height: 500px; width: 100%; overflow: auto;">
+                <div id='my-spreadsheet2'></div>              
+              </div>
+            </div>
           </div>
         </div>
       </div>
