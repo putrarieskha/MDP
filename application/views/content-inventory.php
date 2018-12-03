@@ -20,21 +20,16 @@
           <?php //echo $content; ?>
           <div class="col-xs-12">
           Pabrik : 
-          <select>
-            <option>GSDI</option>
-            <option>GSPP</option>
-            <option>GSIP</option>
-            <option>NAL</option>
-            <option>SINP</option>
-            <option>BCL2</option>
-          </select>
+          <?php echo $dropdown_pabrik ?>
           Tahun : 
-          <select>
+          <select id="tahun">
+            <option>2017</option>
             <option>2018</option>
             <option>2019</option>
           </select>
-
           <br><br>
+          <button id="simpan">Simpan</button>
+          <br>
           <div id='my-spreadsheet'></div>
           <br><br>
           <div id='my-PRPO'></div>

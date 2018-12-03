@@ -1,5 +1,30 @@
 $(document).ready(function () {
-    // console.log("tes");
+
+    data = [];
+
+    // load a locale
+    numeral.register('locale', 'id', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'rb',
+            million: 'jt',
+            billion: 'M',
+            trillion: 'T'
+        },
+        ordinal: function (number) {
+            return number === 1 ? 'er' : 'ème';
+        },
+        currency: {
+            symbol: 'Rp'
+        }
+    });
+
+    // switch between locales
+    numeral.locale('id');
+
     data = [
         ['Januari'],
         ['Februari'],
@@ -15,36 +40,99 @@ $(document).ready(function () {
         ['Desember'],
     ];
 
-    unit =[
-        ''
-    ];
-    dummy_nama = ['agus', 'bram', 'candra', 'dodi', 'eko', 'fadil', 'gani', 'heri', 'iko', 'joni'];
-    dummy_station = ['loading ramp', 'sterilizer', 'thresher', 'press', 'bunch press', 'kernel', 'klarifikasi', 'boiler', 'effluent', 'dispatch'];
+    function refresh(data){
+        // alert(data.length);
+        if (data.length < 1) {
+            data = [
+                ['Januari'],
+                ['Februari'],
+                ['Maret'],
+                ['April'],
+                ['Mei'],
+                ['Juni'],
+                ['Juli'],
+                ['Agustus'],
+                ['September'],
+                ['Oktober'],
+                ['November'],
+                ['Desember'],
+            ];
+        }
 
-    dummy_wo = ['SDI-18-11-0001','SDI-18-11-0002','SDI-18-11-0003','SDI-18-11-0004','SDI-18-11-0005','SDI-18-11-0006','SDI-18-11-0007','SDI-18-11-0008','SDI-18-11-0009','SDI-18-11-0010','SDI-18-11-0011'];
-    $('#my-spreadsheet').jexcel({
-        data: data,
-        colHeaders: [
-            'Bulan',
-            'Norma Min',
-            'Norma Max',
-            'Nilai Stok',
-            'Shortage',
-            'Normal',
-            'Excess',
-            'Undefined',
-        ],
-        colWidths: [100, 250, 250, 250, 100, 100, 100, 100, 100, 100],
-        columns: [
-            { type: 'text' },
-            { type: 'text' },
-            { type: 'text' },
-            { type: 'text' },
-            { type: 'text' },
-            { type: 'text' },
-            { type: 'text' },
-            { type: 'text' },
-        ]
+        $('#my-spreadsheet').jexcel({
+            data: data,
+            colHeaders: [
+                'Bulan',
+                'Norma Min',
+                'Norma Max',
+                'Nilai Stok',
+                'Shortage',
+                'Normal',
+                'Excess',
+                'Undefined',
+            ],
+            colWidths: [100, 250, 250, 250, 100, 100, 100, 100, 100, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text' },
+            ]
+        });
+    }
+
+
+
+    $("#pabrik").change(function () {
+        ajax_refresh();
     });
-    // $('#my-spreadsheet').find('thead').before('<thead class="jexcel_label"><tr><td class="jexcel_label" width="30"></td><td colspan="2" width="400" align="center">Group 1</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td></tr></thead>');
+    $("#tahun").change(function () {
+        ajax_refresh();
+    });
+
+    var tgl = new Date();
+    var y = tgl.getFullYear();
+    $("#tahun").val(y.toString());
+
+
+    $("#simpan").click(function () {
+        var data = $('#my-spreadsheet').jexcel('getData');
+        console.log(data);
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "inventory/simpan",
+            data: {
+                pabrik: $("#pabrik").val(),
+                tahun: $("#tahun").val(),
+                data_json: JSON.stringify(data),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+        });
+
+    });
+
+    function ajax_refresh() {
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "inventory/load",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                tahun: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            data = JSON.parse(msg);
+            console.log(data);
+            refresh(data);
+        });
+    }
+
+    ajax_refresh();
+
 });

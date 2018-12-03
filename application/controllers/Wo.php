@@ -170,4 +170,14 @@ class Wo extends CI_Controller {
 		}
 		echo json_encode($a);
 	}
+
+	public function list_open(){
+		// $this->db->select('concat(nama,"-",barcode) as produk');
+		// $this->db->from('m_wo');
+		// $this->db->where('status = "open"');
+		// $query = $this->db->get();
+		$pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,'-',unit,'-',problem) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
+        echo(json_encode($query->result()));
+	}
 }

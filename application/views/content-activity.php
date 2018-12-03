@@ -78,26 +78,45 @@
           </select>
           <br><br>
         </div>
+        <!-- <div class="col-xs-12"> -->
+          <div class="col-xs-10">
+            <input class="form-control" type="text" name="wo" id="wo" autocomplete="off" placeholder="cari workorder disini"/>        
+          </div>
+          <div class="col-xs-2">
+            <button class="btn btn-success" id="tambah">Tambah</button>
+          </div>
+          <br>
+        <!-- </div> -->
         <div class="col-xs-6">
+          <br>
           <div style="
-						height: 470px;
+						height: 410px;
 						width: 100%;
 						overflow: auto;
 					">
             <div id='my-spreadsheet'></div>      
           </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-6" id="side-note">
+          <br>          
           <div style="
-						height: 470px;
+						height: 410px;
 						width: 100%;
 						overflow: auto;
 					">
-            <div id="keterangan"></div>
+            <div id="keterangan">
+              Station<br>
+              Unit<br>
+              Problem<br>
+              Desc masalah 
+            </div>
+            <br>
             <div id='my-spreadsheet2'></div>      
           </div>
         </div>
       </div>
+      <button id="simpan">Simpan</button>
+
       <!-- /.row -->
     </section>
     <!-- /.content -->

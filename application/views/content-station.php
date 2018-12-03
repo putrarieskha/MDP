@@ -21,14 +21,6 @@
           <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          <!-- <select>
-            <option>GSDI</option>
-            <option>GSPP</option>
-            <option>GSIP</option>
-            <option>NAL</option>
-            <option>SINP</option>
-            <option>BCL2</option>
-          </select> -->
           <br><br>
           <button id="simpan">Simpan</button>
           <br><br><div id='my-spreadsheet'></div>      

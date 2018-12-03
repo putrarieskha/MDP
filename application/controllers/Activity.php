@@ -27,27 +27,46 @@ class Activity extends CI_Controller {
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			base_url("assets/easyautocomplete/easy-autocomplete.min.css"),
+
 		];
 
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/js/jquery.mask.min.js"),
+			base_url("assets/easyautocomplete/jquery.easy-autocomplete.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/activity.js"),
 		];
 		
 		$query = $this->db->query("SELECT nama FROM master_pabrik;");
-		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
-		foreach ($query->result() as $row)
-		{
-			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
-		}
-		$output['dropdown_pabrik'] .= "/<select>";
 
 		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-activity',$output);
@@ -61,7 +80,7 @@ class Activity extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT no_wo,perbaikan FROM m_activity where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT no_wo,perbaikan,jenis_breakdown,jenis_problem FROM m_activity where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -69,14 +88,85 @@ class Activity extends CI_Controller {
 		{
 			// $d[$i][0] = $row->nama; // access attributes
 			$d[$i][0] = $row->no_wo; // or methods defined on the 'User' class
-			$d[$i][1] = $row->station; // or methods defined on the 'User' class
-			$d[$i][2] = $row->unit; // or methods defined on the 'User' class
-			$d[$i][3] = $row->problem; // or methods defined on the 'User' class
-			$d[$i][4] = $row->desc_masalah; // or methods defined on the 'User' class
-			$d[$i][5] = $row->hm; // or methods defined on the 'User' class
-			$d[$i][6] = $row->kategori; // or methods defined on the 'User' class
-			$d[$i++][7] = $row->status; // or methods defined on the 'User' class
+			$d[$i][1] = $row->perbaikan; // or methods defined on the 'User' class
+			$d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
+			$d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}
+
+	public function load_detail()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
+		$query = $this->db->query("SELECT no_wo,nama_teknisi,t_mulai,t_selesai,r_mulai,r_selesai,realisasi FROM m_activity_detail where id_pabrik = '$id_pabrik' AND tanggal='$tanggal';");
+
+		$i = 0;
+		$d = [];
+		$no_wo = "";
+		foreach ($query->result() as $row)
+		{
+			// $d[$i][0] = $row->nama; // access attributes
+			if($no_wo!=$row->no_wo){
+				$i = 0;
+				$no_wo = $row->no_wo;
+			}
+			$d[$row->no_wo][$i][0] = $row->nama_teknisi; // or methods defined on the 'User' class
+			$d[$row->no_wo][$i][1] = $row->t_mulai; // or methods defined on the 'User' class
+			$d[$row->no_wo][$i][2] = $row->t_selesai; // or methods defined on the 'User' class
+			$d[$row->no_wo][$i][3] = $row->r_mulai; // or methods defined on the 'User' class
+			$d[$row->no_wo][$i][4] = $row->r_selesai; // or methods defined on the 'User' class
+			$d[$row->no_wo][$i++][5] = $row->realisasi; // or methods defined on the 'User' class
+			// $d[$row->no_wo][$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
+		}
+		echo json_encode($d);
+	}
+
+	public function simpan()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$detail = json_decode($_REQUEST['detail']);
+
+		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'id_pabrik' => $pabrik,
+				'tanggal' => $tanggal,
+				'no_wo' => $value[0],
+				'perbaikan' => $value[1],
+				'jenis_breakdown' => $value[2],
+				'jenis_problem' => $value[3],
+			);
+			if($value[0]!=""){
+				$this->db->insert('m_activity', $data);
+			}
+		}
+
+		$this->db->query("DELETE FROM `m_activity_detail` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+
+		foreach ($detail as $key => $value) {
+			if($key!="_empty_" && $key!="undefined"){
+				foreach ($value as $ky => $val) {
+					$data = array(
+						'id_pabrik' => $pabrik,
+						'tanggal' => $tanggal,
+						'no_wo' => $key,
+						'nama_teknisi' =>$val[0],
+						't_mulai' => $val[1],
+						't_selesai' => $val[2],
+						'r_mulai' => $val[3],
+						'r_selesai' => $val[4],
+						'realisasi' => $val[5],
+					);
+					$this->db->insert('m_activity_detail', $data);
+				}
+			}
+		}
+	}
+
+
 }
