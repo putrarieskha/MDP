@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
     dx = [];
     data = [];
     data_detail = {};
@@ -227,6 +231,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
+            success: sukses,
             url: BASE_URL+"activity/simpan",
             data: {
                 pabrik: $("#pabrik").val(),

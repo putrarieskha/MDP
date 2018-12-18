@@ -23,13 +23,22 @@
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
   <style>
+  .n_success {
+    position:fixed;
+    width: 400px;
+    height: 50px;
+    z-index:10000000;
+    top : 50px;
+    right:calc(50% - 200px);
+    display:none;
+  }
   .hload {
     position:fixed;
     top:220px;
-    right:50%;
+    right:calc(50% - 40px);
 
-    width: 75px;
-    height: 105px;    
+    width: 80px;
+    height: 115px;    
     z-index:10000000;
     display:none;
 
@@ -41,12 +50,12 @@
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #3498db; /* Blue */
     border-radius: 50%;
-    width: 75px;
-    height: 75px;
+    width: 80px;
+    height: 80px;
     animation: spin 2s linear infinite;
     position:fixed;
     top:250px;
-    right:50%;
+    right: calc(50% - 40px);
     /* background-color:#666; */
     z-index:10000000;
     /* opacity: 0.4; */
@@ -74,6 +83,15 @@
   <div class="loader"></div>
   Loading
 </div>
+
+<div class="n_success">
+  <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-check"></i> Sukses</h4>
+    Data Anda Telah Berhasil Disimpan..
+  </div>
+</div>
+
 
 <div class="wrapper">
 

@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
     function refresh() {
         $.ajax({
             method: "POST",
@@ -50,6 +54,7 @@ $(document).ready(function () {
         $.ajax({
             method: "POST",
             url: BASE_URL+"karyawan/simpan",
+            success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
                 data_json: JSON.stringify(data_j),

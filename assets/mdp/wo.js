@@ -1,10 +1,8 @@
 $(document).ready(function(){
-    // console.log("tes");
-    // data = [
-    //     ['Google', 'SDI-18-11-0200'],
-    //     ['Yahoo', 'NAMA_PT-TAHUN-BULAN-NO_WO(auto)'],
-    //     ['Bing', '#b43131'],
-    // ];
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
     function refresh(data){
         var nama_pt = $("#pabrik").val();
         var tahun = $("#tahun").val();
@@ -99,6 +97,7 @@ $(document).ready(function(){
         $.ajax({
             method: "POST",
             url: BASE_URL+"wo/simpan",
+            success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
                 d: $("#tanggal").val(),

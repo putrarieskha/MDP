@@ -1,5 +1,8 @@
 $(document).ready(function () {
-
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
     data = [];
 
     // load a locale
@@ -106,6 +109,7 @@ $(document).ready(function () {
         $.ajax({
             method: "POST",
             url: BASE_URL + "inventory/simpan",
+            success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
                 tahun: $("#tahun").val(),

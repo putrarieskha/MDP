@@ -23,6 +23,9 @@
           <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
+          Station :
+          <?php echo $dropdown_station; ?>
+
           <br><br>
           <div style="
 						height: 500px;

@@ -1,5 +1,8 @@
 $(document).ready(function(){
-    // console.log("tes");
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
     function refresh(data) {
         if (data.length < 1){
             $.ajax({
@@ -33,7 +36,7 @@ $(document).ready(function(){
                         'Kabel<br>tiap<br>Fasa',
                     ],
 
-                    colWidths: [150, 60, 50, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300, 60, 50, 75, 75, 75, 100, 100, 100],
                     columns: [
                         { type: 'text' },
                         // { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
@@ -86,7 +89,7 @@ $(document).ready(function(){
 
                     ],
 
-                    colWidths: [150, 60, 50, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300, 60, 50, 75, 75, 75, 100, 100, 100],
                     columns: [
                         { type: 'text' },
                         // { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
@@ -115,6 +118,7 @@ $(document).ready(function(){
         $.ajax({
             method: "POST",
             url: BASE_URL+"uelektrik/simpan",
+            success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
                 station: $("#station").val(),
@@ -186,7 +190,7 @@ $(document).ready(function(){
 
 
 
-    ajax_refresh();
+    station_refresh();
 
     // $("#pabrik").change(function () {
     //     refresh();

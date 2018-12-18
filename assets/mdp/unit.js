@@ -1,5 +1,40 @@
 $(document).ready(function(){
-    // console.log("tes");
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
+
+    function station_refresh() {
+        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // alert("success");
+                    ajax_refresh();
+                } else {
+                    // alert("gaagal");
+                }
+            }
+        );
+    }
+
+    function ajax_refresh() {
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "unit/load",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                id_station: $("#station").val(),
+                // d: $("#tanggal").val(),
+                // m: $("#bulan").val(),
+                // y: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            data = JSON.parse(msg);
+            console.log(data);
+            refresh(data);
+        });
+    }
 
     function refresh() {
         $.ajax({
@@ -7,6 +42,7 @@ $(document).ready(function(){
             url: BASE_URL+"unit/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
+                id_station: $("#station").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -17,14 +53,14 @@ $(document).ready(function(){
                 allowInsertColumn: false,
 
                 colHeaders: [
-                    'Station',
+                    // 'Station',
                     'Kode Asset',
                     'Unit',
                 ],
 
-                colWidths: [150, 150, 150, 100, 250, 250, 75, 75],
+                colWidths: [150, 350, 150, 100, 250, 250, 75, 75],
                 columns: [
-                    { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
+                    // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
                 ]
@@ -39,8 +75,11 @@ $(document).ready(function(){
         $.ajax({
             method: "POST",
             url: BASE_URL+"unit/simpan",
+            success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
+                station: $("#station").val(),
+
                 data_json: JSON.stringify(data_j),
             }
         }).done(function (msg) {
@@ -64,11 +103,17 @@ $(document).ready(function(){
     //     ]
     // });
 
-    refresh();
 
     $("#pabrik").change(function () {
-        refresh();
+        station_refresh();
     });
+    $("#station").change(function () {
+        ajax_refresh();
+    });
+
+    station_refresh();
+
+    
 
 
 });

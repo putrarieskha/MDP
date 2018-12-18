@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
     // console.log("tes");
     // data = [
     //     ['Google', '#542727'],
@@ -70,6 +74,7 @@ $(document).ready(function(){
         $.ajax({
             method: "POST",
             url: BASE_URL+"pabrik/simpan",
+            success: sukses,
             data: {
                 data_json: JSON.stringify(data_j),
             }

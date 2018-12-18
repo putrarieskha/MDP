@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    var sukses = function () {
+        $(".n_success").show();
+        $(".n_success").fadeOut(3000);
+    }
     data = [];
 
     function refresh(data){
@@ -46,6 +50,7 @@ $(document).ready(function () {
         $.ajax({
             method: "POST",
             url: BASE_URL + "lkpmp/simpan",
+            success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
                 bulan: $("#bulan").val(),

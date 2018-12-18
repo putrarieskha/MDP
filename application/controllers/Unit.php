@@ -36,7 +36,6 @@ class Unit extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-
 			base_url("assets/mdp/unit.js"),
 		];
 		
@@ -62,7 +61,8 @@ class Unit extends CI_Controller {
 				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
 			}
 		}
-		$output['dropdown_pabrik'] .= "/<select>";		
+		$output['dropdown_pabrik'] .= "/<select>";
+		$output['dropdown_station'] = "<select id=\"station\"></select>";		
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-unit',$output);
@@ -73,16 +73,18 @@ class Unit extends CI_Controller {
 	public function load()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$query = $this->db->query("SELECT id_station,kode_asset,nama FROM master_unit where id_pabrik = '$id_pabrik';");
+		$id_station = $_REQUEST['id_station'];
+
+		$query = $this->db->query("SELECT kode_asset,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
 			// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->id_station; // or methods defined on the 'User' class
-			$d[$i][1] = $row->kode_asset; // or methods defined on the 'User' class
-			$d[$i++][2] = $row->nama; // or methods defined on the 'User' class
+			// $d[$i][0] = $row->id_station; // or methods defined on the 'User' class
+			$d[$i][0] = $row->kode_asset; // or methods defined on the 'User' class
+			$d[$i++][1] = $row->nama; // or methods defined on the 'User' class
 		}
 		echo json_encode($d);
 	}
@@ -90,16 +92,18 @@ class Unit extends CI_Controller {
 	public function simpan()
 	{
 		$pabrik = $_REQUEST['pabrik'];
-		$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' ");
+		$station = $_REQUEST['station'];
+
+		$this->db->query("DELETE FROM `master_unit` where id_pabrik = '$pabrik' AND id_station = '$station' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
 			// $this->db->insert
 			$data = array(
 				'id_pabrik' => $pabrik,
-				'id_station' => $value[0],
-				'kode_asset' => $value[1],
-				'nama' => $value[2],
+				'id_station' => $station,
+				'kode_asset' => $value[0],
+				'nama' => $value[1],
 				// 'tipe' => $value[1],
 				// 'date' => 'My date'
 			);
