@@ -60,22 +60,21 @@ $(document).ready(function () {
             colWidths: [100, 100, 250, 80, 50, 100, 50, 60, 100, 50, 200, 100],
             columns: [
                 // { type: 'autocomplete', source: ['loading ramp', 'sterilizer', 'thresher', 'press', 'bunch press', 'kernel', 'klarifikasi', 'boiler', 'effluent', 'dispatch'] },
-                { type: 'text' },
-                { type: 'dropdown', source: ['Mill Replacement', 'HO Project'] },
-                { type: 'text' },
-                { type: 'text' },
-                { type: 'dropdown', source: ['Pcs', 'Lot', 'Unit', 'Meter'] },
-                { type: 'text' },
-                { type: 'dropdown', source: ['PK', 'PO'] },
-                { type: 'dropdown', source: ['Process', 'Approve', 'Cancel', 'Dialihkan'] },
-                { type: 'calendar', option: { format: 'MM/YYYY', time: 0 } },
-                { type: 'dropdown', source: ['Site', 'WSC', 'HO'] },
+                { type: 'text', readOnly: true},
+                { type: 'dropdown', source: ['Mill Replacement', 'HO Project'], readOnly: true },
+                { type: 'text', readOnly: true},
+                { type: 'text', readOnly: true },
+                { type: 'dropdown', source: ['Pcs', 'Lot', 'Unit', 'Meter'], readOnly: true },
+                { type: 'text', readOnly: true },
+                { type: 'dropdown', source: ['PK', 'PO'], readOnly: true },
+                { type: 'dropdown', source: ['Process', 'Approve', 'Cancel', 'Dialihkan'], readOnly: true },
+                { type: 'calendar', option: { format: 'MM/YYYY', time: 0 }, readOnly: true },
+                { type: 'dropdown', source: ['Site', 'WSC', 'HO'], readOnly: true },
                 { type: 'dropdown', source: ['Project Id Release', 'Fabrikasi', 'Mesin On Site', 'Install', 'Testing Commisioning'] },
                 // 10%,40%,70%,95%,100% 
                 { type: 'text', wordWrap: true },
             ],
             onchange: handler,
-            allowInsertColumn: false,	
         });
 
         $('#my-PI').jexcel('updateSettings', {
@@ -95,7 +94,6 @@ $(document).ready(function () {
 
         $('#my-PRPO').jexcel({
             data: dataPRPO,
-            allowInsertColumn: false,	
             colHeaders: [
                 'Project ID', 'No PR', 'Nominal<br>PR', 'Status', 'No<br>PO', 'Nominal<br>PO', 'Vendor/<br>Supplier', 'Keterangan'],
             colWidths: [100, 100, 100, 130, 100, 100, 200, 350],

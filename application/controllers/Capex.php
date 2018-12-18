@@ -30,15 +30,15 @@ class Capex extends CI_Controller {
 			base_url("assets/jexcel/css/jquery.jcalendar.css"),
 		];
 
-		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
-			base_url("assets/jexcel/js/numeral.min.js"),
-			base_url("assets/mdp/config.js"),
-			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/capex.js"),
-		];
+		$footer['js_files'] = "";
+		// $footer['js_files'] = [		
+		// 	base_url("assets/jexcel/js/jquery.jexcel.js"),
+		// 	base_url("assets/jexcel/js/jquery.jcalendar.js"),
+		// 	base_url("assets/jexcel/js/numeral.min.js"),
+		// 	base_url("assets/mdp/config.js"),
+		// 	base_url("assets/mdp/global.js"),
+		// 	base_url("assets/mdp/capex.js"),
+		// ];
 		
 		$output['content'] = '';
 		
@@ -49,8 +49,28 @@ class Capex extends CI_Controller {
 
 		$output['dropdown_pabrik']= "";
 		if($kategori<2){
+			$footer['js_files'] = [
+				// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+				base_url("assets/jexcel/js/jquery.jexcel.js"),
+				base_url("assets/jexcel/js/jquery.jcalendar.js"),
+				base_url("assets/jexcel/js/numeral.min.js"),
+				base_url("assets/mdp/config.js"),
+				base_url("assets/mdp/global.js"),
+				base_url("assets/mdp/capex.js"),
+			];
+
 			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
 		}else{
+			$footer['js_files'] = [
+				// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+				base_url("assets/jexcel/js/jquery.jexcel.js"),
+				base_url("assets/jexcel/js/jquery.jcalendar.js"),
+				base_url("assets/jexcel/js/numeral.min.js"),
+				base_url("assets/mdp/config.js"),
+				base_url("assets/mdp/global.js"),
+				base_url("assets/mdp/capex.readonly.js"),
+			];
+
 			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
 		}
 		

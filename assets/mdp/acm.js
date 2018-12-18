@@ -31,7 +31,7 @@ $(document).ready(function () {
                         'Available',
                         'Keterangan',
                     ],
-                    colWidths: [160, 250, 300, 90, 50, 100, 60, 100, 100],
+                    colWidths: [300, 100, 300, 90, 50, 100, 60, 100, 100],
                     columns: [
                         { type: 'text' },
                         { type: 'checkbox' },
@@ -49,7 +49,7 @@ $(document).ready(function () {
                     'Available',
                     'Keterangan',
                 ],
-                colWidths: [160, 250, 300, 90, 50, 100, 60, 100, 100],
+                colWidths: [300, 100, 300, 90, 50, 100, 60, 100, 100],
                 columns: [
                     { type: 'text' },
                     { type: 'checkbox' },
