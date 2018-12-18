@@ -7,9 +7,10 @@
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li>Activity Maintenance</li>
-        <li class="active">Dashboard</li>
+        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-primary" id="simpan">
+          <i class="fa fa-save"></i> Simpan
+        </a>
       </ol>
     </section>
 
@@ -87,10 +88,9 @@
                     </span>
               </div>
           </div>
-          <br>
+          <!-- <br> -->
         <!-- </div> -->
         <div class="col-xs-6">
-          <br>
           <div style="
 						height: 410px;
 						width: 100%;
@@ -117,7 +117,6 @@
           </div>
         </div>
       </div>
-      <button id="simpan">Simpan</button>
 
       <!-- /.row -->
     </section>

@@ -7,8 +7,10 @@
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?=base_url()?>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><?=$main_title?></li>
+        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-primary" id="simpan">
+          <i class="fa fa-save"></i> Simpan
+        </a>
       </ol>
     </section>
 
@@ -25,7 +27,7 @@
           <?php echo $dropdown_station; ?>
 
           <br><br>
-          <button id="simpan">Simpan</button>
+          <!-- <button id="simpan">Simpan</button> -->
           <div style="
 						height: 500px;
 						width: 100%;

@@ -23,6 +23,20 @@
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
   <style>
+  .hload {
+    position:fixed;
+    top:220px;
+    right:50%;
+
+    width: 75px;
+    height: 105px;    
+    z-index:10000000;
+    display:none;
+
+    background-color:#3498db;
+    border: 10px solid #3498db; 
+    color : #fff;  
+  }
   .loader {
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #3498db; /* Blue */
@@ -56,7 +70,10 @@
   <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
-<div class="loader"></div>
+<div class="hload">
+  <div class="loader"></div>
+  Loading
+</div>
 
 <div class="wrapper">
 
@@ -74,6 +91,7 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
+
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 

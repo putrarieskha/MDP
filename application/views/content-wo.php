@@ -7,9 +7,10 @@
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li>Work Order</li>
-        <li class="active">Dashboard</li>
+        <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-primary" id="simpan">
+          <i class="fa fa-save"></i> Simpan
+        </a>
       </ol>
     </section>
 
@@ -84,7 +85,7 @@
 					">
           <div id='my-spreadsheet'></div>
           </div>
-          <button id="simpan" class="btn btn-small btn-danger">Simpan</button>
+          <!-- <button id="simpan" class="btn btn-small btn-danger">Simpan</button> -->
         </div>
       </div>
       <!-- /.row -->

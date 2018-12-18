@@ -31,7 +31,7 @@ $(document).ready(function () {
                         'Unit',
                         'Hour Meter',
                     ],
-                    colWidths: [160, 250, 95, 90, 50, 100, 60, 100, 100],
+                    colWidths: [360, 100, 95, 90, 50, 100, 60, 100, 100],
                     columns: [
                         // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                         { type: 'text' },
@@ -54,7 +54,7 @@ $(document).ready(function () {
                     'Unit',
                     'Hour Meter',
                 ],
-                colWidths: [160, 250, 95, 90, 50, 100, 60, 100, 100],
+                colWidths: [360, 100, 95, 90, 50, 100, 60, 100, 100],
                 columns: [
                     // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                     { type: 'text' },
