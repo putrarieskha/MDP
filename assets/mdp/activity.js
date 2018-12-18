@@ -167,14 +167,14 @@ $(document).ready(function () {
             colHeaders: [
                 'No WO',
                 'Perbaikan',
-                'Jenis<br>Breakdown',
+                'Jenis<br>Kerusakan',
                 'Jenis<br>Problem'
             ],
-            colWidths: [160, 230, 95, 90, 50, 100, 60, 100, 100],
+            colWidths: [160, 230, 110, 65, 50, 100, 60, 100, 100],
             columns: [
                 { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                 { type: 'text', wordWrap: true },
-                { type: 'dropdown', source: ['unit', 'line', 'pabrik'] },
+                { type: 'dropdown', source: ['PCM','UPCM','breakdown unit', 'breakdown line', 'breakdown pabrik'] },
                 { type: 'dropdown', source: ['alat', 'proses'] },
             ],
             // onfocus: selection,

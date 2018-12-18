@@ -25,11 +25,13 @@ $(document).ready(function () {
                     colHeaders: [
                         'Unit',
                         'Available',
+                        'Keterangan',
                     ],
-                    colWidths: [160, 250, 95, 90, 50, 100, 60, 100, 100],
+                    colWidths: [160, 250, 300, 90, 50, 100, 60, 100, 100],
                     columns: [
                         { type: 'text' },
                         { type: 'checkbox' },
+                        { type: 'text' },
                     ],
                 });
 
@@ -41,11 +43,13 @@ $(document).ready(function () {
                 colHeaders: [
                     'Unit',
                     'Available',
+                    'Keterangan',
                 ],
-                colWidths: [160, 250, 95, 90, 50, 100, 60, 100, 100],
+                colWidths: [160, 250, 300, 90, 50, 100, 60, 100, 100],
                 columns: [
                     { type: 'text' },
                     { type: 'checkbox' },
+                    { type: 'text' },
                 ],
             });
         }

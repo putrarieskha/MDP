@@ -79,11 +79,13 @@
           <br><br>
         </div>
         <!-- <div class="col-xs-12"> -->
-          <div class="col-xs-10">
-            <input class="form-control" type="text" name="wo" id="wo" autocomplete="off" placeholder="cari workorder disini"/>        
-          </div>
-          <div class="col-xs-2">
-            <button class="btn btn-success" id="tambah">Tambah</button>
+          <div class="col-xs-12">
+              <div class="input-group margin">
+                <input type="text" class="form-control" name="wo" id="wo" autocomplete="off" placeholder="cari workorder disini">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-info btn-flat" id="tambah">Tambah</button>
+                    </span>
+              </div>
           </div>
           <br>
         <!-- </div> -->

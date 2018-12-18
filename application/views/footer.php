@@ -5,6 +5,8 @@
     <strong>Copyright &copy; 2018 <a href="http://twitter.com/fajarrukmo">Fajar Rukmo</a>.</strong> All rights
     reserved.
   </footer> -->
+
+
 </div>
 <!-- ./wrapper -->
 <!-- jQuery 3 -->

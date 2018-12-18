@@ -45,6 +45,8 @@ class Pabrik extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+
 			base_url("assets/mdp/pabrik.js"),
 		];
 		

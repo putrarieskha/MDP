@@ -36,6 +36,7 @@ class Capex extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/js/numeral.min.js"),
 			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/capex.js"),
 		];
 		

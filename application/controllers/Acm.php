@@ -43,6 +43,7 @@ class Acm extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/acm.js"),
 		];
 		
@@ -82,7 +83,7 @@ class Acm extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT unit,acm FROM m_acm where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tanggal='$tanggal';");
+		$query = $this->db->query("SELECT unit,acm,keterangan FROM m_acm where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tanggal='$tanggal';");
 
 		$i = 0;
 		$d = [];
@@ -90,7 +91,8 @@ class Acm extends CI_Controller {
 		{
 			// $d[$i][0] = $row->nama; // access attributes
 			$d[$i][0] = $row->unit; // or methods defined on the 'User' class
-			$d[$i++][1] = $row->acm; // or methods defined on the 'User' class
+			$d[$i][1] = $row->acm; // or methods defined on the 'User' class
+			$d[$i++][2] = $row->keterangan; // or methods defined on the 'User' class
 			// $d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
 			// $d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
 		}
@@ -113,6 +115,8 @@ class Acm extends CI_Controller {
 				'id_station' => $station,
 				'unit' => $value[0],
 				'acm' => $value[1],
+				'keterangan' => $value[2],
+
 				// 'jenis_problem' => $value[2],
 				// 'jenis_breakdown' => $value[3],
 				// 'date' => 'My date'

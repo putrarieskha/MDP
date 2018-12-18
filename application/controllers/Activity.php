@@ -39,6 +39,7 @@ class Activity extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.mask.min.js"),
 			base_url("assets/easyautocomplete/jquery.easy-autocomplete.min.js"),
 			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/activity.js"),
 		];
 		
