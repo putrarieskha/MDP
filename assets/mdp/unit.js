@@ -56,6 +56,7 @@ $(document).ready(function(){
                     // 'Station',
                     'Kode Asset',
                     'Unit',
+                    'HM Installed'
                 ],
 
                 colWidths: [150, 350, 150, 100, 250, 250, 75, 75],
@@ -63,6 +64,8 @@ $(document).ready(function(){
                     // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
                     { type: 'text' },
+                    { type: 'checkbox' },
+
                 ]
             });
         });

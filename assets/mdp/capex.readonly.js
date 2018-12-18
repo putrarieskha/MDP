@@ -75,6 +75,8 @@ $(document).ready(function () {
                 { type: 'text', wordWrap: true },
             ],
             onchange: handler,
+            allowInsertRow	: false,
+            allowInsertColumn : false,	
         });
 
         $('#my-PI').jexcel('updateSettings', {

@@ -75,7 +75,7 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 
-		$query = $this->db->query("SELECT kode_asset,nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT kode_asset,nama,hm_installed FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		$i = 0;
 		$d = [];
@@ -84,7 +84,9 @@ class Unit extends CI_Controller {
 			// $d[$i][0] = $row->nama; // access attributes
 			// $d[$i][0] = $row->id_station; // or methods defined on the 'User' class
 			$d[$i][0] = $row->kode_asset; // or methods defined on the 'User' class
-			$d[$i++][1] = $row->nama; // or methods defined on the 'User' class
+			$d[$i][1] = $row->nama; // or methods defined on the 'User' class
+			$d[$i++][2] = $row->hm_installed; // or methods defined on the 'User' class
+
 		}
 		echo json_encode($d);
 	}
@@ -104,7 +106,7 @@ class Unit extends CI_Controller {
 				'id_station' => $station,
 				'kode_asset' => $value[0],
 				'nama' => $value[1],
-				// 'tipe' => $value[1],
+				'hm_installed' => $value[2],
 				// 'date' => 'My date'
 			);
 			// print_r($data);
@@ -149,6 +151,24 @@ class Unit extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function hm_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND hm_installed=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+				$d[$i++][0] = $row->nama; // access attributes
+				// $a['name'] = $row->nama;
+				// $a['id'] = $row->nama;
+				// $d[$i++] = $;
+		}
+		echo json_encode($d);
+	}
 
 	public function site(){
 		$output['content'] = "test";

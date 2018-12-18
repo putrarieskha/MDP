@@ -16,7 +16,7 @@ $(document).ready(function () {
             console.log("yes");
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/ajax_default_list",
+                url: BASE_URL + "unit/hm_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
                     id_station: $("#station").val(),

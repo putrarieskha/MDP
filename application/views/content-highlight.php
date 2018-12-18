@@ -19,38 +19,33 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-xs-12">
-          <?php //echo $content; ?>
-          <div class="col-xs-12">
-          Pabrik : 
-          <?php echo $dropdown_pabrik ?>
-          Tahun : 
-          <select id="tahun">
-            <option>2017</option>
-            <option>2018</option>
-            <option>2019</option>
-          </select>
-          Bulan : 
-          <select id="bulan">
-            <option value="01">januari</option>
-            <option value="02">februari</option>
-            <option value="03">maret</option>
-            <option value="04">april</option>
-            <option value="05">mei</option>
-            <option value="06">juni</option>
-            <option value="07">juli</option>
-            <option value="08">agustus</option>
-            <option value="09">september</option>
-            <option value="10">oktober</option>
-            <option value="11">november</option>
-            <option value="12">desember</option>
-          </select>
-          <br><br>
-          <br>
-          <div id='my-spreadsheet'></div>
-          <br><br>
-          <div id='my-PRPO'></div>
-
-        </div>
+        Pabrik : 
+        <?php echo $dropdown_pabrik ?>
+        Tahun : 
+        <select id="tahun">
+          <option>2017</option>
+          <option>2018</option>
+          <option>2019</option>
+        </select>
+        Bulan : 
+        <select id="bulan">
+          <option value="01">januari</option>
+          <option value="02">februari</option>
+          <option value="03">maret</option>
+          <option value="04">april</option>
+          <option value="05">mei</option>
+          <option value="06">juni</option>
+          <option value="07">juli</option>
+          <option value="08">agustus</option>
+          <option value="09">september</option>
+          <option value="10">oktober</option>
+          <option value="11">november</option>
+          <option value="12">desember</option>
+        </select>
+        <br><br>
+        <div id='my-spreadsheet'></div>
+        <br><br>
+        <div id='my-PRPO'></div>
       </div>
       <!-- /.row -->
     </section>
