@@ -6,12 +6,11 @@
         <?=$main_title?>
         <small>Control panel</small>
       </h1>
-      <ol class="breadcrumb">
-        <!-- <button id="simpan">Simpan</button> -->
+      <!-- <ol class="breadcrumb">
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
-      </ol>
+      </ol> -->
     </section>
 
     <!-- Main content -->
@@ -21,17 +20,18 @@
         <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
-          Tahun : 
-          <select id="tahun">
-            <option>2017</option>
-            <option>2018</option>
-            <option>2019</option>
-          </select>
-          <br><br>
-          <div id='my-PI'></div>
-          <br><br>
-          <div id='my-PRPO'></div>
+          Station :
+          <?php echo $dropdown_station; ?>
+          Unit :
+          <?php echo $dropdown_unit; ?>
 
+          <br><br>
+          <div style="
+						height: 500px;
+						width: 100%;
+						overflow: auto;
+					">
+          <div id='my-spreadsheet'></div>              
         </div>
       </div>
       <!-- /.row -->

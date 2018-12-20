@@ -124,7 +124,6 @@ class Unit extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
 				$a['name'] = $row->nama;
 				$a['id'] = $row->nama;
 				$d[$i++] = $a;
@@ -144,9 +143,6 @@ class Unit extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 				$d[$i++][0] = $row->nama; // access attributes
-				// $a['name'] = $row->nama;
-				// $a['id'] = $row->nama;
-				// $d[$i++] = $;
 		}
 		echo json_encode($d);
 	}
@@ -162,84 +158,20 @@ class Unit extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				$d[$i++][0] = $row->nama; // access attributes
-				// $a['name'] = $row->nama;
-				// $a['id'] = $row->nama;
-				// $d[$i++] = $;
+			$d[$i++][0] = $row->nama; // access attributes
 		}
 		echo json_encode($d);
 	}
 
-	public function site(){
-		$output['content'] = "test";
-		$output['main_title'] = "Breakdown";
-		
-		$header['css_files'] = [
-			// base_url("assets/datatables/css/jquery.dataTables.min.css"),
-			// base_url("assets/datatables/css/responsive.dataTables.min.css"),
-			base_url("assets/datatables/css/datatables.min.css"),
-		];
+	public function ajax_dropdown(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = urldecode($this->uri->segment(4, 0));
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
-		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			// base_url("assets/datatables/js/jquery.dataTables.min.js"),
-			// base_url("assets/datatables/js/dataTables.responsive.min.js"),
-			base_url("assets/datatables/js/datatables.min.js"),
-			base_url("assets/mdp/breakdown.js"),
-		];
-		
-
-
-		$output['content'] = '
-		<div id="Bfrtip"></div>
-		<table id="table_id" class="display responsive nowrap" cellspacing="0" width="100%">
-			<thead>
-				<tr>
-					<th>station</th>
-					<th>equipment</th>
-					<th>problem</th>
-					<th>jenis</th>
-					<th>tipe</th>
-					<th>tindakan</th>
-					<th>mulai</th>
-					<th>selesai</th>
-					<th>keterangan</th>
-					<th>action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-					<td><a>edit</a><a>delete</a></td>
-				</tr>
-				<tr>
-					<td>station</td>
-					<td>equipment</td>
-					<td>problem</td>
-					<td>jenis</td>
-					<td>tipe</td>
-					<td>tindakan</td>
-					<td>mulai</td>
-					<td>selesai</td>
-					<td>keterangan</td>
-					<td><a>edit</a><a>delete</a></td>
-				</tr>
-			</tbody>
-		</table>
-		';
-		
-		
-		
-		$this->load->view('header',$header);
-		$this->load->view('content-breakdown',$output);
-		$this->load->view('footer',$footer);
+		foreach ($query->result() as $row)
+		{
+			echo "<option>".$row->nama."</option>";
+		}
 	}
+
 }

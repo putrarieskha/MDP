@@ -28,10 +28,7 @@
             <option>2019</option>
           </select>
           <br><br>
-          <div id='my-PI'></div>
-          <br><br>
-          <div id='my-PRPO'></div>
-
+          <div id='my-G'></div>
         </div>
       </div>
       <!-- /.row -->

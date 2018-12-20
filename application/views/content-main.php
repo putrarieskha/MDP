@@ -21,7 +21,7 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65 Unit</h3>
+              <h3><span id="unit_problem"></span> Unit</h3>
               <p>Bermasalah</p>
             </div>
             <div class="icon">
@@ -35,7 +35,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44 WO</h3>
+              <h3><span id="wo_unfinished"></span> WO</h3>
 
               <p>Belum Terselesaikan</p>
             </div>
@@ -51,9 +51,9 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3><span id="wo_baru"></span> WO</h3>
 
-              <p>New Work Orders</p>
+              <p>Baru di bulan ini</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
@@ -66,7 +66,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3><span id="mill_avaibility"></span><sup style="font-size: 20px">%</sup></h3>
 
               <p>Mill Avaibility</p>
             </div>
@@ -80,6 +80,30 @@
       </div>
       <div class="row">
         <div class="col-md-6">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Job Hari</h3> &nbsp;&nbsp;
+              <input type="date" id="tgl_job"/>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- <table class="table table-bordered">
+                <tbody><tr>
+                  <th>No WO</th>
+                  <th>Pekerjaan</th>
+                  <th>MPP</th>
+                  <th>Waktu</th>
+                </tr>
+                <tr>
+                  <td>1.</td>
+                  <td>Update software</td>
+                  <td></td>
+                  <td>55%</td>
+                </tr>
+              </tbody></table> -->
+              <div id="j_today"></div>
+            </div>
+          </div>
           <!-- Bar chart -->
           <div class="box box-primary">
             <div class="box-header with-border">
