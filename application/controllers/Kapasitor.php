@@ -81,8 +81,8 @@ class Kapasitor extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			$d[$i][0] = $row->titik_pengukuran;
-			$d[$i][1] = $row->bak_kontrol;
+			$d[$i][0] = $row->kapasitor;
+			$d[$i][1] = $row->kvar;
 			$d[$i][2] = $row->jan;
 			$d[$i][3] = $row->feb;
 			$d[$i][4] = $row->mar;

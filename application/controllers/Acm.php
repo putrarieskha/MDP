@@ -128,4 +128,73 @@ class Acm extends CI_Controller {
 		}
 	}
 
+	public function load_problem(){
+		// SELECT max(tanggal) as tanggal,id_station,unit,acm FROM `m_acm` where acm = 1 GROUP by unit
+		$id_pabrik = $_REQUEST['id_pabrik'];
+
+		$query = $this->db->query("SELECT max(tanggal) as tanggal,id_station,unit,acm,keterangan FROM `m_acm` where acm = 0 AND id_pabrik = '$id_pabrik' GROUP by unit");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->tanggal; 
+			$d[$i][1] = $row->id_station; 
+			$d[$i][2] = $row->unit;
+			$d[$i][3] = $row->acm;
+			$d[$i++][4] = $row->keterangan;
+		}
+		echo json_encode($d);
+	}
+
+	public function problem()
+	{
+		$output['content'] = "test";
+		$output['main_title'] = "Data Avaibility Cricital Machine";
+		
+		$header['css_files'] = [
+			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
+		];
+
+		$footer['js_files'] = [
+			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/mdp/acm_problem.js"),
+		];
+		
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";		
+
+		$output['dropdown_station'] = "<select id=\"station\"></select>";
+
+		$this->load->view('header',$header);
+		$this->load->view('content-acm-problem',$output);
+		$this->load->view('footer',$footer);
+	}
+
 }

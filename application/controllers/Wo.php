@@ -31,7 +31,7 @@ class Wo extends CI_Controller {
 	public function index()
 	{
 		$output['content'] = "test";
-		$output['main_title'] = "Breakdown";
+		$output['main_title'] = "Work Order";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -89,15 +89,14 @@ class Wo extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->no_wo; // or methods defined on the 'User' class
-			$d[$i][1] = $row->station; // or methods defined on the 'User' class
-			$d[$i][2] = $row->unit; // or methods defined on the 'User' class
-			$d[$i][3] = $row->problem; // or methods defined on the 'User' class
-			$d[$i][4] = $row->desc_masalah; // or methods defined on the 'User' class
-			$d[$i][5] = $row->hm; // or methods defined on the 'User' class
-			$d[$i][6] = $row->kategori; // or methods defined on the 'User' class
-			$d[$i++][7] = $row->status; // or methods defined on the 'User' class
+			$d[$i][0] = $row->no_wo;
+			$d[$i][1] = $row->station;
+			$d[$i][2] = $row->unit;
+			$d[$i][3] = $row->problem;
+			$d[$i][4] = $row->desc_masalah;
+			$d[$i][5] = $row->hm;
+			$d[$i][6] = $row->kategori;
+			$d[$i++][7] = $row->status;
 		}
 		echo json_encode($d);
 	}
@@ -162,23 +161,90 @@ class Wo extends CI_Controller {
 		$a = [];
 		foreach ($query->result() as $row)
 		{
-				// $d[$i][0] = $row->nama; // access attributes
 				$a['station'] = $row->station;
 				$a['unit'] = $row->unit;
 				$a['problem'] = $row->problem;
 				$a['desc_masalah'] = $row->desc_masalah;
-				// $d[$i++] = $a;
 		}
 		echo json_encode($a);
 	}
 
 	public function list_open(){
-		// $this->db->select('concat(nama,"-",barcode) as produk');
-		// $this->db->from('m_wo');
-		// $this->db->where('status = "open"');
-		// $query = $this->db->get();
 		$pabrik = $this->uri->segment(3, 0);
 		$query = $this->db->query("SELECT CONCAT(no_wo,' - ',station,'-',unit,'-',problem) as daftar FROM m_wo where m_wo.status = 'open' AND m_wo.id_pabrik = '$pabrik'");
         echo(json_encode($query->result()));
+	}
+
+	public function unfinished(){
+
+		$output['content'] = "test";
+		$output['main_title'] = "Work Order";
+		
+		$header['css_files'] = [
+			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+		];
+
+		$footer['js_files'] = [
+			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
+			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
+			base_url("assets/mdp/wo_unfinished.js"),
+		];
+			
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['content'] = '';
+		
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+
+		$this->load->view('header',$header);
+		$this->load->view('content-wo-unfinished',$output);
+		$this->load->view('footer',$footer);
+
+	}
+
+	public function load_unfinished(){
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$query = $this->db->query("SELECT no_wo,station,unit,problem,desc_masalah,hm,kategori,status FROM m_wo where id_pabrik = '$id_pabrik' AND status = 'open';");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i][0] = $row->no_wo;
+			$d[$i][1] = $row->station;
+			$d[$i][2] = $row->unit;
+			$d[$i][3] = $row->problem;
+			$d[$i][4] = $row->desc_masalah;
+			$d[$i][5] = $row->hm;
+			$d[$i][6] = $row->kategori;
+			$d[$i++][7] = $row->status;
+		}
+		echo json_encode($d);
+
 	}
 }

@@ -160,19 +160,43 @@
             <li><a href="<?php echo base_url("inventory"); ?>"><i class="fa fa-file"></i>Inventory <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
           </ul>
         </li>
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-gear"></i> <span>Report</span>
-            </a>
-            <ul class="treeview-menu" style="display: none;">
-              <li><a href="<?php echo base_url("historical"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>
-              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
-              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Distribusi Man Hour</a></li>
-              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Plan vs Real (CM MM)</a></li>
-              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Inventory</a></li>
-              <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
-            </ul>
-          </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-bolt"></i> <span>Monitoring Elektrik</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("grounding"); ?>"><i class="fa fa-file"></i>Grounding <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("kapasitor"); ?>"><i class="fa fa-file"></i>Kapasitor <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("megger"); ?>"><i class="fa fa-file"></i>Megger <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gears"></i> <span>Monitoring Mekanik</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Monitoring Oli<span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("screwpress"); ?>"><i class="fa fa-file"></i>Screw Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("bunchpress"); ?>"><i class="fa fa-file"></i>Bunch Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Hydrocyclone <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+          </ul>
+        </li>
+
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gear"></i> <span>Report</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("historical"); ?>"><i class="fa fa-thumbs-o-down"></i>Historycal Machineries Card</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Cost RM Pabrik</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Distribusi Man Hour</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Plan vs Real (CM MM)</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Inventory</a></li>
+            <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
+          </ul>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
