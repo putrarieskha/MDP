@@ -1,27 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Uelektrik extends CI_Controller {
+class Umekanik extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
-		// $this->load->view('welcome_message');
-
 		$output['content'] = "test";
 		$output['main_title'] = "Data Asset Mesin";
 		
@@ -37,7 +20,7 @@ class Uelektrik extends CI_Controller {
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 
-			base_url("assets/mdp/uelektrik.js"),
+			base_url("assets/mdp/umekanik.js"),
 		];
 		
 		$output['content'] = '';
@@ -67,7 +50,7 @@ class Uelektrik extends CI_Controller {
 
 
 		$this->load->view('header',$header);
-		$this->load->view('content-unit-elektrik',$output);
+		$this->load->view('content-unit-mekanik',$output);
 		$this->load->view('footer',$footer);
 
 	}
@@ -78,11 +61,11 @@ class Uelektrik extends CI_Controller {
 		$id_station = $_REQUEST['id_station'];
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
 		$query = $this->db->query("
-		SELECT nama,kw,class,starter,mccb,kontaktor_line,kontaktor_delta,kontaktor_star,kabel,jumlah_kabel 
-		FROM master_unit_elektrik RIGHT JOIN master_unit
-		ON master_unit.id_pabrik = master_unit_elektrik.id_pabrik
-		AND master_unit.id_station = master_unit_elektrik.id_station
-		AND master_unit.nama = master_unit_elektrik.unit
+		SELECT nama,merk_gearbox,kapasitas_gearbox,rasio_gearbox,type_gearbox,pulley_motor,pulley_driven,pulley_type,merk_pompa,type_pompa,kapasitas_pompa
+		FROM master_unit_mekanik RIGHT JOIN master_unit
+		ON master_unit.id_pabrik = master_unit_mekanik.id_pabrik
+		AND master_unit.id_station = master_unit_mekanik.id_station
+		AND master_unit.nama = master_unit_mekanik.unit
 		where master_unit.id_pabrik = '$id_pabrik' AND master_unit.id_station = '$id_station'
 		");
 
@@ -91,15 +74,16 @@ class Uelektrik extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->nama;
-			$d[$i][1] = $row->kw;
-			$d[$i][2] = $row->class;
-			$d[$i][3] = $row->starter;
-			$d[$i][4] = $row->mccb;
-			$d[$i][5] = $row->kontaktor_line;
-			$d[$i][6] = $row->kontaktor_delta;
-			$d[$i][7] = $row->kontaktor_star;
-			$d[$i][8] = $row->kabel;
-			$d[$i++][9] = $row->jumlah_kabel;
+			$d[$i][1] = $row->merk_gearbox;
+			$d[$i][2] = $row->kapasitas_gearbox;
+			$d[$i][3] = $row->rasio_gearbox;
+			$d[$i][4] = $row->type_gearbox;
+			$d[$i][5] = $row->pulley_motor;
+			$d[$i][6] = $row->pulley_driven;
+			$d[$i][7] = $row->pulley_type;
+			$d[$i][8] = $row->merk_pompa;
+			$d[$i][9] = $row->type_pompa;
+			$d[$i++][10] = $row->kapasitas_pompa;
 		}
 		echo json_encode($d);
 	}
@@ -125,29 +109,29 @@ class Uelektrik extends CI_Controller {
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$station = $_REQUEST['station'];
-		$this->db->query("DELETE FROM `master_unit_elektrik` where id_pabrik = '$pabrik' AND id_station = '$station' ");
+		$this->db->query("DELETE FROM `master_unit_mekanik` where id_pabrik = '$pabrik' AND id_station = '$station' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
-			// $this->db->insert
 			$data = array(
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'unit' => $value[0],
-				'kw' => $value[1],
-				'class' => $value[2],
-				'starter' => $value[3],
-				'mccb' => $value[4],
-				'kontaktor_line' => $value[5],
-				'kontaktor_delta' => $value[6],
-				'kontaktor_star' => $value[7],
-				'kabel' => $value[8],
-				'jumlah_kabel' => $value[9],
+				'merk_gearbox' => $value[1],
+				'kapasitas_gearbox' => $value[2],
+				'rasio_gearbox' => $value[3],
+				'type_gearbox' => $value[4],
+				'pulley_motor' => $value[5],
+				'pulley_driven' => $value[6],
+				'pulley_type' => $value[7],
+				'merk_pompa' => $value[8],
+				'type_pompa' => $value[9],
+				'kapasitas_pompa' => $value[10],
 
 				// 'date' => 'My date'
 			);
 			print_r($data);
-			$this->db->insert('master_unit_elektrik', $data);
+			$this->db->insert('master_unit_mekanik', $data);
 		}
 	}
 
@@ -179,7 +163,7 @@ class Uelektrik extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-				$d[$i++][0] = $row->nama; 
+			$d[$i++][0] = $row->nama; 
 		}
 		echo json_encode($d);
 	}
