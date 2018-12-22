@@ -132,7 +132,7 @@
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-gear"></i> <span>Master</span>
+            <i class="fa fa-list"></i> <span>Master</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li><a href="<?php echo base_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
