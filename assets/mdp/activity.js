@@ -10,7 +10,8 @@ $(document).ready(function () {
     data_detailnya = "";
     no_wo_aktif = "";
 
-    var option2 = "";
+    data_sparepart = {};
+    data_sparepartnya = "";
 
     function add(no) {
         var sama = 0;
@@ -39,6 +40,44 @@ $(document).ready(function () {
         $("#wo").val("");
     }
 
+    function refresh_modal(){
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "wo/list_open/" + $("#pabrik").val(),
+            data: {
+                id_pabrik: $("#pabrik").val(),
+            }
+        }).done(function (msg) {
+            x = [];
+            y = [];
+            data = JSON.parse(msg);
+
+            for (i in data) {
+                console.log(data[i].daftar);
+                x.push(data[i].daftar);
+                y[i] = x;
+                x = [];
+            }
+            var table = $('#dt-table').DataTable({
+                destroy: true,
+                data: y,
+                columns: [
+                    { title: "Daftar" },
+                ]
+            });
+
+            $('.dataTable tbody').on('click', 'tr', function () {
+                if (table.row(this).data()!=undefined){
+                    console.log('API row values : ', table.row(this).data());
+                    var sp = table.row(this).data();
+                    sp = sp[0].split(" - ");
+                    add(sp[0]);
+                    $('#modal-default').modal('toggle');
+                }
+            });
+        });
+    }
+
     function detail_refresh(no) {
         if (keterangan_detail[no] == undefined) {
             console.log("g ada");
@@ -51,8 +90,8 @@ $(document).ready(function () {
                 console.log(data);
                 // refresh(data);
                 var t = "";
-                t += "Station : " + data['station'] + "<br>";
-                t += "Unit : " + data['unit'] + "<br>";
+                t += "<strong>Station :</strong> " + data['station'] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                t += "<strong>Unit :</strong> " + data['unit'] + "<br>";
                 t += "Problem : " + data['problem'] + "<br>";
                 t += "Desc Problem : " + data['desc_masalah'] + "<br>";
                 $("#keterangan").html(t);
@@ -63,11 +102,19 @@ $(document).ready(function () {
             console.log("ada");
         }
 
+
         if(data_detail[no_wo_aktif]==undefined){
             data_detail[no_wo_aktif] = [["","","",""]];
-            data_detailnya = data_detail[no_wo_aktif];            
+            data_detailnya = data_detail[no_wo_aktif]; 
         }else{
             data_detailnya = data_detail[no_wo_aktif];
+        }
+
+        if (data_sparepart[no_wo_aktif] == undefined) {
+            data_sparepart[no_wo_aktif] = [["", ""]];
+            data_sparepartnya = data_sparepart[no_wo_aktif];
+        } else {
+            data_sparepartnya = data_sparepart[no_wo_aktif];
         }
 
         $('#my-spreadsheet2').jexcel({
@@ -94,11 +141,32 @@ $(document).ready(function () {
             ]
         });
 
+        $('#my-spare').jexcel({
+            allowInsertColumn: false,
+            data: data_sparepartnya,
+            allowInsertColumn: false,
+            onchange: handlers,
+            colHeaders: [
+                'Nama Sparepart / Material',
+                'Qty',
+            ],
+            colWidths: [400, 50, 53, 50, 53, 100, 75, 80, 80],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+            ]
+        });
+
     }
 
     function refresh(data) {
+        handlers = function (obj, cell, val) {
+            data_sparepart[no_wo_aktif] = $('#my-spare').jexcel('getData');
+        };
+
         handler = function (obj, cell, val) {
             data_detail[no_wo_aktif] = $('#my-spreadsheet2').jexcel('getData');
+
             pos = $(cell).prop('id').split("-");
 
             console.log(pos);
@@ -136,8 +204,6 @@ $(document).ready(function () {
                 console.log(hh + ':' + mm);
 
                 $("#my-spreadsheet2").jexcel('setValue', 'F' + (parseInt(pos[1])+1).toString() ,hour+':'+min);
-                // data_detail[no_wo_aktif][0][5] = hour + ':' + min;
-                // data_detail[no_wo_aktif] = $('#my-spreadsheet2').jexcel('getData');
             }
 
         };
@@ -149,9 +215,7 @@ $(document).ready(function () {
             var value = pos[1];
             var data = $("#my-spreadsheet").jexcel('getRowData', value)
             console.log(data);
-            // data_detail[value] = $('#my-spreadsheet2').jexcel('getData');
             if(data[0]!=""){
-                // console.log("ada");
                 $("#side-note").show();
                 no_wo_aktif = data[0];
                 detail_refresh(no_wo_aktif);
@@ -189,6 +253,7 @@ $(document).ready(function () {
 
 
     $("#pabrik").change(function () {
+        refresh_modal();
         ajax_refresh();
         $("#side-note").hide();
     });
@@ -240,6 +305,7 @@ $(document).ready(function () {
                 y: $("#tahun").val(),
                 data_json: JSON.stringify(data_j),
                 detail: JSON.stringify(Object.assign({}, data_detail)),
+                sparepart: JSON.stringify(Object.assign({}, data_sparepart)),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -247,18 +313,6 @@ $(document).ready(function () {
     });
 
     function ajax_refresh() {
-        options2 = {
-            url: BASE_URL + "wo/list_open/" + $("#pabrik").val(),
-            getValue: "daftar",
-            requestDelay: 500,
-            list: {
-                match: {
-                    enabled: true
-                }
-            }
-        };
-
-        $("#wo").easyAutocomplete(options2);
 
         $.ajax({
             method: "POST",
@@ -287,21 +341,27 @@ $(document).ready(function () {
             }
         }).done(function (msg) {
             console.log("detail");
-            // console.log(msg);
             data = JSON.parse(msg);
-            // console.log(data);
-            // // refresh(data);
-            // var obj = data.reduce(function (acc, cur, i) {
-            //     acc[i] = cur;
-            //     return acc;
-            // }, {});
             console.log(data_detail);
             data_detail = data;
             console.log(data_detail);
 
-            // data.forEach(element => {
-            //     console.log(element);
-            // });
+        });
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "activity/load_sparepart",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                d: $("#tanggal").val(),
+                m: $("#bulan").val(),
+                y: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            data = JSON.parse(msg);
+            console.log(data_sparepart);
+            data_sparepart = data;
+            console.log(data_sparepart);
         });
     }
 
@@ -321,20 +381,8 @@ $(document).ready(function () {
         $("#tanggal").val(d.toString());
     }
 
-    options2 = {
-        url: BASE_URL + "wo/list_open/" + $("#pabrik").val() ,
-        getValue: "daftar",
-        requestDelay: 500,
-        list: {
-            match: {
-                enabled: true
-            }
-        }
-    };
-    
-    $("#wo").easyAutocomplete(options2);
     $("#side-note").hide();
 
     ajax_refresh();
-
+    refresh_modal();
 });

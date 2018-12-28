@@ -4,10 +4,14 @@
     <section class="content-header">
       <h1>
         Activity Maintenance
-        <small>Control panel</small>
+        <small>Input Harian</small>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
+        <a class="btn btn-app btn-danger" id="cari" href="#modal-default" role="button" data-toggle="modal">
+          <i class="fa fa-search-plus"></i> Cari WO
+        </a>
+
         <a class="btn btn-app btn-primary" id="simpan">
           <i class="fa fa-save"></i> Simpan
         </a>
@@ -17,6 +21,28 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
+      <div class="modal fade in" id="modal-default" style="display: none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Daftar WO belum selesai</h4>
+            </div>
+            <div class="modal-body">
+              <!-- <p>One fine body…</p> -->
+              <!-- <div id=></div> -->
+              <table id="dt-table" class="display" width="100%"></table>
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
       <div class="row">
         <?php  ?>
         <div class="col-xs-12">
@@ -79,17 +105,6 @@
           </select>
           <br><br>
         </div>
-        <!-- <div class="col-xs-12"> -->
-          <div class="col-xs-12">
-              <div class="input-group margin">
-                <input type="text" class="form-control" name="wo" id="wo" autocomplete="off" placeholder="cari workorder disini">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-info btn-flat" id="tambah">Tambah</button>
-                    </span>
-              </div>
-          </div>
-          <!-- <br> -->
-        <!-- </div> -->
         <div class="col-xs-6">
           <div style="
 						height: 410px;
@@ -100,7 +115,6 @@
           </div>
         </div>
         <div class="col-xs-6" id="side-note">
-          <br>          
           <div style="
 						height: 410px;
 						width: 100%;
@@ -111,9 +125,9 @@
               Unit<br>
               Problem<br>
               Desc masalah 
-            </div>
-            <br>
-            <div id='my-spreadsheet2'></div>      
+            </div><br>
+            <div id='my-spreadsheet2'></div><br>
+            <div id='my-spare'></div>
           </div>
         </div>
       </div>

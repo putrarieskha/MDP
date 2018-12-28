@@ -28,7 +28,7 @@ class Activity extends CI_Controller {
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
 			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
-			base_url("assets/easyautocomplete/easy-autocomplete.min.css"),
+			base_url("assets/datatables/css/jquery.dataTables.min.css"),
 
 		];
 
@@ -37,7 +37,7 @@ class Activity extends CI_Controller {
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
 			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/jexcel/js/jquery.mask.min.js"),
-			base_url("assets/easyautocomplete/jquery.easy-autocomplete.min.js"),
+			base_url("assets/datatables/js/jquery.dataTables.min.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/activity.js"),
@@ -87,11 +87,10 @@ class Activity extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->no_wo; // or methods defined on the 'User' class
-			$d[$i][1] = $row->perbaikan; // or methods defined on the 'User' class
-			$d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
-			$d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
+			$d[$i][0] = $row->no_wo;
+			$d[$i][1] = $row->perbaikan;
+			$d[$i][2] = $row->jenis_breakdown;
+			$d[$i++][3] = $row->jenis_problem;
 		}
 		echo json_encode($d);
 	}
@@ -112,13 +111,33 @@ class Activity extends CI_Controller {
 				$i = 0;
 				$no_wo = $row->no_wo;
 			}
-			$d[$row->no_wo][$i][0] = $row->nama_teknisi; // or methods defined on the 'User' class
-			$d[$row->no_wo][$i][1] = $row->t_mulai; // or methods defined on the 'User' class
-			$d[$row->no_wo][$i][2] = $row->t_selesai; // or methods defined on the 'User' class
-			$d[$row->no_wo][$i][3] = $row->r_mulai; // or methods defined on the 'User' class
-			$d[$row->no_wo][$i][4] = $row->r_selesai; // or methods defined on the 'User' class
-			$d[$row->no_wo][$i++][5] = $row->realisasi; // or methods defined on the 'User' class
-			// $d[$row->no_wo][$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
+			$d[$row->no_wo][$i][0] = $row->nama_teknisi;
+			$d[$row->no_wo][$i][1] = $row->t_mulai;
+			$d[$row->no_wo][$i][2] = $row->t_selesai;
+			$d[$row->no_wo][$i][3] = $row->r_mulai;
+			$d[$row->no_wo][$i][4] = $row->r_selesai;
+			$d[$row->no_wo][$i++][5] = $row->realisasi;
+		}
+		echo json_encode($d);
+	}
+
+	public function load_sparepart()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
+		$query = $this->db->query("SELECT no_wo,material,qty FROM m_sparepart_usage where no_wo LIKE '$id_pabrik%' AND tanggal='$tanggal';");
+
+		$i = 0;
+		$d = [];
+		$no_wo = "";
+		foreach ($query->result() as $row)
+		{
+			if($no_wo!=$row->no_wo){
+				$i = 0;
+				$no_wo = $row->no_wo;
+			}
+			$d[$row->no_wo][$i][0] = $row->material;
+			$d[$row->no_wo][$i++][1] = $row->qty;
 		}
 		echo json_encode($d);
 	}
@@ -128,6 +147,7 @@ class Activity extends CI_Controller {
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
 		$detail = json_decode($_REQUEST['detail']);
+		$spare = json_decode($_REQUEST['sparepart']);
 
 		$this->db->query("DELETE FROM `m_activity` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
@@ -148,7 +168,6 @@ class Activity extends CI_Controller {
 		}
 
 		$this->db->query("DELETE FROM `m_activity_detail` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
-
 		foreach ($detail as $key => $value) {
 			if($key!="_empty_" && $key!="undefined"){
 				foreach ($value as $ky => $val) {
@@ -164,6 +183,21 @@ class Activity extends CI_Controller {
 						'realisasi' => $val[5],
 					);
 					$this->db->insert('m_activity_detail', $data);
+				}
+			}
+		}
+
+		$this->db->query("DELETE FROM `m_sparepart_usage` where no_wo LIKE '$pabrik%' AND tanggal = '$tanggal' ");
+		foreach ($spare as $key => $value) {
+			if($key!="_empty_" && $key!="undefined"){
+				foreach ($value as $ky => $val) {
+					$data = array(
+						'no_wo' => $key,
+						'tanggal' =>$tanggal,
+						'material' => $val[0],
+						'qty' => $val[1],
+					);
+					$this->db->insert('m_sparepart_usage', $data);
 				}
 			}
 		}

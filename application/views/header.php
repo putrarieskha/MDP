@@ -3,23 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MDP | Dashboard</title>
-  <!-- Tell the browser to be responsive to screen width -->
+  <title>Maintenance And Services | Dashboard</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/dist/css/skins/_all-skins.min.css">
   <?php if(isset($css_files)){ ?>
   <?php foreach($css_files as $file): ?>
   <link rel="stylesheet" href="<?php echo $file; ?>">
   <?php endforeach; 
   }?>
-  <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
   <style>
@@ -47,8 +41,8 @@
     color : #fff;  
   }
   .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
     border-radius: 50%;
     width: 80px;
     height: 80px;
@@ -56,10 +50,7 @@
     position:fixed;
     top:250px;
     right: calc(50% - 40px);
-    /* background-color:#666; */
     z-index:10000000;
-    /* opacity: 0.4; */
-    /* filter: alpha(opacity=40); For IE8 and earlier */
     display:none;
   }
 
@@ -92,41 +83,29 @@
   </div>
 </div>
 
-
 <div class="wrapper">
-
   <header class="main-header">
-    <!-- Logo -->
     <a href="<?php echo base_url(); ?>" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>MS</b></span>
-      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>MS</b></span>
     </a>
-    <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-
-          <!-- User Account: style can be found in dropdown.less -->
           <li>
             <a href="<?php echo base_url("login/signout");?>">
               <span class="hidden-xs"><?php echo $this->session->user; ?> | Logout </span>
             </a>
           </li>
-          <!-- Control Sidebar Toggle Button -->
         </ul>
       </div>
     </nav>
   </header>
-  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
@@ -177,14 +156,12 @@
             <i class="fa fa-gears"></i> <span>Monitoring Mekanik</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
-            <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Monitoring Oli<span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("oli"); ?>"><i class="fa fa-file"></i>Monitoring Oli<span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
             <li><a href="<?php echo base_url("screwpress"); ?>"><i class="fa fa-file"></i>Screw Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
             <li><a href="<?php echo base_url("bunchpress"); ?>"><i class="fa fa-file"></i>Bunch Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
             <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Hydrocyclone <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
           </ul>
         </li>
-
-
         <li class="treeview">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Report</span>
@@ -200,5 +177,4 @@
         </li>
       </ul>
     </section>
-    <!-- /.sidebar -->
   </aside>
