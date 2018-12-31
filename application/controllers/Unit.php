@@ -75,18 +75,19 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 
-		$query = $this->db->query("SELECT kode_asset,nama,hm_installed FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT kode_asset,nama,hm_installed,oil_monitoring,screwpress_monitoring,bunchpress_monitoring,hydrocyclone_monitoring FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			// $d[$i][0] = $row->nama; // access attributes
-			// $d[$i][0] = $row->id_station; // or methods defined on the 'User' class
-			$d[$i][0] = $row->kode_asset; // or methods defined on the 'User' class
-			$d[$i][1] = $row->nama; // or methods defined on the 'User' class
-			$d[$i++][2] = $row->hm_installed; // or methods defined on the 'User' class
-
+			$d[$i][0] = $row->kode_asset;
+			$d[$i][1] = $row->nama;
+			$d[$i][2] = $row->hm_installed;
+			$d[$i][3] = $row->oil_monitoring;
+			$d[$i][4] = $row->screwpress_monitoring;
+			$d[$i][5] = $row->bunchpress_monitoring;
+			$d[$i++][6] = $row->hydrocyclone_monitoring;
 		}
 		echo json_encode($d);
 	}
@@ -107,6 +108,10 @@ class Unit extends CI_Controller {
 				'kode_asset' => $value[0],
 				'nama' => $value[1],
 				'hm_installed' => $value[2],
+				'oil_monitoring' => $value[3],
+				'screwpress_monitoring' => $value[4],
+				'bunchpress_monitoring' => $value[5],
+				'hydrocyclone_monitoring' => $value[6],
 				// 'date' => 'My date'
 			);
 			// print_r($data);

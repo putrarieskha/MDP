@@ -3,13 +3,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Activity Maintenance
-        <small>Input Harian</small>
+        <?=$main_title?>
+        <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
         <!-- <button id="simpan">Simpan</button> -->
-        <a class="btn btn-app btn-danger" id="tambah" href="#modal-default" role="button" data-toggle="modal">
-          <i class="fa fa-search-plus"></i> Cari WO
+        <a class="btn btn-app btn-danger" id="cari" href="#modal-default" role="button" data-toggle="modal">
+          <i class="fa fa-plus"></i> Tambah Unit
         </a>
 
         <a class="btn btn-app btn-primary" id="simpan">
@@ -20,24 +20,27 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
       <div class="modal fade in" id="modal-default" style="display: none;">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Daftar WO belum selesai</h4>
+              <h4 class="modal-title">Daftar Unit</h4>
             </div>
             <div class="modal-body">
+              Station : <select id="station"></select>
+              Unit : <select id="unit"></select>
               <table id="dt-table" class="display" width="100%"></table>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Small boxes (Stat box) -->
       <div class="row">
-        <?php  ?>
         <div class="col-xs-12">
+          <?php //echo $content; ?>
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           Tahun : 
@@ -96,36 +99,12 @@
             <option>31</option>
           </select>
           <br><br>
-        </div>
-        <div class="col-xs-6">
-          <div style="
-						height: 410px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id='my-spreadsheet'></div>      
-          </div>
-        </div>
-        <div class="col-xs-6" id="side-note">
-          <div style="
-						height: 410px;
-						width: 100%;
-						overflow: auto;
-					">
-            <div id="keterangan">
-              Station<br>
-              Unit<br>
-              Problem<br>
-              Desc masalah 
-            </div><br>
-            <div id='my-spreadsheet2'></div><br>
-            <div id='my-spare'></div>
+          <div class="row">
+            <div class="col-xs-12">
+                <div id='my-spreadsheet'></div>              
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- /.row -->
     </section>
-    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
