@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php site_url(""); ?>"><b>MDP</b>Q</a>
+    <a href="<?php site_url(""); ?>"><b>Maintenance</b> & Services</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -49,7 +49,7 @@
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"> Remember Me
+              <!-- <input type="checkbox"> Remember Me -->
             </label>
           </div>
         </div>

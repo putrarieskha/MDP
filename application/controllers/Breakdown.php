@@ -26,12 +26,16 @@ class Breakdown extends CI_Controller {
 		$output['main_title'] = "Breakdown";
 		
 		$header['css_files'] = [
-			base_url("assets/datatables/css/jquery.dataTables.min.css"),
+			base_url("assets/jexcel/css/jquery.jexcel.css"),
+			base_url("assets/jexcel/css/jquery.jcalendar.css"),
 		];
 
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/datatables/js/jquery.dataTables.min.js"),
+			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			base_url("assets/mdp/config.js"),
+			base_url("assets/mdp/global.js"),
 			base_url("assets/mdp/breakdown.js"),
 		];
 		
@@ -77,7 +81,13 @@ class Breakdown extends CI_Controller {
 		</table>
 		';
 		
-		
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+		$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		foreach ($query->result() as $row)
+		{
+			$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
 		
 		$this->load->view('header',$header);
 		$this->load->view('content-breakdown',$output);
