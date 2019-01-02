@@ -24,9 +24,6 @@ $(document).ready(function(){
             data: {
                 id_pabrik: $("#pabrik").val(),
                 id_station: $("#station").val(),
-                // d: $("#tanggal").val(),
-                // m: $("#bulan").val(),
-                // y: $("#tahun").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -60,10 +57,11 @@ $(document).ready(function(){
                     'Oil<br>Monitoring',
                     'Screw Press<br>Monitoring',
                     'Bunch Press<br>Monitoring',
-                    'Hydrocyclone<br>Monitoring'
+                    'Hydrocyclone<br>Monitoring',
+                    'KCP<br>Monitoring'
                 ],
 
-                colWidths: [150, 350, 100, 100, 100, 100, 100, 75],
+                colWidths: [150, 350, 100, 100, 100, 100, 100, 100],
                 columns: [
                     // { type: 'autocomplete', url: BASE_URL+'station/ajax/' + $("#pabrik").val() },
                     { type: 'text' },
@@ -73,7 +71,7 @@ $(document).ready(function(){
                     { type: 'checkbox' },
                     { type: 'checkbox' },
                     { type: 'checkbox' },
-
+                    { type: 'checkbox' },
                 ]
             });
         });

@@ -75,7 +75,7 @@ class Unit extends CI_Controller {
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$id_station = $_REQUEST['id_station'];
 
-		$query = $this->db->query("SELECT kode_asset,nama,hm_installed,oil_monitoring,screwpress_monitoring,bunchpress_monitoring,hydrocyclone_monitoring FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
+		$query = $this->db->query("SELECT kode_asset,nama,hm_installed,oil_monitoring,screwpress_monitoring,bunchpress_monitoring,hydrocyclone_monitoring,kcp_monitoring FROM master_unit where id_pabrik = '$id_pabrik' AND id_station = '$id_station';");
 
 		$i = 0;
 		$d = [];
@@ -87,7 +87,9 @@ class Unit extends CI_Controller {
 			$d[$i][3] = $row->oil_monitoring;
 			$d[$i][4] = $row->screwpress_monitoring;
 			$d[$i][5] = $row->bunchpress_monitoring;
-			$d[$i++][6] = $row->hydrocyclone_monitoring;
+			$d[$i][6] = $row->hydrocyclone_monitoring;
+			$d[$i++][7] = $row->kcp_monitoring;
+
 		}
 		echo json_encode($d);
 	}
@@ -112,6 +114,8 @@ class Unit extends CI_Controller {
 				'screwpress_monitoring' => $value[4],
 				'bunchpress_monitoring' => $value[5],
 				'hydrocyclone_monitoring' => $value[6],
+				'kcp_monitoring' => $value[7],
+
 				// 'date' => 'My date'
 			);
 			// print_r($data);
@@ -168,6 +172,71 @@ class Unit extends CI_Controller {
 		echo json_encode($d);
 	}
 
+	public function screwpress_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND screwpress_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function bunchpress_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND bunchpress_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function hydrocyclone_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND hydrocyclone_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	public function kcp_default_list()
+	{
+		$id_pabrik = $_REQUEST['id_pabrik'];
+		// $id_station = $_REQUEST['id_station'];
+		// $id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_unit where id_pabrik = '$id_pabrik' AND kcp_monitoring=1;");
+
+		$i = 0;
+		$d = [];
+		foreach ($query->result() as $row)
+		{
+			$d[$i++][0] = $row->nama; // access attributes
+		}
+		echo json_encode($d);
+	}
+
+	
 	public function ajax_dropdown(){
 		$id_pabrik = $this->uri->segment(3, 0);
 		$id_station = urldecode($this->uri->segment(4, 0));
