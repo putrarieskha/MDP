@@ -4,12 +4,6 @@ $(document).ready(function () {
         $(".n_success").fadeOut(3000);
     }
 
-    var type_screw = 0;
-    var type_bunch = 0;
-    var type_hydro = 0;
-    var type_kcp = 0;
-
-
     data = [];
     data_detail = [];
     keterangan_detail = [];
@@ -22,10 +16,9 @@ $(document).ready(function () {
             console.log("yes");
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/hm_default_list",
+                url: BASE_URL + "unit/kcp_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
                 }
             }).done(function (msg) {
                 console.log(msg);
@@ -37,38 +30,60 @@ $(document).ready(function () {
                     allowInsertColumn: false,
                     colHeaders: [
                         'Unit',
-                        'Hour Meter',
+                        'Screw',
+                        'Body Cage',
+                        'Tupperhead',
                     ],
-                    colWidths: [360, 100, 95, 90, 50, 100, 60, 100, 100],
+                    colWidths: [300, 100, 100, 100, 100, 100, 100, 150, 150],
                     columns: [
+                        // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                         { type: 'text' },
-                        { type: 'numeric', wordWrap: true },
+                        { type: 'text' },
+                        { type: 'text' },
+                        { type: 'text' },
                     ],
                 });
-
             });
-
         }else{
             $('#my-spreadsheet').jexcel({
                 data: data,
                 allowInsertColumn: false,
                 colHeaders: [
                     'Unit',
-                    'Hour Meter',
+                    'Screw',
+                    'Body Cage',
+                    'Tupperhead',
                 ],
-                colWidths: [360, 100, 95, 90, 50, 100, 60, 100, 100],
+                colWidths: [300, 100, 100, 100, 100, 100, 100, 150, 150],
                 columns: [
                     { type: 'text' },
-                    { type: 'numeric', wordWrap: true },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
                 ],
             });
         }
     }
 
-    $("#pabrik").change(function () {
-        station_refresh();
+    function station_refresh() {
+        $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
+            function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    // alert("success");
+                    ajax_refresh();
+                } else {
+                    // alert("gaagal");
+                }
+            }
+        );
+    }
+
+
+    $("#tambah").click(function () {
+        $("#modal-default").modal('toggle');
     });
-    $("#station").change(function () {
+
+    $("#pabrik").change(function () {
         ajax_refresh();
     });
     $("#tahun").change(function () {
@@ -87,21 +102,15 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"recordhm/simpan",
+            url: BASE_URL+"kcp/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                // station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
                 data_json: JSON.stringify(data_j),
-
-                screwpress : type_screw,
-                bunchpress : type_bunch,
-                hydrocyclone : type_hydro,
-                kcp: type_kcp,
-
             }
         }).done(function (msg) {
             console.log(msg);
@@ -112,6 +121,7 @@ $(document).ready(function () {
         $("#station").load(BASE_URL + "station/ajax_dropdown/" + $("#pabrik").val(),
             function(responseTxt,statusTxt,xhr){
                 if(statusTxt == "success"){
+                    // alert("success");
                     ajax_refresh();
                 }else{
                     // alert("gaagal");
@@ -123,10 +133,10 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "recordhm/load",
+            url: BASE_URL + "kcp/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                // id_station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -136,46 +146,6 @@ $(document).ready(function () {
             data = JSON.parse(msg);
             console.log(data);
             refresh(data);
-        });
-
-        $.ajax({
-            method: "POST",
-            url: BASE_URL + "recordhm/load_type_monitoring",
-            data: {
-                id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
-            }
-        }).done(function (msg) {
-            // console.log(msg);
-            data = JSON.parse(msg);
-            // console.log(data);
-            // console.log(data.screwpress);
-
-            if(data.screwpress == 1){
-                type_screw = 1;
-            }else{
-                type_screw = 0;
-            }
-
-            if (data.bunchpress == 1) {
-                type_bunch = 1;
-            } else {
-                type_bunch = 0;
-            }
-
-            if (data.hydrocyclone == 1) {
-                type_hydro = 1;
-            } else {
-                type_hydro = 0;
-            }
-
-            if (data.kcp == 1) {
-                type_kcp = 1;
-                alert("kcp");
-            } else {
-                type_kcp = 0;
-            }
-            // refresh(data);
         });
     }
 
@@ -195,7 +165,7 @@ $(document).ready(function () {
         $("#tanggal").val(d.toString());
     }
 
-    station_refresh();
+    // station_refresh();
     ajax_refresh();
 
 });

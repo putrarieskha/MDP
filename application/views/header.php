@@ -147,7 +147,7 @@
           <ul class="treeview-menu" style="display: none;">
             <li><a href="<?php echo base_url("grounding"); ?>"><i class="fa fa-file"></i>Grounding <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
             <li><a href="<?php echo base_url("kapasitor"); ?>"><i class="fa fa-file"></i>Kapasitor <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
-            <li><a href="<?php echo base_url("megger"); ?>"><i class="fa fa-file"></i>Megger <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("motor"); ?>"><i class="fa fa-file"></i>Motor Inspection <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
           </ul>
         </li>
 
@@ -160,6 +160,7 @@
             <li><a href="<?php echo base_url("screwpress"); ?>"><i class="fa fa-file"></i>Screw Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
             <li><a href="<?php echo base_url("bunchpress"); ?>"><i class="fa fa-file"></i>Bunch Press <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
             <li><a href="<?php echo base_url("hydrocyclone"); ?>"><i class="fa fa-file"></i>Hydrocyclone <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
+            <li><a href="<?php echo base_url("kcp"); ?>"><i class="fa fa-file"></i>KCP <span class="pull-right-container"><small class="label pull-right label-primary">Bulanan</small></span> </a></li>
           </ul>
         </li>
         <li class="treeview">

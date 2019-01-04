@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Screwpress extends CI_Controller {
+class Kcp extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -43,7 +43,7 @@ class Screwpress extends CI_Controller {
 			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/screwpress.js"),
+			base_url("assets/mdp/kcp.js"),
 		];
 		
 		$output['content'] = '';
@@ -73,7 +73,7 @@ class Screwpress extends CI_Controller {
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-screwpress',$output);
+		$this->load->view('content-kcp',$output);
 		$this->load->view('footer',$footer);
 
 	}
@@ -82,11 +82,11 @@ class Screwpress extends CI_Controller {
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT master_unit.nama as unit,ab,cd,presscage,wearpipe,shaft,cone_guide,adjusting_cone_guide
-		FROM `m_recordhm_screwpress` RIGHT JOIN master_unit
-		ON m_recordhm_screwpress.unit = master_unit.nama
-		WHERE m_recordhm_screwpress.id_pabrik = '$id_pabrik'
-		AND m_recordhm_screwpress.tanggal = '$tanggal'
+		$query = $this->db->query("SELECT master_unit.nama as unit,screw,body_cage,tupperhead
+		FROM `m_recordhm_kcp` RIGHT JOIN master_unit
+		ON m_recordhm_kcp.unit = master_unit.nama
+		WHERE m_recordhm_kcp.id_pabrik = '$id_pabrik'
+		AND m_recordhm_kcp.tanggal = '$tanggal'
 		");
 		
 		$i = 0;
@@ -94,13 +94,13 @@ class Screwpress extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->unit;
-			$d[$i][1] = $row->ab;
-			$d[$i][2] = $row->cd;
-			$d[$i][3] = $row->presscage;
-			$d[$i][4] = $row->wearpipe;
-			$d[$i][5] = $row->shaft;
-			$d[$i][6] = $row->cone_guide;
-			$d[$i++][7] = $row->adjusting_cone_guide;
+			$d[$i][1] = $row->screw;
+			$d[$i][2] = $row->body_cage;
+			$d[$i++][3] = $row->tupperhead;
+			// $d[$i][4] = $row->wearpipe;
+			// $d[$i][5] = $row->shaft;
+			// $d[$i][6] = $row->cone_guide;
+			// $d[$i++][7] = $row->adjusting_cone_guide;
 		}
 		echo json_encode($d);
 	}
@@ -109,7 +109,7 @@ class Screwpress extends CI_Controller {
 	{
 		$pabrik = $_REQUEST['pabrik'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_recordhm_screwpress` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `m_recordhm_kcp` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
@@ -117,16 +117,16 @@ class Screwpress extends CI_Controller {
 				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
 				'unit' => $value[0],
-				'ab' => $value[1],
-				'cd' => $value[2],
-				'presscage' => $value[3],
-				'wearpipe' => $value[4],
-				'shaft' => $value[5],
-				'cone_guide' => $value[6],
-				'adjusting_cone_guide' => $value[7],
+				'screw' => $value[1],
+				'body_cage' => $value[2],
+				'tupperhead' => $value[3],
+				// 'wearpipe' => $value[4],
+				// 'shaft' => $value[5],
+				// 'cone_guide' => $value[6],
+				// 'adjusting_cone_guide' => $value[7],
 			);
 			if($value[0]!=""){
-				$this->db->insert('m_recordhm_screwpress', $data);
+				$this->db->insert('m_recordhm_kcp', $data);
 			}
 		}
 	}

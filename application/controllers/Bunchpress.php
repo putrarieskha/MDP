@@ -30,20 +30,20 @@ class Bunchpress extends CI_Controller {
 	{
 		// $this->load->view('welcome_message');
 		$output['content'] = "test";
-		$output['main_title'] = "Data Penggunaan Oli";
+		$output['main_title'] = "Data Hour Meter Part Bunch Press";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			// base_url("assets/jexcel/css/jquery.jcalendar.css"),
 		];
 
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			// base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/recordhm.js"),
+			base_url("assets/mdp/bunchpress.js"),
 		];
 		
 		$output['content'] = '';
@@ -73,7 +73,7 @@ class Bunchpress extends CI_Controller {
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-oli',$output);
+		$this->load->view('content-bunchpress',$output);
 		$this->load->view('footer',$footer);
 
 	}
@@ -81,19 +81,24 @@ class Bunchpress extends CI_Controller {
 	public function load()
 	{
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
-		$query = $this->db->query("SELECT unit,hm FROM m_recordhm where id_pabrik = '$id_pabrik' AND id_station = '$id_station' AND tanggal='$tanggal';");
-
+		$query = $this->db->query("SELECT master_unit.nama as `unit`,`scroll`,`top_semi_cage_ring`,`bottom_semi_cage_ring`,`semi_press_cone`,`adjusting_knife`
+		FROM `m_recordhm_bunchpress` RIGHT JOIN master_unit
+		ON m_recordhm_bunchpress.unit = master_unit.nama
+		WHERE m_recordhm_bunchpress.id_pabrik = '$id_pabrik'
+		AND m_recordhm_bunchpress.tanggal = '$tanggal'
+		");
+		
 		$i = 0;
 		$d = [];
 		foreach ($query->result() as $row)
 		{
-			// $d[$i][0] = $row->nama; // access attributes
-			$d[$i][0] = $row->unit; // or methods defined on the 'User' class
-			$d[$i++][1] = $row->hm; // or methods defined on the 'User' class
-			// $d[$i][2] = $row->jenis_breakdown; // or methods defined on the 'User' class
-			// $d[$i++][3] = $row->jenis_problem; // or methods defined on the 'User' class
+			$d[$i][0] = $row->unit;
+			$d[$i][1] = $row->scroll;
+			$d[$i][2] = $row->top_semi_cage_ring;
+			$d[$i][3] = $row->bottom_semi_cage_ring;
+			$d[$i][4] = $row->semi_press_cone;
+			$d[$i++][5] = $row->adjusting_knife;
 		}
 		echo json_encode($d);
 	}
@@ -103,7 +108,7 @@ class Bunchpress extends CI_Controller {
 		$pabrik = $_REQUEST['pabrik'];
 		$station = $_REQUEST['station'];
 		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_recordhm` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' ");
+		$this->db->query("DELETE FROM `m_recordhm_bunchpress` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
@@ -114,13 +119,15 @@ class Bunchpress extends CI_Controller {
 				'id_station' => $station,
 				'unit' => $value[0],
 				'hm' => $value[1],
-				// 'jenis_problem' => $value[2],
-				// 'jenis_breakdown' => $value[3],
-				// 'date' => 'My date'
+				'scroll' => $value[2],
+				'top_semi_cage_ring' => $value[3],
+				'bottom_semi_cage_ring' => $value[4],
+				'semi_press_cone' => $value[5],
+				'adjusting_knife' => $value[6],
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_recordhm', $data);
+				$this->db->insert('m_recordhm_bunchpress', $data);
 			}
 		}
 	}

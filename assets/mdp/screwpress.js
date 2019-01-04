@@ -16,10 +16,9 @@ $(document).ready(function () {
             console.log("yes");
             $.ajax({
                 method: "POST",
-                url: BASE_URL + "unit/hm_default_list",
+                url: BASE_URL + "unit/screwpress_default_list",
                 data: {
                     id_pabrik: $("#pabrik").val(),
-                    id_station: $("#station").val(),
                 }
             }).done(function (msg) {
                 console.log(msg);
@@ -39,7 +38,7 @@ $(document).ready(function () {
                         'Cone Guide',
                         'Adjusting Cone Guide',
                     ],
-                    colWidths: [300, 100, 100, 100, 100, 100, 100, 100, 100],
+                    colWidths: [300, 100, 100, 100, 100, 100, 100, 150, 150],
                     columns: [
                         // { type: 'autocomplete', url: BASE_URL+'wo/ajax/open/' + $("#pabrik").val() },
                         { type: 'text' },
@@ -59,12 +58,24 @@ $(document).ready(function () {
                 allowInsertColumn: false,
                 colHeaders: [
                     'Unit',
-                    'Hour Meter',
+                    'Screw AB',
+                    'Screw CD',
+                    'Press Cage',
+                    'Wear Pipe',
+                    'Shaft',
+                    'Cone Guide',
+                    'Adjusting Cone Guide'
                 ],
-                colWidths: [360, 100, 95, 90, 50, 100, 60, 100, 100],
+                colWidths: [300, 100, 100, 100, 100, 100, 100, 150, 150],
                 columns: [
                     { type: 'text' },
-                    { type: 'numeric', wordWrap: true },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
+                    { type: 'text' },
                 ],
             });
         }
@@ -86,20 +97,19 @@ $(document).ready(function () {
 
     $("#tambah").click(function () {
         $("#modal-default").modal('toggle');
-
     });
 
     $("#pabrik").change(function () {
-        station_refresh();
+        ajax_refresh();
     });
     $("#tahun").change(function () {
-        // ajax_refresh();
+        ajax_refresh();
     });
     $("#bulan").change(function () {
-        // ajax_refresh();
+        ajax_refresh();
     });
     $("#tanggal").change(function () {
-        // ajax_refresh();
+        ajax_refresh();
     });
 
     $("#simpan").click(function () {
@@ -108,11 +118,11 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: BASE_URL+"recordhm/simpan",
+            url: BASE_URL+"screwpress/simpan",
             success: sukses,
             data: {
                 pabrik: $("#pabrik").val(),
-                station: $("#station").val(),
+                // station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -139,10 +149,10 @@ $(document).ready(function () {
     function ajax_refresh() {
         $.ajax({
             method: "POST",
-            url: BASE_URL + "recordhm/load",
+            url: BASE_URL + "screwpress/load",
             data: {
                 id_pabrik: $("#pabrik").val(),
-                id_station: $("#station").val(),
+                // id_station: $("#station").val(),
                 d: $("#tanggal").val(),
                 m: $("#bulan").val(),
                 y: $("#tahun").val(),
@@ -171,7 +181,7 @@ $(document).ready(function () {
         $("#tanggal").val(d.toString());
     }
 
-    station_refresh();
-    // ajax_refresh();
+    // station_refresh();
+    ajax_refresh();
 
 });
