@@ -109,17 +109,30 @@
     <section class="sidebar">
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
+        <!-- <li class="treeview">
+          <a href="#">
+            <i class="fa fa-list"></i> <span>App Config</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
+          </ul>
+        </li> -->
+
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-list"></i> <span>Master</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
+          <?php if($this->session->kategori <= 1){ ?>
             <li><a href="<?php echo base_url("pabrik"); ?>"><i class="fa fa-industry"></i>Pabrik</a></li>
+          <?php } ?>
             <li><a href="<?php echo base_url("station"); ?>"><i class="fa fa-industry"></i>Station</a></li>
             <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
             <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
             <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-gears"></i>Unit Mekanik</a></li>
             <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
+            <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
           </ul>
         </li>
   

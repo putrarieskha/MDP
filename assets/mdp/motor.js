@@ -177,12 +177,16 @@ $(document).ready(function(){
     });
 
 
-
+    var tgl = new Date();
+    var m = tgl.getMonth() + 1;
+    if (m < 5) {
+        $("#periode").val("1");
+    } else if (m < 9) {
+        $("#periode").val("2");
+    } else {
+        $("#periode").val("3");
+    }
 
     station_refresh();
-
-    // $("#pabrik").change(function () {
-    //     refresh();
-    // });
 
 });

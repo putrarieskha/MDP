@@ -19,7 +19,13 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-xs-12">
-          <div id='my-spreadsheet'></div>      
+          <div style="
+						height: 500px;
+						width: 90%;
+						overflow: auto;
+					">
+            <div id='my-spreadsheet'></div>              
+          </div>
         </div>
       </div>
       <!-- /.row -->

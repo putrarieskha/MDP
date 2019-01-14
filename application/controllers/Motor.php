@@ -23,7 +23,7 @@ class Motor extends CI_Controller {
 		// $this->load->view('welcome_message');
 
 		$output['content'] = "test";
-		$output['main_title'] = "Data Asset Mesin";
+		$output['main_title'] = "Data Inspeksi Mesin Berputar";
 		
 		$header['css_files'] = [
 			base_url("assets/jexcel/css/jquery.jexcel.css"),
@@ -76,7 +76,9 @@ class Motor extends CI_Controller {
 		$output['dropdown_tahun'] = "<select id=\"tahun\">".$opt_tahun."</select>";
 
 		$output['dropdown_periode'] = "<select id=\"periode\">
-			<option>1</option>
+			<option value=\"1\">Januari - April (Cawu 1)</option>
+			<option value=\"2\">Mei - Agustus (Cawu 2)</option>
+			<option value=\"3\">September - Desember (Cawu 3)</option>
 		</select>";
 
 

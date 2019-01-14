@@ -78,7 +78,7 @@ class Uelektrik extends CI_Controller {
 		$id_station = $_REQUEST['id_station'];
 		// $tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];		
 		$query = $this->db->query("
-		SELECT nama,kw,class,starter,mccb,kontaktor_line,kontaktor_delta,kontaktor_star,kabel,jumlah_kabel 
+		SELECT nama,merk,kw,class,starter,mccb,kontaktor_line,kontaktor_delta,kontaktor_star,kabel,jumlah_kabel 
 		FROM master_unit_elektrik RIGHT JOIN master_unit
 		ON master_unit.id_pabrik = master_unit_elektrik.id_pabrik
 		AND master_unit.id_station = master_unit_elektrik.id_station
@@ -91,15 +91,16 @@ class Uelektrik extends CI_Controller {
 		foreach ($query->result() as $row)
 		{
 			$d[$i][0] = $row->nama;
-			$d[$i][1] = $row->kw;
-			$d[$i][2] = $row->class;
-			$d[$i][3] = $row->starter;
-			$d[$i][4] = $row->mccb;
-			$d[$i][5] = $row->kontaktor_line;
-			$d[$i][6] = $row->kontaktor_delta;
-			$d[$i][7] = $row->kontaktor_star;
-			$d[$i][8] = $row->kabel;
-			$d[$i++][9] = $row->jumlah_kabel;
+			$d[$i][1] = $row->merk;
+			$d[$i][2] = $row->kw;
+			$d[$i][3] = $row->class;
+			$d[$i][4] = $row->starter;
+			$d[$i][5] = $row->mccb;
+			$d[$i][6] = $row->kontaktor_line;
+			$d[$i][7] = $row->kontaktor_delta;
+			$d[$i][8] = $row->kontaktor_star;
+			$d[$i][9] = $row->kabel;
+			$d[$i++][10] = $row->jumlah_kabel;
 		}
 		echo json_encode($d);
 	}
@@ -134,15 +135,16 @@ class Uelektrik extends CI_Controller {
 				'id_pabrik' => $pabrik,
 				'id_station' => $station,
 				'unit' => $value[0],
-				'kw' => $value[1],
-				'class' => $value[2],
-				'starter' => $value[3],
-				'mccb' => $value[4],
-				'kontaktor_line' => $value[5],
-				'kontaktor_delta' => $value[6],
-				'kontaktor_star' => $value[7],
-				'kabel' => $value[8],
-				'jumlah_kabel' => $value[9],
+				'merk' => $value[1],
+				'kw' => $value[2],
+				'class' => $value[3],
+				'starter' => $value[4],
+				'mccb' => $value[5],
+				'kontaktor_line' => $value[6],
+				'kontaktor_delta' => $value[7],
+				'kontaktor_star' => $value[8],
+				'kabel' => $value[9],
+				'jumlah_kabel' => $value[10],
 
 				// 'date' => 'My date'
 			);

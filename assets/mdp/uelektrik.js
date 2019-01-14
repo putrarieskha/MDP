@@ -25,6 +25,7 @@ $(document).ready(function(){
                         // 'Station',
                         // 'Kode Asset',
                         '<br>Unit',
+                        '<br>Merk',
                         '<br>KW',
                         '<br>class',
                         '<br>starter',
@@ -36,8 +37,9 @@ $(document).ready(function(){
                         'Kabel<br>tiap<br>Fasa',
                     ],
 
-                    colWidths: [300, 60, 50, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300,100, 60, 50, 75, 75, 75, 100, 100, 100],
                     columns: [
+                        { type: 'text' },
                         { type: 'text' },
                         // { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
                         { type: 'dropdown', source: ['0.37', '0.56', '0.75', '1.1', '1.5', '2.2', '3.0', '3.7', '4.0', '5.5', '7.5', '9.3', '10', '11', '15', '18', '22', '30', '37', '45', '55', '75', '90', '110', '130', '150'] },
@@ -77,6 +79,7 @@ $(document).ready(function(){
                         // 'Station',
                         // 'Kode Asset',
                         '<br>Unit',
+                        '<br>Merk',
                         '<br>KW',
                         '<br>class',
                         '<br>starter',
@@ -89,8 +92,9 @@ $(document).ready(function(){
 
                     ],
 
-                    colWidths: [300, 60, 50, 75, 75, 75, 100, 100, 100],
+                    colWidths: [300,100, 60, 50, 75, 75, 75, 100, 100, 100],
                     columns: [
+                        { type: 'text' },
                         { type: 'text' },
                         // { type: 'autocomplete', url: BASE_URL + 'station/ajax/' + $("#pabrik").val() },
                         { type: 'dropdown', source: ['0.37', '0.56', '0.75', '1.1', '1.5', '2.2', '3.0', '3.7', '4.0', '5.5', '7.5', '9.3', '10', '11', '15', '18.5', '22', '30', '37', '45', '55', '75', '90', '110', '132', '160','200','250','315'] },
