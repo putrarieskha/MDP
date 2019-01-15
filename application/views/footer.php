@@ -11,6 +11,12 @@
 <!-- ./wrapper -->
 <!-- jQuery 3 -->
 <script src="<?php echo base_url();?>assets/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="<?php echo base_url();?>assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url();?>assets/adminlte/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
 <!-- jQuery UI 1.11.4 -->
 <!-- <script src="<?php echo base_url();?>assets/adminlte/bower_components/jquery-ui/jquery-ui.min.js"></script> -->
 <?php if(isset($js_files)){ ?>
@@ -18,10 +24,5 @@
 <script src="<?php echo $file; ?>"></script>
 <?php endforeach; 
 }?>
-<!-- Bootstrap 3.3.7 -->
-<script src="<?php echo base_url();?>assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url();?>assets/adminlte/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 </body>
 </html>

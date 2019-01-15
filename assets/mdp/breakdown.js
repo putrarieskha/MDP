@@ -27,10 +27,43 @@ $(document).ready(function () {
             { type: 'text' },
             { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
             { type: 'text' },
-            // { type: 'text' },
             { type: 'dropdown', source: ['unit', 'line', 'pabrik'] },
             { type: 'dropdown', source: ['Alat', 'Proses'] },
         ]
     });
-    // $('#my-spreadsheet').find('thead').before('<thead class="jexcel_label"><tr><td class="jexcel_label" width="30"></td><td colspan="2" width="400" align="center">Group 1</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td><td width="200" align="center">Group 2</td></tr></thead>');
+
+    function ajax_refresh() {
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "breakdown/load",
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                bulan: $("#bulan").val(),
+                tahun: $("#tahun").val(),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+            data = JSON.parse(msg);
+            console.log(data);
+            refresh(data);
+        });
+    }
+
+    var tgl = new Date();
+    var m = tgl.getMonth() + 1;
+    if (m < 10) {
+        $("#bulan").val("0" + m.toString());
+    } else {
+        $("#bulan").val(m.toString());
+    }
+    var y = tgl.getFullYear();
+    $("#tahun").val(y.toString());
+    var d = tgl.getDate();
+    if (d < 10) {
+        $("#tanggal").val("0" + d.toString());
+    } else {
+        $("#tanggal").val(d.toString());
+    }
+
+    ajax_refresh();
 });

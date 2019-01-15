@@ -5,6 +5,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Maintenance And Services | Dashboard</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  
+  <script src="<?php echo base_url();?>assets/dhtmlx/dhtmlxscheduler.js?v=20190111" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="<?php echo base_url();?>assets/dhtmlx/dhtmlxscheduler_material.css?v=20190111" type="text/css" charset="utf-8">
+
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/adminlte/dist/css/AdminLTE.min.css">

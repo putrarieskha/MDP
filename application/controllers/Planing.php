@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Breakdown extends CI_Controller {
+class Planing extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -26,17 +26,36 @@ class Breakdown extends CI_Controller {
 		$output['main_title'] = "Breakdown";
 		
 		$header['css_files'] = [
-			base_url("assets/jexcel/css/jquery.jexcel.css"),
-			base_url("assets/jexcel/css/jquery.jcalendar.css"),
+			// library untuk fullcalendar
+			// base_url("assets/adminlte/bower_components/fullcalendar/dist/fullcalendar.min.css"),
+			
+			// library untuk dhtmlx 			
+			base_url("assets/dhtmlx/dhtmlxscheduler_material.css?v=20190111"),
+
+			// base_url("assets/toast/dist/tui-calendar.min.css"),
+			// base_url("assets/toast/css/default.css"),
+			// base_url("assets/toast/css/icons.css"),
+
 		];
 
 		$footer['js_files'] = [
-			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
-			base_url("assets/jexcel/js/jquery.jexcel.js"),
-			base_url("assets/jexcel/js/jquery.jcalendar.js"),
+			// library untuk full calendar 
+			// base_url("assets/adminlte/bower_components/jquery-ui/jquery-ui.min.js"),
+			// base_url("assets/adminlte/bower_components/moment/min/moment.min.js"),
+			// base_url("assets/adminlte/bower_components/fullcalendar/dist/fullcalendar.min.js"),
+
+			// library untuk dhtmlx
+			base_url("assets/dhtmlx/dhtmlxscheduler.js?v=20190111"),
+			base_url("assets/adminlte/bower_components/fullcalendar/dist/fullcalendar.min.js"),
+
+
+			// base_url("assets/adminlte/bower_components/moment/min/moment.min.js"),
+			// base_url("assets/toast/dist/tui-calendar.min.js"),
+			// base_url("assets/toast/js/default.js"),
+
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/breakdown.js"),
+			base_url("assets/mdp/planing.dhtmlx.js"),
 		];
 		
 		$output['content'] = '';
@@ -65,8 +84,10 @@ class Breakdown extends CI_Controller {
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-breakdown',$output);
+		$this->load->view('content-planing-dhtmlx',$output);
 		$this->load->view('footer',$footer);
+
+		// $this->load->view('footer-planing',$footer);
 
 	}
 
