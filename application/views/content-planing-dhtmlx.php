@@ -40,7 +40,35 @@
       </div>
       <div class="row">
         <div class="col-xs-3">
-          test
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <i class="fa fa-info-circle"></i>
+
+              <h3 class="box-title">Legenda</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="callout callout-danger">
+                <h4>Corrective Maintenance</h4>
+                <!-- <p>There is a problem that we need to fix. A wonderful serenity has taken possession of my entire soul,
+                  like these sweet mornings of spring which I enjoy with my whole heart.</p> -->
+              </div>
+              <div class="callout callout-info">
+                <h4>Preventive Maintenance</h4>
+                <!-- <p>Follow the steps to continue to payment.</p> -->
+              </div>
+              <div class="callout callout-warning">
+                <h4>Monitoring Maintenance</h4>
+                <!-- <p>This is a yellow callout.</p> -->
+              </div>
+              <div class="callout callout-success">
+                <h4>Improve Maintenance</h4>
+                <!-- <p>This is a green callout.</p> -->
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
         <div class="col-xs-9">
           <div id="scheduler_here" class="dhx_cal_container" style="width:100%; height:500px; padding:10px;">

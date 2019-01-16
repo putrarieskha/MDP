@@ -4,57 +4,56 @@ $(document).ready(function(){
         $(".n_success").fadeOut(3000);
     }
 
-    var template = "<div class=\"dhx_cal_ltext my_editor\" style=\"height:80px;\">"+
-        "Kategori:"+
-        "<select class=\"form-control\">"+
-            "<option>Preventive</option>"+
-            "<option>Monitoring</option>"+
-            "<option>Corrective</option>"+
-        "</select>"+
-        "<br>"+
-        "Station :"+
-        "<select class=\"form-control\">"+
-            "<option>A</option>"+
-            "<option>B</option>"+
-            "<option>C</option>"+
-        "</select>"+
-        "Text&nbsp;<input type=\"text\"><br/>"+
-        "Details&nbsp;<input type=\"text\">"+
-    "</div>";
 
-    scheduler.init('scheduler_here', new Date(), "month");
+    // var stations;
+    // var units;
 
-    scheduler.form_blocks["my_editor"] = {
-        render: function (sns) {
-            // return "<div class='dhx_cal_ltext my_editor' style='height:80px;'>Text&nbsp;<input type='text'><br/>Details&nbsp;<input type='text'></div>";
-            return template;
-        },
-        set_value: function (node, value, ev) {
-            node.childNodes[1].value = value || "";
-            node.childNodes[4].value = ev.details || "";
-        },
-        get_value: function (node, ev) {
-            ev.details = node.childNodes[4].value;
-            return node.childNodes[1].value;
-        },
-        focus: function (node) {
-            var a = node.childNodes[1];
-            a.select();
-            a.focus();
-        }
-    };
+    function reinit_calendar(){
+        var pabrik = $("#pabrik").val();
+    }
+
+
+
+    scheduler.config.first_hour = 6; // oke
+    scheduler.config.last_hour = 22; // oke
+    scheduler.config.start_on_monday = false; // oke
+
+    var stations = [
+        { key: 1, label: 'None' },
+        { key: 2, label: 'On start date' },
+        { key: 3, label: '1 day before' }
+    ];
+
+    var units = [
+        { key: 1, label: 'None' },
+        { key: 2, label: 'On start date' },
+        { key: 3, label: '1 day before' }
+    ];
+
+    scheduler.locale.labels.section_station = 'Station';
+    scheduler.locale.labels.section_unit = 'Unit';
+
     scheduler.config.lightbox.sections = [
-        // { name: "description", height: 200, map_to: "text", type: "my_editor", focus: true },
-        { name: "description", height: 200, map_to: "select", type: "my_editor", focus: true },
-
+        { name: "station", height: 40, map_to: "station", type: "select", options: stations },
+        { name: "unit", height: 40, map_to: "unit", type: "select", options: units },
+        { name: "Deskripsi", height: 100, map_to: "desc", type: "textarea", focus: true },
         { name: "time", height: 72, type: "time", map_to: "auto" }
     ];
 
+    scheduler.templates.event_text = function (start, end, ev) {
+        return 'Subject:\n' + ev.text + '\nStation:\n' + ev.station + '\nUnit:\n' + ev.unit;
+    };
+
+    scheduler.init('scheduler_here', new Date(), "month");
 
 
-
-    // scheduler.config.agenda_start = new Date(2013, 5, 1);
-    // //to display dates until 1st June,2014
-    // scheduler.config.agenda_end = new Date(2014, 5, 1);
+    $("#pabrik").change(function () {
+        // alert("update");
+        var json_string = scheduler.toJSON(); //json string
+        console.log(json_string);
+        var evs = scheduler.getEvents();// will return all events
+        console.log(evs);
+        reinit_calendar();
+    });
 
 });

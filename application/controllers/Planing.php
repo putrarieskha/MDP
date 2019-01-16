@@ -31,6 +31,7 @@ class Planing extends CI_Controller {
 			
 			// library untuk dhtmlx 			
 			base_url("assets/dhtmlx/dhtmlxscheduler_material.css?v=20190111"),
+			base_url("assets/dhtmlx/dhtmlx.css"),
 
 			// base_url("assets/toast/dist/tui-calendar.min.css"),
 			// base_url("assets/toast/css/default.css"),
@@ -46,7 +47,12 @@ class Planing extends CI_Controller {
 
 			// library untuk dhtmlx
 			base_url("assets/dhtmlx/dhtmlxscheduler.js?v=20190111"),
-			base_url("assets/adminlte/bower_components/fullcalendar/dist/fullcalendar.min.js"),
+			base_url("assets/dhtmlx/ext/dhtmlxscheduler_serialize.js"),
+			base_url("assets/dhtmlx/ext/dhtmlxscheduler_editors.js"),
+			
+			// base_url("assets/dhtmlx/dhtmlx.js"),
+			
+			// base_url("assets/adminlte/bower_components/fullcalendar/dist/fullcalendar.min.js"),
 
 
 			// base_url("assets/adminlte/bower_components/moment/min/moment.min.js"),
