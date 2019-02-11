@@ -132,11 +132,21 @@
             <li><a href="<?php echo base_url("unit"); ?>"><i class="fa fa-calendar-check-o"></i>Unit</a></li>
             <li><a href="<?php echo base_url("uelektrik"); ?>"><i class="fa fa-bolt"></i>Unit Elektrik</a></li>
             <li><a href="<?php echo base_url("umekanik"); ?>"><i class="fa fa-gears"></i>Unit Mekanik</a></li>
+            <li><a href="<?php echo base_url("schedule"); ?>"><i class="fa fa-calendar"></i>Schedule</a></li>
             <li><a href="<?php echo base_url("karyawan"); ?>"><i class="fa fa-group"></i>Karyawan</a></li>
             <li><a href="<?php echo base_url("user"); ?>"><i class="fa fa-user"></i>User</a></li>
           </ul>
         </li>
-  
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-gear"></i> <span>Process</span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?php echo base_url("feedback"); ?>"><i class="fa fa-file"></i>Feedback Process <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
+          </ul>
+        </li>
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Maintenance</span>

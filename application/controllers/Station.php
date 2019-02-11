@@ -145,4 +145,20 @@ class Station extends CI_Controller {
 		}
 		// echo json_encode($d);
 	}
+
+	public function dhtmlx(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$query = $this->db->query("SELECT nama FROM master_station where id_pabrik = '$id_pabrik';");
+		$i = 0;
+		$d = [];
+		// echo "{\"collections\":{\"type\":[";
+		foreach ($query->result() as $row)
+		{
+			// echo '{"id":"'.$i++.'","value":"'.$row->nama.'","label":"'.$row->nama.'"},';
+			// echo "<option>".$row->nama."</option>";
+			$d[$i++] = $row->nama;
+		}
+		// echo "]}}";
+		echo json_encode($d);
+	}
 }

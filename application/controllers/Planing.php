@@ -29,9 +29,14 @@ class Planing extends CI_Controller {
 			// library untuk fullcalendar
 			// base_url("assets/adminlte/bower_components/fullcalendar/dist/fullcalendar.min.css"),
 			
-			// library untuk dhtmlx 			
-			base_url("assets/dhtmlx/dhtmlxscheduler_material.css?v=20190111"),
-			base_url("assets/dhtmlx/dhtmlx.css"),
+			// library untuk dhtmlx scheduler			
+			// base_url("assets/dhtmlx/dhtmlxscheduler_material.css?v=20190111"),
+			// base_url("assets/dhtmlx/dhtmlx.css"),
+
+			// library untuk dhtmlx gantt			
+			// base_url("assets/gantt/codebase/dhtmlxgantt.css?v=6.0.7"),
+			base_url("assets/gantt/codebase/skins/dhtmlxgantt_meadow.css?v=6.0.7"),
+
 
 			// base_url("assets/toast/dist/tui-calendar.min.css"),
 			// base_url("assets/toast/css/default.css"),
@@ -46,9 +51,13 @@ class Planing extends CI_Controller {
 			// base_url("assets/adminlte/bower_components/fullcalendar/dist/fullcalendar.min.js"),
 
 			// library untuk dhtmlx
-			base_url("assets/dhtmlx/dhtmlxscheduler.js?v=20190111"),
-			base_url("assets/dhtmlx/ext/dhtmlxscheduler_serialize.js"),
-			base_url("assets/dhtmlx/ext/dhtmlxscheduler_editors.js"),
+			// base_url("assets/dhtmlx/dhtmlxscheduler.js?v=20190111"),
+			// base_url("assets/dhtmlx/ext/dhtmlxscheduler_serialize.js"),
+			// base_url("assets/dhtmlx/ext/dhtmlxscheduler_editors.js"),
+
+			base_url("assets/gantt/codebase/dhtmlxgantt.js?v=6.0.7"),
+
+
 			
 			// base_url("assets/dhtmlx/dhtmlx.js"),
 			
@@ -61,7 +70,8 @@ class Planing extends CI_Controller {
 
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
-			base_url("assets/mdp/planing.dhtmlx.js"),
+			// base_url("assets/mdp/planing.dhtmlx.js"),
+			base_url("assets/mdp/planing.gantt.js"),
 		];
 		
 		$output['content'] = '';
@@ -90,7 +100,7 @@ class Planing extends CI_Controller {
 		$output['dropdown_station'] = "<select id=\"station\"></select>";
 
 		$this->load->view('header',$header);
-		$this->load->view('content-planing-dhtmlx',$output);
+		$this->load->view('content-planing-gantt',$output);
 		$this->load->view('footer',$footer);
 
 		// $this->load->view('footer-planing',$footer);

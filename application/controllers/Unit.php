@@ -248,4 +248,49 @@ class Unit extends CI_Controller {
 		}
 	}
 
+	public function dhtmlx(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		// $id_station = urldecode($this->uri->segment(4, 0));
+		$query = $this->db->query("SELECT id_station,nama FROM master_unit where id_pabrik = '$id_pabrik'");
+		$i = 0;
+		$ls = "";
+		$d = [];
+		foreach ($query->result() as $row)
+		{	
+			// if($row->nama != "" || $row->id_station != ""){
+				if($ls!=$row->id_station){
+					$ls=$row->id_station;
+					$d[$i++] = "= = = = =".$row->id_station."= = = = =";
+					$d[$i++] = $row->nama;
+				}else{
+					$d[$i++] = $row->nama;
+				}
+			// }			
+		}
+		echo json_encode($d);
+	}
+
+	public function dhtmlxx(){
+		$id_pabrik = $this->uri->segment(3, 0);
+		$id_station = urldecode($this->uri->segment(4, 0));
+		$query = $this->db->query("SELECT id_station,nama FROM master_unit where id_pabrik = '$id_pabrik'");
+		$i = 0;
+		$ls = "";
+		$d = [];
+		foreach ($query->result() as $row)
+		{	
+			// // if($row->nama != "" || $row->id_station != ""){
+			// 	if($ls!=$row->id_station){
+			// 		$ls=$row->id_station;
+			// 		$d[$i++] = "= = = = =".$row->id_station."= = = = =";
+			// 		$d[$i++] = $row->nama;
+			// 	}else{
+			// 		$d[$i++] = $row->nama;
+			// 	}
+			// // }
+			
+			// $d[$i++][];
+		}
+		echo json_encode($d);
+	}
 }
