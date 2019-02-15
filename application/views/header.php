@@ -144,6 +144,7 @@
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li><a href="<?php echo base_url("feedback"); ?>"><i class="fa fa-file"></i>Feedback Process <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
+            <li><a href="<?php echo base_url("cost"); ?>"><i class="fa fa-file"></i>Cost Harian <span class="pull-right-container"><small class="label pull-right label-primary">Harian</small></span> </a></li>
           </ul>
         </li>
 
@@ -199,6 +200,8 @@
             <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Plan vs Real (CM MM)</a></li>
             <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Inventory</a></li>
             <li><a href="<?php echo base_url("costrm"); ?>"><i class="fa fa-money"></i>Potret Pabrik</a></li>
+            <li><a href="<?php echo base_url("display/proses"); ?>"><i class="fa fa-money"></i>Potret Proses</a></li>
+            <li><a href="<?php echo base_url("display/maintenance"); ?>"><i class="fa fa-money"></i>Potret Maintenance</a></li>
           </ul>
         </li>
       </ul>

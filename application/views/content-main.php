@@ -78,58 +78,80 @@
         </div>
         <!-- ./col -->
       </div>
+
       <div class="row">
-        <div class="col-md-6">
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Job Hari</h3> &nbsp;&nbsp;
-              <input type="date" id="tgl_job"/>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <!-- <table class="table table-bordered">
-                <tbody><tr>
-                  <th>No WO</th>
-                  <th>Pekerjaan</th>
-                  <th>MPP</th>
-                  <th>Waktu</th>
-                </tr>
-                <tr>
-                  <td>1.</td>
-                  <td>Update software</td>
-                  <td></td>
-                  <td>55%</td>
-                </tr>
-              </tbody></table> -->
-              <div id="j_today"></div>
+        <div class="col-lg-2 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h4>Downtime</h4>
+              <p id="downtime">... HI<br>... SHI<br>&nbsp;</p>
             </div>
           </div>
-          <!-- Bar chart -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <i class="fa fa-bar-chart-o"></i>
-
-              <h3 class="box-title">Bar Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div id="bar-chart" style="height: 300px;"></div>
-            </div>
-            <!-- /.box-body-->
-          </div>
-          <!-- /.box -->
         </div>
+        <!-- ./col -->
+        <div class="col-lg-2 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h4>Breakdown</h4>
+              <p id="breakdown">... HI<br>... SHI<br>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+      
+        <div class="col-lg-2 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h4>Oil greasing</h4>
+              <p id="ol">Plan<br>Finish<br>(%)</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-2 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h4>Cost PK R/M</h4>
+              <p id="cpkrm">HI<br>SHI<br>%</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-2 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h4>Cost PO R/M</h4>
+              <p id="cporm">HI<br>SHI<br>%</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-2 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h4>Stok Gudang</h4>
+              <p id="sg">Min<br>Max<br>Real</p>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+
+
+      </div>
+
+      <div class="row">
         <div class="col-md-6">
           <!-- Donut chart -->
           <div class="box box-primary">
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
-              <h3 class="box-title">Breakdown Chart</h3>
+              <h3 class="box-title">Breakdown & Downtime Chart</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -142,9 +164,42 @@
           </div>
           <!-- /.box -->
         </div>
-        <?php  ?>
+        <div class="col-md-6">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Job Hari</h3> &nbsp;&nbsp;
+                <input type="date" id="tgl_job"/>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div id="j_today"></div>
+              </div>
+            </div>
+            <!-- Bar chart -->
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <i class="fa fa-bar-chart-o"></i>
 
+                <h3 class="box-title">Highlight Problem</h3>
+
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body">
+                <div id="highlight"></div>
+              </div>
+              <!-- /.box-body-->
+            </div>
+            <!-- /.box -->
+          </div>
+          <?php  ?>
+
+        </div>
       </div>
+
       <!-- /.row -->
     </section>
     <!-- /.content -->

@@ -109,7 +109,7 @@ class Main extends CI_Controller {
 		$jumlah_unit_trouble = $row->unit;
 
 		//nilai data mill avaibility
-		$query = $this->db->query("SELECT ROUND(sum(acm)/count(acm)*100,2) as jumlah FROM `m_acm` where tanggal = '$tgl' and id_pabrik = '$nama_pabrik';");
+		$query = $this->db->query("SELECT ROUND(floatval(sum(acm)/count(acm)*100,2) as jumlah FROM `m_acm` where tanggal = '$tgl' and id_pabrik = '$nama_pabrik';");
 		$row = $query->row();
 		$mill_avaibility = $row->jumlah;
 
@@ -136,6 +136,192 @@ class Main extends CI_Controller {
 		// print_r($out);
 		// echo $m;
 		echo json_encode($out);
+	}
+
+	public function downtime(){
+		$nama_pabrik = $this->uri->segment(3);
+		$bulan = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+		$bulanx = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+		$y = date('Y');
+		$m = $bulan[date('m')-1];
+		$mx = $bulanx[date('m')-1];
+
+
+		// "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))) total from m_breakdown_pabrik";
+
+		$query = $this->db->query("SELECT (SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai))))/3600.0 as total FROM m_breakdown_pabrik WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' AND (jenis='unit' OR jenis='line') ");
+		$row = $query->row();
+
+		$query1 = $this->db->query("SELECT tanggal,(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai))))/3600.0 as total FROM m_breakdown_pabrik WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' AND (jenis='unit' OR jenis='line') GROUP BY tanggal  ORDER BY tanggal desc limit 1");
+		$row1 = $query1->row();
+		// print_r($row);
+
+		if($row && $row1){
+			$hi = round(floatval($row1->total),2);
+			$t = $row1->tanggal;
+			$shi = round(floatval($row->total),2);
+			$t = explode("-",$t);
+
+			echo "TGL : ".$t[2]."-$m-$y<br>HI : ".$hi."<br>SHI : ".$shi;
+		}else{
+			echo "data bulan ".$mx." belum diisi";
+		}		
+	}
+	public function breakdown(){
+		$nama_pabrik = $this->uri->segment(3);
+		$bulan = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+		$bulanx = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+		$y = date('Y');
+		$m = $bulan[date('m')-1];
+		$mx = $bulanx[date('m')-1];
+
+
+		// "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))) total from m_breakdown_pabrik";
+
+		$query = $this->db->query("SELECT (SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai))))/3600.0 as total FROM m_breakdown_pabrik WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' AND jenis='pabrik' ");
+		$row = $query->row();
+
+		$query1 = $this->db->query("SELECT tanggal,(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai))))/3600.0 as total FROM m_breakdown_pabrik WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' AND jenis='pabrik' GROUP BY tanggal ORDER BY tanggal desc limit 1");
+		$row1 = $query1->row();
+		// print_r($row);
+
+		if($row && $row1){
+			$hi = round(floatval($row1->total),2);
+			$t = $row1->tanggal;
+			$shi = round(floatval($row->total),2);
+			$t = explode("-",$t);
+
+			echo "TGL : ".$t[2]."-$m-$y<br>HI : ".$hi."<br>SHI : ".$shi;
+		}else{
+			echo "data bulan ".$mx." belum diisi / belum ada breakdown";
+		}		
+	}
+
+	public function bd_chart(){
+		$nama_pabrik = $_REQUEST['id_pabrik'];
+
+		$bulan = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+		// $bulanx = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+		$y = date('Y');
+		$m = $bulan[date('m')-1];
+		// $mx = $bulanx[date('m')-1];
+
+
+		$query = $this->db->query("SELECT jenis,(SUM(TIME_TO_SEC(TIMEDIFF(selesai,mulai)))) total FROM m_breakdown_pabrik WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' GROUP BY jenis");
+		// $row = $query->row();
+		
+		$unit = 0;
+		$line = 0;
+		$pabrik = 0;
+
+		foreach ($query->result() as $row)
+		{
+			if($row->jenis == 'unit'){
+				$unit = $row->total;
+			}else if($row->jenis == 'line'){
+				$line = $row->total;
+			}else if($row->jenis == 'pabrik'){
+				$pabrik = $row->total;
+			}
+		}
+		$data['unit'] = $unit;
+		$data['line'] = $line;
+		$data['pabrik'] = $pabrik;
+
+
+		// $data = '{'.'{ "label": "Unit",  data: '.$unit.' },'.'{ "label": "Line",  data: '.$line.' },'.'{ "label": "Pabrik",  data: '.$pabrik.'}}';
+		echo json_encode($data);
+	}
+
+	public function ol(){
+		echo "tes";
+	}
+	public function cporm(){
+		$nama_pabrik = $this->uri->segment(3);
+		$bulan = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+		$bulanx = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+		$y = date('Y');
+		$m = $bulan[date('m')-1];
+		$mx = $bulanx[date('m')-1];
+
+		$query = $this->db->query("SELECT AVG(porm) as rata FROM `m_cost` WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' ");
+		$row = $query->row();
+
+		$query1 = $this->db->query("SELECT tanggal,porm FROM `m_cost` WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' ORDER BY tanggal desc limit 1");
+		$row1 = $query1->row();
+		// print_r($row);
+
+		if($row && $row1){
+			$hi = $row1->porm;
+			$t = $row1->tanggal;
+			$shi = $row->rata;
+			$t = explode("-",$t);
+
+			echo "TGL : ".$t[2]."-$m-$y<br>HI :".$hi."<br>SHI : ".$shi;
+		}else{
+			echo "data bulan ".$mx." belum diisi";
+		}
+	}
+	
+	public function cpkrm(){
+		$nama_pabrik = $this->uri->segment(3);
+		$bulan = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+		$bulanx = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+
+		$y = date('Y');
+		$m = $bulan[date('m')-1];
+		$mx = $bulanx[date('m')-1];
+
+		$query = $this->db->query("SELECT AVG(pkrm) as rata FROM `m_cost` WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' ");
+		$row = $query->row();
+
+		$query1 = $this->db->query("SELECT tanggal,pkrm FROM `m_cost` WHERE id_pabrik = '$nama_pabrik' AND tanggal LIKE '%$y-$m%' ORDER BY tanggal desc limit 1");
+		$row1 = $query1->row();
+		// print_r($row);
+
+		if($row && $row1){
+			$hi = $row1->pkrm;
+			$t = $row1->tanggal;
+			$shi = $row->rata;
+			// $stok = $row->nilai_stok;
+			$t = explode("-",$t);
+
+			echo "TGL : ".$t[2]."-$m-$y<br>HI :".$hi."<br>SHI : ".$shi;
+		}else{
+			echo "data bulan ".$mx." belum diisi";
+		}
+	}
+	public function sg(){
+		// echo $this->uri->segment(3);
+		$nama_pabrik = $this->uri->segment(3);
+		$bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+		$y = date('Y');
+		$m = $bulan[date('m')-1];
+
+		$query = $this->db->query("SELECT * FROM `m_inventory` WHERE id_pabrik = '$nama_pabrik' AND tahun = '$y' AND bulan = '$m'");
+		$row = $query->row();
+
+		// print_r($row);
+
+		if($row){
+			$min = $row->norma_min;
+			$max = $row->norma_max;
+			$stok = $row->nilai_stok;
+
+			echo "Min :".$min."<br>Max : ".$max."<br>Stok : ".$stok;
+
+		}else{
+			echo "data bulan ".$m." belum diisi";
+		}
+
+
+
 	}
 
 	public function wo_unfinished(){

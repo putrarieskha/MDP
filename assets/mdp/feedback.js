@@ -88,38 +88,70 @@ $(document).ready(function () {
     ];
 
     d_absloss = [
-        ["USB"],
-        ["PRESS CAKE"],
-        ["TANDAN KOSONG"],
-        ["HEAVY PHASE"],
-        ["WET NUT"],
-        ["TOTAL"],
+        ["USB",""],
+        ["PRESS CAKE",""],
+        ["TANDAN KOSONG",""],
+        ["HEAVY PHASE",""],
+        ["WET NUT",""],
+        ["TOTAL",""],
+    ];
+
+    md_absloss = [
+        ["USB", ""],
+        ["PRESS CAKE", ""],
+        ["TANDAN KOSONG", ""],
+        ["HEAVY PHASE", ""],
+        ["WET NUT", ""],
+        ["TOTAL", ""],
     ];
 
     d_abskloss = [
-        ["DESTONER"],
-        ["FIBER CYCLONE"],
-        ["LTDS-1"],
-        ["LTDS-2"],
-        ["HYDROCYCLONE"],
-        ["TOTAL KERNEL LOSSES"],
+        ["DESTONER",""],
+        ["FIBER CYCLONE",""],
+        ["LTDS-1",""],
+        ["LTDS-2",""],
+        ["HYDROCYCLONE",""],
+        ["TOTAL KERNEL LOSSES",""],
+    ];
+
+    md_abskloss = [
+        ["DESTONER", ""],
+        ["FIBER CYCLONE", ""],
+        ["LTDS-1", ""],
+        ["LTDS-2", ""],
+        ["HYDROCYCLONE", ""],
+        ["TOTAL KERNEL LOSSES", ""],
     ];
 
     d_olah = [
-        ["TBS Olah"],
-        ["TBS Terima"],
-        ["Taksasi"],
-        ["Rata-Rata Lori"],
-        ["ER CPO"],
-        ["ER KERNEL"],
-        ["ER PKO"],
-        ["Troughput POM"],
-        ["Troughput KCP"],
-        ["Pemakaian Air/TBS Olah(Maks 1M³/T)"],
-        ["Oil Content Kernel Olah"],
-        ["Sludge ter olah/produksi sludge "],
+        ["TBS Olah",""],
+        ["TBS Terima",""],
+        ["Taksasi",""],
+        ["Rata-Rata Lori",""],
+        ["ER CPO",""],
+        ["ER KERNEL",""],
+        ["ER PKO",""],
+        ["Troughput POM",""],
+        ["Troughput KCP",""],
+        ["Pemakaian Air/TBS Olah(Maks 1M³/T)",""],
+        ["Oil Content Kernel Olah",""],
+        ["Sludge ter olah/produksi sludge ",""],
     ];
 
+    md_olah = [
+        ["TBS Olah", ""],
+        ["TBS Terima", ""],
+        ["Taksasi", ""],
+        ["Rata-Rata Lori", ""],
+        ["ER CPO", ""],
+        ["ER KERNEL", ""],
+        ["ER PKO", ""],
+        ["Troughput POM", ""],
+        ["Troughput KCP", ""],
+        ["Pemakaian Air/TBS Olah(Maks 1M³/T)", ""],
+        ["Oil Content Kernel Olah", ""],
+        ["Sludge ter olah/produksi sludge ", ""],
+    ];
 
     data_detail = [];
     keterangan_detail = [];
@@ -136,7 +168,7 @@ $(document).ready(function () {
 
         if(dt_olah.length<1){
             $('#my-absloss').jexcel({
-                data: d_absloss,
+                data: md_absloss,
                 allowInsertColumn: false,
                 colHeaders: [
                     'Parameter',
@@ -150,7 +182,7 @@ $(document).ready(function () {
             });
 
             $('#my-abskloss').jexcel({
-                data: d_abskloss,
+                data: md_abskloss,
                 allowInsertColumn: false,
                 colHeaders: [
                     'Parameter',
@@ -164,7 +196,7 @@ $(document).ready(function () {
             });
 
             $('#my-olah').jexcel({
-                data: d_olah,
+                data: md_olah,
                 allowInsertColumn: false,
                 colHeaders: [
                     'Parameter',
@@ -184,7 +216,7 @@ $(document).ready(function () {
 
             var a = 0;
             console.log("i="+i);
-            d_olah.forEach(element => {
+            dtx_olah.forEach(element => {
                 console.log(element[0]);
                 dtx_olah[a++][1] = dt_olah[0][i++];
             });
@@ -206,7 +238,7 @@ $(document).ready(function () {
 
             console.log("i=" + i);
             a = 0;
-            d_absloss.forEach(element => {
+            dtx_absloss.forEach(element => {
                 console.log(element[0]);
                 dtx_absloss[a++][1] = dt_olah[0][i++];
             });
@@ -228,7 +260,7 @@ $(document).ready(function () {
 
             console.log("i=" + i);
             a = 0;
-            d_abskloss.forEach(element => {
+            dtx_abskloss.forEach(element => {
                 console.log(element[0]);
                 dtx_abskloss[a++][1] = dt_olah[0][i++];
             });

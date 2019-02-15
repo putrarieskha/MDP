@@ -191,7 +191,7 @@ class Feedback extends CI_Controller {
 			$p[$i][10] = $row->unit_8;
 			$p[$i][11] = $row->unit_9;
 			$p[$i][12] = $row->unit_10;
-			$p[$i][13] = $row->rata;
+			$p[$i++][13] = $row->rata;
 		}
 
 		$kcp = $this->db->query("SELECT 
@@ -216,7 +216,7 @@ class Feedback extends CI_Controller {
 			$k[$i][10] = $row->unit_8;
 			$k[$i][11] = $row->unit_9;
 			$k[$i][12] = $row->unit_10;
-			$k[$i][13] = $row->rata;
+			$k[$i++][13] = $row->rata;
 		}
 		// echo json_encode($d);
 
@@ -295,7 +295,7 @@ class Feedback extends CI_Controller {
 		$boiler = json_decode($d_boiler);
 
 		// print_r($pks);
-		// print_r($kcp);
+		print_r($kcp);
 		// print_r($effluent);
 		// print_r($boiler);
 
@@ -386,7 +386,8 @@ class Feedback extends CI_Controller {
 				'unit_10' => $value[12],
 				'rata' => $value[13],
 			);
-			$this->db->insert('o_feedback_pks', $data);
+			$this->db->insert('o_feedback_kcp', $data);
+			echo "tes\n";
 		}
 
 		$data = [];

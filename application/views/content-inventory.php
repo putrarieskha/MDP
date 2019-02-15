@@ -19,8 +19,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-xs-12">
-          <?php //echo $content; ?>
-          <div class="col-xs-12">
           Pabrik : 
           <?php echo $dropdown_pabrik ?>
           Tahun : 
@@ -29,8 +27,7 @@
             <option>2018</option>
             <option>2019</option>
           </select>
-          <br><br>
-
+          <br>
           <br>
           <div id='my-spreadsheet'></div>
           <br><br>
