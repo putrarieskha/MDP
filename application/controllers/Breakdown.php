@@ -72,7 +72,9 @@ class Breakdown extends CI_Controller {
 
 	public function load(){
 		$id_pabrik = $_REQUEST['id_pabrik'];
-		$id_station = $_REQUEST['id_station'];
+		// $id_station = $_REQUEST['id_station'];
+
+		$tanggal = $_REQUEST['tahun'].'-'.$_REQUEST['bulan'].'-'.$_REQUEST['tanggal'];
 
 		$query = $this->db->query(
 			"SELECT station,unit,problem,jenis,tipe,tindakan,mulai,selesai,keterangan
@@ -83,18 +85,53 @@ class Breakdown extends CI_Controller {
 		$d = [];
 		foreach ($query->result() as $row)
 		{
+			$mulai = explode(" ",$row->mulai);
+			$selesai = explode(" ",$row->selesai);
+
 			$d[$i][0] = $row->station;
 			$d[$i][1] = $row->unit;
 			$d[$i][2] = $row->problem;
 			$d[$i][3] = $row->jenis;
 			$d[$i][4] = $row->tipe;
 			$d[$i][5] = $row->tindakan;
-			$d[$i][6] = $row->mulai;
-			$d[$i][7] = $row->selesai;
-			$d[$i++][8] = $row->keterangan;
+			$d[$i][6] = $mulai[0];
+			$d[$i][7] = $mulai[1];
+			$d[$i][8] = $selesai[0];
+			$d[$i][9] = $selesai[1];
+			$d[$i++][10] = $row->keterangan;
 		}
 		echo json_encode($d);
 	}
+
+	public function simpan()
+	{
+		$pabrik = $_REQUEST['pabrik'];
+		$station = $_REQUEST['station'];
+		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
+		$this->db->query("DELETE FROM `m_acm` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' ");
+		$data_json = $_REQUEST['data_json'];
+		$data = json_decode($data_json);
+		foreach ($data as $key => $value) {
+			// $this->db->insert
+			$data = array(
+				'tanggal' => $tanggal,
+				'id_pabrik' => $pabrik,
+				'id_station' => $station,
+				'unit' => $value[0],
+				'acm' => $value[1],
+				'keterangan' => $value[2],
+
+				// 'jenis_problem' => $value[2],
+				// 'jenis_breakdown' => $value[3],
+				// 'date' => 'My date'
+			);
+			// print_r($data);
+			if($value[0]!=""){
+				$this->db->insert('m_acm', $data);
+			}
+		}
+	}
+
 
 	public function load_default(){
 		$id_pabrik = $_REQUEST['id_pabrik'];

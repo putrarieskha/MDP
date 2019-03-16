@@ -16,21 +16,42 @@ $(document).ready(function () {
     $('#my-spreadsheet').jexcel({
         data: data,
         colHeaders: [
-            'Station', 'Unit', 'Problem', 'Perbaikan', 'Tanggal<br>Mulai', 'Jam<br>Mulai', 'Tanggal<br>Selesai', 'Jam<br>Selesai','Jenis<br>Breakdown', 'Jenis<br>Problem'],
-        colWidths: [100, 100, 250, 250, 100, 50, 100, 60, 100, 100],
+            'Station', 'Unit', 'Problem', 'Jenis<br>Problem','Tipe', 'Perbaikan', 'Tanggal<br>Mulai', 'Jam<br>Mulai', 'Tanggal<br>Selesai', 'Jam<br>Selesai','Keterangan'],
+        colWidths: [100, 100, 250, 70, 60, 150, 100, 63, 100, 63, 100],
         columns: [
-            { type: 'autocomplete', source: ['loading ramp', 'sterilizer', 'thresher', 'press', 'bunch press', 'kernel', 'klarifikasi', 'boiler', 'effluent', 'dispatch'] },
+            { type: 'text' },
             { type: 'text' },
             { type: 'text', wordWrap: true },
-            { type: 'text', wordWrap: true },
-            { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
-            { type: 'text' },
-            { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
-            { type: 'text' },
             { type: 'dropdown', source: ['unit', 'line', 'pabrik'] },
             { type: 'dropdown', source: ['Alat', 'Proses'] },
+            { type: 'text', wordWrap: true },
+            { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
+            { type: 'text' },
+            { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
+            { type: 'text' },
         ]
     });
+
+    function refresh(xdata){
+        $('#my-spreadsheet').jexcel({
+            data: xdata,
+            colHeaders: [
+                'Station', 'Unit', 'Problem', 'Jenis<br>Problem', 'Tipe', 'Perbaikan', 'Tanggal<br>Mulai', 'Jam<br>Mulai', 'Tanggal<br>Selesai', 'Jam<br>Selesai', 'Keterangan'],
+            colWidths: [100, 100, 250, 70, 60, 150, 100, 63, 100, 63, 100],
+            columns: [
+                { type: 'text' },
+                { type: 'text' },
+                { type: 'text', wordWrap: true },
+                { type: 'dropdown', source: ['unit', 'line', 'pabrik'] },
+                { type: 'dropdown', source: ['Alat', 'Proses'] },
+                { type: 'text', wordWrap: true },
+                { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
+                { type: 'text' },
+                { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
+                { type: 'text' },
+            ]
+        });        
+    }
 
     function ajax_refresh() {
         $.ajax({
@@ -40,6 +61,7 @@ $(document).ready(function () {
                 id_pabrik: $("#pabrik").val(),
                 bulan: $("#bulan").val(),
                 tahun: $("#tahun").val(),
+                tanggal: $("#tanggal").val(),
             }
         }).done(function (msg) {
             console.log(msg);
@@ -64,6 +86,41 @@ $(document).ready(function () {
     } else {
         $("#tanggal").val(d.toString());
     }
+
+    $("#tanggal").change(function(){
+        ajax_refresh();
+    });
+
+    $("#tahun").change(function () {
+        ajax_refresh();
+    });
+    $("#bulan").change(function () {
+        ajax_refresh();
+    });
+
+    $("#pabrik").change(function () {
+        ajax_refresh();
+    });
+
+    $("#simpan").click(function () {
+        var data = $('#my-spreadsheet').jexcel('getData');
+        console.log(data);
+
+        $.ajax({
+            method: "POST",
+            url: BASE_URL + "breakdown/simpan",
+            success: sukses,
+            data: {
+                id_pabrik: $("#pabrik").val(),
+                bulan: $("#bulan").val(),
+                tahun: $("#tahun").val(),
+                tanggal: $("#tanggal").val(),
+                data_json: JSON.stringify(data),
+            }
+        }).done(function (msg) {
+            console.log(msg);
+        });
+    });
 
     ajax_refresh();
 });

@@ -70,7 +70,6 @@ class Display extends CI_Controller {
 		}
 		echo json_encode($d);
 
-
 	}
 
 	public function simpan()
@@ -92,8 +91,6 @@ class Display extends CI_Controller {
 
 	public function proses(){
 		$output = "";
-
-
 
         $output['taksasi_t'] = '';
         $output['start_t'] = '';
@@ -134,12 +131,42 @@ class Display extends CI_Controller {
         $output['stok_pko'] = '';
         $output['stok_pke'] = '';
 		
+
+		$nama_pabrik = $this->session->user;
+		$kategori = $this->session->kategori;
+
+		$query = $this->db->query("SELECT nama FROM master_pabrik;");
+
+		$output['dropdown_pabrik']= "";
+		if($kategori<2){
+			$output['dropdown_pabrik']= "<select id=\"pabrik\">";
+		}else{
+			$output['dropdown_pabrik']= "<select id=\"pabrik\" disabled>";
+		}
+		
+		foreach ($query->result() as $row)
+		{
+			if($nama_pabrik==$row->nama){
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option selected=\"selected\">".$row->nama."</option>";
+			}else{
+				$output['dropdown_pabrik'] = $output['dropdown_pabrik']."<option>".$row->nama."</option>";
+			}
+		}
+		$output['dropdown_pabrik'] .= "/<select>";
+
+
 		$this->load->view('display-proses',$output);
 	
 	}
 
+	public function tbs_olah(){
+		$pabrik = $_REQUEST['pabrik'];
+		$tanggal = $_REQUEST['tanggal'];
 
+		$query = $this->db->query("SELECT tbs_olah FROM o_feedback_olah WHERE id_pabrik = '$pabrik' AND tanggal = '$tanggal';");
 
+		
+	}
 
 	public function maintenance(){
 		$output = "";

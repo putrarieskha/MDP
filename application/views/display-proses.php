@@ -111,9 +111,10 @@
   <div class="col-xs-8" id="app">
     <h1>
       <span style="color:white">Dashboard Pabrik :</span>
-      <select id="pabrik">
+      <?php echo $dropdown_pabrik ?>
+      <!-- <select id="pabrik">
         <option>GSDI</option>
-      </select>
+      </select> -->
     </h1>
     <table class="tbl" width="100%" border="5" cellpadding="5" cellspacing="5">
       <tr>
