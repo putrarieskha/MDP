@@ -26,9 +26,11 @@ $(document).ready(function () {
             { type: 'dropdown', source: ['Alat', 'Proses'] },
             { type: 'text', wordWrap: true },
             { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
-            { type: 'text' },
+            // { type: 'number' , option: { format:'##:##:##' } },
+            { type: 'text', mask: '##:##:##' },
             { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
-            { type: 'text' },
+            // { type: 'text' },
+            { type: 'text', mask: '##:##:##' },
         ]
     });
 
@@ -46,9 +48,11 @@ $(document).ready(function () {
                 { type: 'dropdown', source: ['Alat', 'Proses'] },
                 { type: 'text', wordWrap: true },
                 { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
-                { type: 'text' },
+                // { type: 'text' },
+                { type: 'text', mask: '##:##:##' },
                 { type: 'calendar', option: { format: 'DD/MM/YYYY HH24:MI', time: 1 } },
-                { type: 'text' },
+                { type: 'text', mask: '##:##:##' },
+                // { type: 'text' },
             ]
         });        
     }

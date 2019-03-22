@@ -33,6 +33,7 @@ class Breakdown extends CI_Controller {
 		$footer['js_files'] = [
 			// base_url('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js'),
 			base_url("assets/jexcel/js/jquery.jexcel.js"),
+			base_url("assets/jexcel/js/jquery.mask.min.js"),
 			base_url("assets/jexcel/js/jquery.jcalendar.js"),
 			base_url("assets/mdp/config.js"),
 			base_url("assets/mdp/global.js"),
@@ -105,10 +106,10 @@ class Breakdown extends CI_Controller {
 
 	public function simpan()
 	{
-		$pabrik = $_REQUEST['pabrik'];
-		$station = $_REQUEST['station'];
-		$tanggal = $_REQUEST['y']."-".$_REQUEST['m']."-".$_REQUEST['d'];
-		$this->db->query("DELETE FROM `m_acm` where id_pabrik = '$pabrik' AND id_station = '$station' AND tanggal = '$tanggal' ");
+		$pabrik = $_REQUEST['id_pabrik'];
+		// $station = $_REQUEST['station'];
+		$tanggal = $_REQUEST['tahun']."-".$_REQUEST['bulan']."-".$_REQUEST['tanggal'];
+		$this->db->query("DELETE FROM `m_breakdown_pabrik` where id_pabrik = '$pabrik' AND tanggal = '$tanggal' ");
 		$data_json = $_REQUEST['data_json'];
 		$data = json_decode($data_json);
 		foreach ($data as $key => $value) {
@@ -116,18 +117,19 @@ class Breakdown extends CI_Controller {
 			$data = array(
 				'tanggal' => $tanggal,
 				'id_pabrik' => $pabrik,
-				'id_station' => $station,
-				'unit' => $value[0],
-				'acm' => $value[1],
-				'keterangan' => $value[2],
-
-				// 'jenis_problem' => $value[2],
-				// 'jenis_breakdown' => $value[3],
-				// 'date' => 'My date'
+				'station' => $value[0],
+				'unit' => $value[1],
+				'problem' => $value[2],
+				'jenis' => $value[3],
+				'tipe' => $value[4],
+				'tindakan' => $value[5],
+				'mulai' => $value[6]." ".$value[7],
+				'selesai' => $value[8]." ".$value[9],
+				'keterangan' => $value[10],
 			);
 			// print_r($data);
 			if($value[0]!=""){
-				$this->db->insert('m_acm', $data);
+				$this->db->insert('m_breakdown_pabrik', $data);
 			}
 		}
 	}
